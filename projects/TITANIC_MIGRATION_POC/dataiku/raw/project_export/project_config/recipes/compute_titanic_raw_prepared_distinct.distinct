@@ -1,0 +1,135 @@
+{
+  "preFilter": {
+    "distinct": false,
+    "enabled": false
+  },
+  "keys": [
+    {
+      "column": "PassengerId"
+    }
+  ],
+  "globalCount": false,
+  "engineParams": {
+    "hive": {
+      "skipPrerunValidate": false,
+      "hiveconf": [],
+      "inheritConf": "default",
+      "addDkuUdf": false,
+      "executionEngine": "HIVESERVER2"
+    },
+    "sqlPipelineParams": {
+      "pipelineAllowMerge": true,
+      "pipelineAllowStart": true
+    },
+    "cdePipelineParams": {
+      "pipelineAllowMerge": true,
+      "pipelineAllowStart": true
+    },
+    "impala": {
+      "forceStreamMode": true
+    },
+    "containerSelection": {
+      "containerMode": "INHERIT"
+    },
+    "lowerCaseSchemaIfEngineRequiresIt": true,
+    "sparkSQL": {
+      "skipPrerunValidate": false,
+      "pipelineAllowMerge": true,
+      "useGlobalMetastore": false,
+      "pipelineAllowStart": true,
+      "readParams": {
+        "mode": "AUTO",
+        "autoModeRepartitionInto": 10,
+        "map": {}
+      },
+      "overwriteOutputSchema": false,
+      "executionEngine": "SPARK_SUBMIT",
+      "sparkConfig": {
+        "inheritConf": "default",
+        "conf": []
+      }
+    }
+  },
+  "outputColumnNameOverrides": {},
+  "selectAllColumns": true,
+  "postFilter": {
+    "$status": {
+      "schema": {
+        "columns": [
+          {
+            "name": "PassengerId",
+            "type": "bigint"
+          },
+          {
+            "name": "Survived",
+            "type": "bigint"
+          },
+          {
+            "name": "Pclass",
+            "type": "bigint"
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "maxLength": 65500
+          },
+          {
+            "name": "Sex",
+            "type": "string",
+            "maxLength": 65500
+          },
+          {
+            "name": "Age",
+            "type": "double"
+          },
+          {
+            "name": "SibSp",
+            "type": "bigint"
+          },
+          {
+            "name": "Parch",
+            "type": "bigint"
+          },
+          {
+            "name": "FamilySize",
+            "type": "bigint"
+          },
+          {
+            "name": "IsAlone",
+            "type": "bigint"
+          },
+          {
+            "name": "Ticket",
+            "type": "string",
+            "maxLength": 65500
+          },
+          {
+            "name": "Fare",
+            "type": "double"
+          },
+          {
+            "name": "FarePerPerson",
+            "type": "double"
+          },
+          {
+            "name": "Cabin",
+            "type": "string",
+            "maxLength": 65500
+          },
+          {
+            "name": "HasCabin",
+            "type": "bigint"
+          },
+          {
+            "name": "Embarked",
+            "type": "string",
+            "maxLength": 65500
+          }
+        ],
+        "userModified": false
+      }
+    },
+    "distinct": false,
+    "enabled": false
+  }
+}

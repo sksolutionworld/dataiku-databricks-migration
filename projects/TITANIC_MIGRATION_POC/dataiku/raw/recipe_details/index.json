@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "project_key": "TITANIC_MIGRATION_POC",
+  "extracted_at_utc": "2026-09-30T06:07:45.665379+00:00",
+  "recipe_count": 9,
+  "recipes": [
+    {
+      "recipe_name": "compute_titanic_migration_output",
+      "recipe_type": "shaker",
+      "details_file": "compute_titanic_migration_output.json"
+    },
+    {
+      "recipe_name": "compute_titanic_raw_prepared",
+      "recipe_type": "shaker",
+      "details_file": "compute_titanic_raw_prepared.json"
+    },
+    {
+      "recipe_name": "compute_titanic_raw_prepared_distinct",
+      "recipe_type": "distinct",
+      "details_file": "compute_titanic_raw_prepared_distinct.json"
+    },
+    {
+      "recipe_name": "compute_titanic_survived_stacked",
+      "recipe_type": "vstack",
+      "details_file": "compute_titanic_survived_stacked.json"
+    },
+    {
+      "recipe_name": "compute_titanic_survived_stacked_by_Pclass",
+      "recipe_type": "grouping",
+      "details_file": "compute_titanic_survived_stacked_by_Pclass.json"
+    },
+    {
+      "recipe_name": "compute_titanic_survived_stacked_recombined_by_Sex",
+      "recipe_type": "pivot",
+      "details_file": "compute_titanic_survived_stacked_recombined_by_Sex.json"
+    },
+    {
+      "recipe_name": "compute_titanic_survived_stacked_recombined_joined",
+      "recipe_type": "join",
+      "details_file": "compute_titanic_survived_stacked_recombined_joined.json"
+    },
+    {
+      "recipe_name": "compute_titanic_survived_stacked_recombined_joined_enriched_windows",
+      "recipe_type": "window",
+      "details_file": "compute_titanic_survived_stacked_recombined_joined_enriched_windows.json"
+    },
+    {
+      "recipe_name": "split_titanic_raw_prepared_distinct",
+      "recipe_type": "split",
+      "details_file": "split_titanic_raw_prepared_distinct.json"
+    }
+  ]
+}

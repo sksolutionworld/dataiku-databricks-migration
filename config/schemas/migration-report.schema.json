@@ -1,0 +1,84 @@
+{
+  "$defs": {
+    "MigrationStatus": {
+      "enum": [
+        "DISCOVERED",
+        "ANALYZED",
+        "PLANNED",
+        "CONVERTED",
+        "VALIDATED",
+        "REQUIRES_REVIEW",
+        "FAILED"
+      ],
+      "title": "MigrationStatus",
+      "type": "string"
+    },
+    "ValidationResult": {
+      "properties": {
+        "check": {
+          "title": "Check",
+          "type": "string"
+        },
+        "status": {
+          "title": "Status",
+          "type": "string"
+        },
+        "expected": {
+          "default": null,
+          "title": "Expected"
+        },
+        "actual": {
+          "default": null,
+          "title": "Actual"
+        },
+        "details": {
+          "additionalProperties": true,
+          "title": "Details",
+          "type": "object"
+        }
+      },
+      "required": [
+        "check",
+        "status"
+      ],
+      "title": "ValidationResult",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "project_key": {
+      "title": "Project Key",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/MigrationStatus"
+    },
+    "converted_recipes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Converted Recipes",
+      "type": "array"
+    },
+    "review_items": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Review Items",
+      "type": "array"
+    },
+    "validations": {
+      "items": {
+        "$ref": "#/$defs/ValidationResult"
+      },
+      "title": "Validations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "project_key",
+    "status"
+  ],
+  "title": "MigrationReport",
+  "type": "object"
+}

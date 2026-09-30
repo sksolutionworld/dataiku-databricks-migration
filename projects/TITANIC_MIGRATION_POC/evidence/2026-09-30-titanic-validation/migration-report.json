@@ -1,0 +1,23 @@
+{
+  "project_key": "TITANIC_MIGRATION_POC",
+  "status": "VALIDATED",
+  "converted_recipes": [
+    "compute_titanic_raw_prepared",
+    "compute_titanic_raw_prepared_distinct",
+    "split_titanic_raw_prepared_distinct",
+    "compute_titanic_survived_stacked",
+    "compute_titanic_survived_stacked_by_Pclass",
+    "compute_titanic_survived_stacked_recombined_by_Sex",
+    "compute_titanic_survived_stacked_recombined_joined",
+    "compute_titanic_survived_stacked_recombined_joined_enriched_windows",
+    "compute_titanic_migration_output"
+  ],
+  "review_items": [],
+  "validations": [
+    {"check": "stage_row_counts", "status": "PASS", "expected": 10, "actual": 10, "details": {"all_stages_match": true}},
+    {"check": "final_row_count", "status": "PASS", "expected": 891, "actual": 891, "details": {}},
+    {"check": "passenger_id_nulls", "status": "PASS", "expected": 0, "actual": 0, "details": {}},
+    {"check": "passenger_id_duplicates", "status": "PASS", "expected": 0, "actual": 0, "details": {}},
+    {"check": "business_column_differences", "status": "PASS", "expected": 0, "actual": 0, "details": {"floating_point_tolerance": 0.000001}}
+  ]
+}

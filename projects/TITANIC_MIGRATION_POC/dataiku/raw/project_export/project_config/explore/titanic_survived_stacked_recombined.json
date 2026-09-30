@@ -1,0 +1,199 @@
+{
+  "script": {
+    "steps": [],
+    "maxProcessedMemTableBytes": -1,
+    "columnsSelection": {
+      "mode": "ALL",
+      "list": [
+        {
+          "name": "PassengerId",
+          "d": true
+        },
+        {
+          "name": "Survived",
+          "d": true
+        },
+        {
+          "name": "Pclass",
+          "d": true
+        },
+        {
+          "name": "Name",
+          "d": true
+        },
+        {
+          "name": "Sex",
+          "d": true
+        },
+        {
+          "name": "Age",
+          "d": true
+        },
+        {
+          "name": "SibSp",
+          "d": true
+        },
+        {
+          "name": "Parch",
+          "d": true
+        },
+        {
+          "name": "FamilySize",
+          "d": true
+        },
+        {
+          "name": "IsAlone",
+          "d": true
+        },
+        {
+          "name": "Ticket",
+          "d": true
+        },
+        {
+          "name": "Fare",
+          "d": true
+        },
+        {
+          "name": "FarePerPerson",
+          "d": true
+        },
+        {
+          "name": "Cabin",
+          "d": true
+        },
+        {
+          "name": "HasCabin",
+          "d": true
+        },
+        {
+          "name": "Embarked",
+          "d": true
+        }
+      ]
+    },
+    "columnOrder": [],
+    "columnWidthsByName": {
+      "PassengerId": 100,
+      "Survived": 100,
+      "Pclass": 100,
+      "Name": 300,
+      "Sex": 100,
+      "Age": 134,
+      "SibSp": 100,
+      "Parch": 100,
+      "FamilySize": 100,
+      "IsAlone": 100,
+      "Ticket": 100,
+      "Fare": 134,
+      "FarePerPerson": 134,
+      "Cabin": 100,
+      "HasCabin": 100,
+      "Embarked": 100
+    },
+    "columnUseScientificNotationByName": {},
+    "coloring": {
+      "scheme": "MEANING_AND_STATUS",
+      "individualColumns": [],
+      "individualColumnsRules": [],
+      "valueColoringMode": "HASH",
+      "coloringGroups": []
+    },
+    "sorting": [],
+    "analysisColumnData": {},
+    "explorationSampling": {
+      "selection": {
+        "maxRecordsForDisplay": -1,
+        "maxStoredBytes": 104857600,
+        "timeout": -1,
+        "filter": {
+          "distinct": false,
+          "enabled": false
+        },
+        "partitionSelectionMethod": "ALL",
+        "latestPartitionsN": 1,
+        "ordering": {
+          "enabled": false,
+          "rules": []
+        },
+        "samplingMethod": "HEAD_SEQUENTIAL",
+        "maxRecords": 10000,
+        "targetRatio": 0.02,
+        "ascending": true,
+        "withinFirstN": -1,
+        "maxReadUncompressedBytes": -1
+      },
+      "autoRefreshSample": false,
+      "_refreshTrigger": 0
+    },
+    "vizSampling": {
+      "selection": {
+        "useMemTable": false,
+        "filter": {
+          "distinct": false,
+          "enabled": false
+        },
+        "partitionSelectionMethod": "ALL",
+        "latestPartitionsN": 1,
+        "ordering": {
+          "enabled": false,
+          "rules": []
+        },
+        "samplingMethod": "FULL",
+        "maxRecords": -1,
+        "targetRatio": 0.02,
+        "ascending": true,
+        "withinFirstN": -1,
+        "maxReadUncompressedBytes": -1
+      },
+      "autoRefreshSample": false,
+      "_refreshTrigger": 0
+    },
+    "exploreUIParams": {
+      "autoRefresh": true
+    },
+    "globalSearchQuery": "",
+    "explorationFilters": [
+      {
+        "column": "Survived",
+        "type": "columnFilter",
+        "currentMode": "FACET",
+        "active": true,
+        "facet": {
+          "type": "facet",
+          "column": "Survived",
+          "columnType": "NUMERICAL",
+          "currentMode": "ALPHANUM",
+          "sort": "count",
+          "selectedValues": {}
+        },
+        "alphanumFilter": {
+          "type": "alphanum",
+          "column": "Survived",
+          "selectedValues": [],
+          "params": {
+            "mode": "full_string",
+            "normalization": "exact"
+          }
+        },
+        "validityFilter": {
+          "type": "validity",
+          "column": "Survived",
+          "params": {
+            "type": "LongMeaning",
+            "ok": true,
+            "nok": true,
+            "empty": true
+          }
+        }
+      }
+    ],
+    "previewMode": "ALL_ROWS"
+  },
+  "charts": [],
+  "interactiveSearch": {
+    "savedQueries": []
+  },
+  "customMeasures": [],
+  "reusableDimensions": [],
+  "hierarchies": []
+}

@@ -1,0 +1,2459 @@
+{
+  "project_key": "TITANIC_MIGRATION_POC",
+  "datasets": [
+    {
+      "name": "titanic_migration_output",
+      "role": "output",
+      "metadata": {}
+    },
+    {
+      "name": "titanic_not_survived",
+      "role": "intermediate",
+      "metadata": {}
+    },
+    {
+      "name": "titanic_raw",
+      "role": "source",
+      "metadata": {}
+    },
+    {
+      "name": "titanic_raw_prepared",
+      "role": "intermediate",
+      "metadata": {}
+    },
+    {
+      "name": "titanic_raw_prepared_distinct",
+      "role": "intermediate",
+      "metadata": {}
+    },
+    {
+      "name": "titanic_survived",
+      "role": "intermediate",
+      "metadata": {}
+    },
+    {
+      "name": "titanic_survived_stacked_recombined",
+      "role": "intermediate",
+      "metadata": {}
+    },
+    {
+      "name": "titanic_survived_stacked_recombined_by_Sex",
+      "role": "output",
+      "metadata": {}
+    },
+    {
+      "name": "titanic_survived_stacked_recombined_joined_enriched",
+      "role": "intermediate",
+      "metadata": {}
+    },
+    {
+      "name": "titanic_survived_stacked_recombined_joined_enriched_ranked",
+      "role": "intermediate",
+      "metadata": {}
+    },
+    {
+      "name": "titanic_survived_stacked_summary",
+      "role": "intermediate",
+      "metadata": {}
+    }
+  ],
+  "recipes": [
+    {
+      "recipe_id": "compute_titanic_migration_output",
+      "recipe_name": "compute_titanic_migration_output",
+      "recipe_type": "shaker",
+      "inputs": [
+        "titanic_survived_stacked_recombined_joined_enriched_ranked"
+      ],
+      "outputs": [
+        "titanic_migration_output"
+      ],
+      "configuration": {
+        "columnsSelection": {
+          "mode": "ALL",
+          "list": [
+            {
+              "d": true,
+              "name": "PassengerId"
+            },
+            {
+              "d": true,
+              "name": "Survived"
+            },
+            {
+              "d": true,
+              "name": "Pclass"
+            },
+            {
+              "d": true,
+              "name": "Name"
+            },
+            {
+              "d": true,
+              "name": "Sex"
+            },
+            {
+              "d": true,
+              "name": "Age"
+            },
+            {
+              "d": true,
+              "name": "SibSp"
+            },
+            {
+              "d": true,
+              "name": "Parch"
+            },
+            {
+              "d": true,
+              "name": "FamilySize"
+            },
+            {
+              "d": true,
+              "name": "IsAlone"
+            },
+            {
+              "d": true,
+              "name": "Ticket"
+            },
+            {
+              "d": true,
+              "name": "Fare"
+            },
+            {
+              "d": true,
+              "name": "FarePerPerson"
+            },
+            {
+              "d": true,
+              "name": "Cabin"
+            },
+            {
+              "d": true,
+              "name": "HasCabin"
+            },
+            {
+              "d": true,
+              "name": "Embarked"
+            },
+            {
+              "d": true,
+              "name": "SexClassPassengerCount"
+            },
+            {
+              "d": true,
+              "name": "SexClassSurvivalRate"
+            },
+            {
+              "d": true,
+              "name": "SexClassAverageAge"
+            },
+            {
+              "d": true,
+              "name": "SexClassAverageFare"
+            },
+            {
+              "d": true,
+              "name": "SexClassAverageFarePerPerson"
+            },
+            {
+              "d": true,
+              "name": "FareRankWithinClass"
+            }
+          ]
+        },
+        "explorationSampling": {
+          "_refreshTrigger": 0,
+          "selection": {
+            "latestPartitionsN": 1,
+            "maxRecords": 10000,
+            "maxRecordsForDisplay": -1,
+            "ordering": {
+              "rules": [],
+              "enabled": false
+            },
+            "withinFirstN": -1,
+            "maxStoredBytes": 104857600,
+            "ascending": true,
+            "timeout": -1,
+            "filter": {
+              "distinct": false,
+              "enabled": false
+            },
+            "partitionSelectionMethod": "ALL",
+            "targetRatio": 0.02,
+            "maxReadUncompressedBytes": -1,
+            "samplingMethod": "HEAD_SEQUENTIAL"
+          },
+          "autoRefreshSample": false
+        },
+        "explorationFilters": [],
+        "columnOrder": [],
+        "columnUseScientificNotationByName": {},
+        "origin": "PREPARE_RECIPE",
+        "exploreUIParams": {
+          "autoRefresh": true
+        },
+        "steps": [
+          {
+            "preview": false,
+            "metaType": "PROCESSOR",
+            "disabled": false,
+            "type": "ColumnRenamer",
+            "params": {
+              "renamings": [
+                {
+                  "from": "rownumber",
+                  "to": "FareRankWithinClass"
+                },
+                {
+                  "from": "PassengerId_count",
+                  "to": "SexClassPassengerCount"
+                },
+                {
+                  "from": "Survived_avg",
+                  "to": "SexClassSurvivalRate"
+                },
+                {
+                  "from": "Age_avg",
+                  "to": "SexClassAverageAge"
+                },
+                {
+                  "from": "Fare_avg",
+                  "to": "SexClassAverageFare"
+                },
+                {
+                  "from": "FarePerPerson_avg",
+                  "to": "SexClassAverageFarePerPerson"
+                }
+              ]
+            },
+            "alwaysShowComment": false
+          },
+          {
+            "preview": true,
+            "metaType": "PROCESSOR",
+            "disabled": false,
+            "type": "ColumnsSelector",
+            "params": {
+              "columns": [
+                "PassengerId",
+                "Name",
+                "Sex",
+                "Age",
+                "Pclass",
+                "Survived",
+                "SibSp",
+                "Parch",
+                "FamilySize",
+                "IsAlone",
+                "Ticket",
+                "Fare",
+                "FarePerPerson",
+                "Cabin",
+                "HasCabin",
+                "Embarked",
+                "SexClassPassengerCount",
+                "SexClassSurvivalRate",
+                "SexClassAverageAge",
+                "SexClassAverageFare",
+                "SexClassAverageFarePerPerson",
+                "FareRankWithinClass"
+              ],
+              "keep": true,
+              "appliesTo": "COLUMNS"
+            },
+            "alwaysShowComment": false
+          }
+        ],
+        "maxProcessedMemTableBytes": -1,
+        "previewMode": "ALL_ROWS",
+        "vizSampling": {
+          "_refreshTrigger": 0,
+          "selection": {
+            "useMemTable": false,
+            "filter": {
+              "distinct": false,
+              "enabled": false
+            },
+            "latestPartitionsN": 1,
+            "maxRecords": -1,
+            "ordering": {
+              "rules": [],
+              "enabled": false
+            },
+            "withinFirstN": -1,
+            "partitionSelectionMethod": "ALL",
+            "targetRatio": 0.02,
+            "maxReadUncompressedBytes": -1,
+            "samplingMethod": "FULL",
+            "ascending": true
+          },
+          "autoRefreshSample": false
+        },
+        "analysisColumnData": {},
+        "flagNumericValues": true,
+        "columnWidthsByName": {
+          "Pclass": 100,
+          "SexClassAverageFare": 183,
+          "Age_avg": 141,
+          "Sex": 100,
+          "SexClassAverageFarePerPerson": 246,
+          "FamilySize": 100,
+          "Name": 300,
+          "Cabin": 100,
+          "FareRankWithinClass": 158,
+          "FarePerPerson": 134,
+          "SexClassAverageAge": 176,
+          "rownumber": 100,
+          "SexClassSurvivalRate": 190,
+          "IsAlone": 100,
+          "Age": 134,
+          "Embarked": 100,
+          "FarePerPerson_avg": 169,
+          "Survived": 100,
+          "Ticket": 100,
+          "PassengerId": 100,
+          "HasCabin": 100,
+          "SexClassPassengerCount": 180,
+          "SibSp": 100,
+          "Fare": 134,
+          "Fare_avg": 141,
+          "Parch": 100,
+          "PassengerId_count": 143,
+          "Survived_avg": 148
+        },
+        "sorting": [],
+        "globalSearchQuery": "",
+        "coloring": {
+          "scheme": "MEANING_AND_STATUS",
+          "individualColumns": [],
+          "coloringGroups": [],
+          "valueColoringMode": "HASH",
+          "individualColumnsRules": []
+        }
+      },
+      "processors": [
+        {
+          "processor_type": "ColumnRenamer",
+          "parameters": {
+            "renamings": [
+              {
+                "from": "rownumber",
+                "to": "FareRankWithinClass"
+              },
+              {
+                "from": "PassengerId_count",
+                "to": "SexClassPassengerCount"
+              },
+              {
+                "from": "Survived_avg",
+                "to": "SexClassSurvivalRate"
+              },
+              {
+                "from": "Age_avg",
+                "to": "SexClassAverageAge"
+              },
+              {
+                "from": "Fare_avg",
+                "to": "SexClassAverageFare"
+              },
+              {
+                "from": "FarePerPerson_avg",
+                "to": "SexClassAverageFarePerPerson"
+              }
+            ]
+          },
+          "disabled": false
+        },
+        {
+          "processor_type": "ColumnsSelector",
+          "parameters": {
+            "columns": [
+              "PassengerId",
+              "Name",
+              "Sex",
+              "Age",
+              "Pclass",
+              "Survived",
+              "SibSp",
+              "Parch",
+              "FamilySize",
+              "IsAlone",
+              "Ticket",
+              "Fare",
+              "FarePerPerson",
+              "Cabin",
+              "HasCabin",
+              "Embarked",
+              "SexClassPassengerCount",
+              "SexClassSurvivalRate",
+              "SexClassAverageAge",
+              "SexClassAverageFare",
+              "SexClassAverageFarePerPerson",
+              "FareRankWithinClass"
+            ],
+            "keep": true,
+            "appliesTo": "COLUMNS"
+          },
+          "disabled": false
+        }
+      ],
+      "source_code": null,
+      "metadata": {
+        "project_key": "TITANIC_MIGRATION_POC"
+      }
+    },
+    {
+      "recipe_id": "compute_titanic_raw_prepared",
+      "recipe_name": "compute_titanic_raw_prepared",
+      "recipe_type": "shaker",
+      "inputs": [
+        "titanic_raw"
+      ],
+      "outputs": [
+        "titanic_raw_prepared"
+      ],
+      "configuration": {
+        "columnsSelection": {
+          "mode": "ALL",
+          "list": [
+            {
+              "d": true,
+              "name": "PassengerId"
+            },
+            {
+              "d": true,
+              "name": "Survived"
+            },
+            {
+              "d": true,
+              "name": "Pclass"
+            },
+            {
+              "d": true,
+              "name": "Name"
+            },
+            {
+              "d": true,
+              "name": "Sex"
+            },
+            {
+              "d": true,
+              "name": "Age"
+            },
+            {
+              "d": true,
+              "name": "SibSp"
+            },
+            {
+              "d": true,
+              "name": "Parch"
+            },
+            {
+              "d": true,
+              "name": "FamilySize"
+            },
+            {
+              "d": true,
+              "name": "IsAlone"
+            },
+            {
+              "d": true,
+              "name": "Ticket"
+            },
+            {
+              "d": true,
+              "name": "Fare"
+            },
+            {
+              "d": true,
+              "name": "FarePerPerson"
+            },
+            {
+              "d": true,
+              "name": "Cabin"
+            },
+            {
+              "d": true,
+              "name": "HasCabin"
+            },
+            {
+              "d": true,
+              "name": "Embarked"
+            }
+          ]
+        },
+        "explorationSampling": {
+          "_refreshTrigger": 0,
+          "selection": {
+            "latestPartitionsN": 1,
+            "maxRecords": 10000,
+            "maxRecordsForDisplay": -1,
+            "ordering": {
+              "rules": [],
+              "enabled": false
+            },
+            "withinFirstN": -1,
+            "maxStoredBytes": 104857600,
+            "ascending": true,
+            "timeout": -1,
+            "filter": {
+              "distinct": false,
+              "enabled": false
+            },
+            "partitionSelectionMethod": "ALL",
+            "targetRatio": 0.02,
+            "maxReadUncompressedBytes": -1,
+            "samplingMethod": "HEAD_SEQUENTIAL"
+          },
+          "autoRefreshSample": false
+        },
+        "explorationFilters": [],
+        "columnOrder": [],
+        "columnUseScientificNotationByName": {},
+        "origin": "PREPARE_RECIPE",
+        "exploreUIParams": {
+          "autoRefresh": true
+        },
+        "steps": [
+          {
+            "preview": false,
+            "metaType": "PROCESSOR",
+            "disabled": false,
+            "type": "CreateColumnWithGREL",
+            "params": {
+              "expression": "if(isBlank(Cabin), 0, 1)",
+              "column": "HasCabin",
+              "errorColumn": ""
+            },
+            "alwaysShowComment": false
+          },
+          {
+            "preview": false,
+            "metaType": "PROCESSOR",
+            "disabled": false,
+            "type": "FillEmptyWithValue",
+            "params": {
+              "columns": [
+                "Age"
+              ],
+              "appliesTo": "SINGLE_COLUMN",
+              "value": "28"
+            },
+            "alwaysShowComment": false
+          },
+          {
+            "preview": false,
+            "metaType": "PROCESSOR",
+            "disabled": false,
+            "type": "FillEmptyWithValue",
+            "params": {
+              "columns": [
+                "Embarked"
+              ],
+              "appliesTo": "SINGLE_COLUMN",
+              "value": "UNKNOWN"
+            },
+            "alwaysShowComment": false
+          },
+          {
+            "preview": false,
+            "metaType": "PROCESSOR",
+            "disabled": false,
+            "type": "FillEmptyWithValue",
+            "params": {
+              "columns": [
+                "Cabin"
+              ],
+              "appliesTo": "SINGLE_COLUMN",
+              "value": "NO_CABIN"
+            },
+            "alwaysShowComment": false
+          },
+          {
+            "preview": false,
+            "metaType": "PROCESSOR",
+            "disabled": false,
+            "type": "CreateColumnWithGREL",
+            "params": {
+              "expression": "SibSp + Parch + 1",
+              "column": "FamilySize",
+              "errorColumn": ""
+            },
+            "alwaysShowComment": false
+          },
+          {
+            "preview": false,
+            "metaType": "PROCESSOR",
+            "disabled": false,
+            "type": "CreateColumnWithGREL",
+            "params": {
+              "expression": "if(FamilySize == 1, 1, 0)",
+              "column": "IsAlone",
+              "errorColumn": ""
+            },
+            "alwaysShowComment": false
+          },
+          {
+            "preview": true,
+            "metaType": "PROCESSOR",
+            "disabled": false,
+            "type": "CreateColumnWithGREL",
+            "params": {
+              "expression": "Fare / FamilySize",
+              "column": "FarePerPerson",
+              "errorColumn": ""
+            },
+            "alwaysShowComment": false
+          }
+        ],
+        "maxProcessedMemTableBytes": -1,
+        "previewMode": "ALL_ROWS",
+        "vizSampling": {
+          "_refreshTrigger": 0,
+          "selection": {
+            "useMemTable": false,
+            "filter": {
+              "distinct": false,
+              "enabled": false
+            },
+            "latestPartitionsN": 1,
+            "maxRecords": -1,
+            "ordering": {
+              "rules": [],
+              "enabled": false
+            },
+            "withinFirstN": -1,
+            "partitionSelectionMethod": "ALL",
+            "targetRatio": 0.02,
+            "maxReadUncompressedBytes": -1,
+            "samplingMethod": "FULL",
+            "ascending": true
+          },
+          "autoRefreshSample": false
+        },
+        "analysisColumnData": {},
+        "flagNumericValues": true,
+        "columnWidthsByName": {
+          "Embarked": 100,
+          "Survived": 100,
+          "Pclass": 100,
+          "Ticket": 100,
+          "PassengerId": 100,
+          "HasCabin": 100,
+          "Sex": 100,
+          "FamilySize": 100,
+          "SibSp": 100,
+          "Name": 300,
+          "Fare": 134,
+          "Parch": 100,
+          "Cabin": 100,
+          "FarePerPerson": 134,
+          "IsAlone": 100,
+          "Age": 134
+        },
+        "sorting": [],
+        "globalSearchQuery": "",
+        "coloring": {
+          "scheme": "MEANING_AND_STATUS",
+          "individualColumns": [],
+          "coloringGroups": [],
+          "valueColoringMode": "HASH",
+          "individualColumnsRules": []
+        }
+      },
+      "processors": [
+        {
+          "processor_type": "CreateColumnWithGREL",
+          "parameters": {
+            "expression": "if(isBlank(Cabin), 0, 1)",
+            "column": "HasCabin",
+            "errorColumn": ""
+          },
+          "disabled": false
+        },
+        {
+          "processor_type": "FillEmptyWithValue",
+          "parameters": {
+            "columns": [
+              "Age"
+            ],
+            "appliesTo": "SINGLE_COLUMN",
+            "value": "28"
+          },
+          "disabled": false
+        },
+        {
+          "processor_type": "FillEmptyWithValue",
+          "parameters": {
+            "columns": [
+              "Embarked"
+            ],
+            "appliesTo": "SINGLE_COLUMN",
+            "value": "UNKNOWN"
+          },
+          "disabled": false
+        },
+        {
+          "processor_type": "FillEmptyWithValue",
+          "parameters": {
+            "columns": [
+              "Cabin"
+            ],
+            "appliesTo": "SINGLE_COLUMN",
+            "value": "NO_CABIN"
+          },
+          "disabled": false
+        },
+        {
+          "processor_type": "CreateColumnWithGREL",
+          "parameters": {
+            "expression": "SibSp + Parch + 1",
+            "column": "FamilySize",
+            "errorColumn": ""
+          },
+          "disabled": false
+        },
+        {
+          "processor_type": "CreateColumnWithGREL",
+          "parameters": {
+            "expression": "if(FamilySize == 1, 1, 0)",
+            "column": "IsAlone",
+            "errorColumn": ""
+          },
+          "disabled": false
+        },
+        {
+          "processor_type": "CreateColumnWithGREL",
+          "parameters": {
+            "expression": "Fare / FamilySize",
+            "column": "FarePerPerson",
+            "errorColumn": ""
+          },
+          "disabled": false
+        }
+      ],
+      "source_code": null,
+      "metadata": {
+        "project_key": "TITANIC_MIGRATION_POC"
+      }
+    },
+    {
+      "recipe_id": "compute_titanic_raw_prepared_distinct",
+      "recipe_name": "compute_titanic_raw_prepared_distinct",
+      "recipe_type": "distinct",
+      "inputs": [
+        "titanic_raw_prepared"
+      ],
+      "outputs": [
+        "titanic_raw_prepared_distinct"
+      ],
+      "configuration": {
+        "preFilter": {
+          "distinct": false,
+          "enabled": false
+        },
+        "keys": [
+          {
+            "column": "PassengerId"
+          }
+        ],
+        "globalCount": false,
+        "engineParams": {
+          "hive": {
+            "skipPrerunValidate": false,
+            "hiveconf": [],
+            "inheritConf": "default",
+            "addDkuUdf": false,
+            "executionEngine": "HIVESERVER2"
+          },
+          "sqlPipelineParams": {
+            "pipelineAllowMerge": true,
+            "pipelineAllowStart": true
+          },
+          "cdePipelineParams": {
+            "pipelineAllowMerge": true,
+            "pipelineAllowStart": true
+          },
+          "impala": {
+            "forceStreamMode": true
+          },
+          "containerSelection": {
+            "containerMode": "INHERIT"
+          },
+          "lowerCaseSchemaIfEngineRequiresIt": true,
+          "sparkSQL": {
+            "skipPrerunValidate": false,
+            "pipelineAllowMerge": true,
+            "useGlobalMetastore": false,
+            "pipelineAllowStart": true,
+            "readParams": {
+              "mode": "AUTO",
+              "autoModeRepartitionInto": 10,
+              "map": {}
+            },
+            "overwriteOutputSchema": false,
+            "executionEngine": "SPARK_SUBMIT",
+            "sparkConfig": {
+              "inheritConf": "default",
+              "conf": []
+            }
+          }
+        },
+        "outputColumnNameOverrides": {},
+        "selectAllColumns": true,
+        "postFilter": {
+          "$status": {
+            "schema": {
+              "columns": [
+                {
+                  "name": "PassengerId",
+                  "type": "bigint"
+                },
+                {
+                  "name": "Survived",
+                  "type": "bigint"
+                },
+                {
+                  "name": "Pclass",
+                  "type": "bigint"
+                },
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "maxLength": 65500
+                },
+                {
+                  "name": "Sex",
+                  "type": "string",
+                  "maxLength": 65500
+                },
+                {
+                  "name": "Age",
+                  "type": "double"
+                },
+                {
+                  "name": "SibSp",
+                  "type": "bigint"
+                },
+                {
+                  "name": "Parch",
+                  "type": "bigint"
+                },
+                {
+                  "name": "FamilySize",
+                  "type": "bigint"
+                },
+                {
+                  "name": "IsAlone",
+                  "type": "bigint"
+                },
+                {
+                  "name": "Ticket",
+                  "type": "string",
+                  "maxLength": 65500
+                },
+                {
+                  "name": "Fare",
+                  "type": "double"
+                },
+                {
+                  "name": "FarePerPerson",
+                  "type": "double"
+                },
+                {
+                  "name": "Cabin",
+                  "type": "string",
+                  "maxLength": 65500
+                },
+                {
+                  "name": "HasCabin",
+                  "type": "bigint"
+                },
+                {
+                  "name": "Embarked",
+                  "type": "string",
+                  "maxLength": 65500
+                }
+              ],
+              "userModified": false
+            }
+          },
+          "distinct": false,
+          "enabled": false
+        }
+      },
+      "processors": [],
+      "source_code": null,
+      "metadata": {
+        "project_key": "TITANIC_MIGRATION_POC"
+      }
+    },
+    {
+      "recipe_id": "compute_titanic_survived_stacked",
+      "recipe_name": "compute_titanic_survived_stacked",
+      "recipe_type": "vstack",
+      "inputs": [
+        "titanic_survived",
+        "titanic_not_survived"
+      ],
+      "outputs": [
+        "titanic_survived_stacked_recombined"
+      ],
+      "configuration": {
+        "mode": "UNION",
+        "selectedColumns": [
+          "PassengerId",
+          "Survived",
+          "Pclass",
+          "Name",
+          "Sex",
+          "Age",
+          "SibSp",
+          "Parch",
+          "FamilySize",
+          "IsAlone",
+          "Ticket",
+          "Fare",
+          "FarePerPerson",
+          "Cabin",
+          "HasCabin",
+          "Embarked"
+        ],
+        "originColumnName": "original_dataset",
+        "engineParams": {
+          "hive": {
+            "skipPrerunValidate": false,
+            "hiveconf": [],
+            "inheritConf": "default",
+            "addDkuUdf": false,
+            "executionEngine": "HIVESERVER2"
+          },
+          "sqlPipelineParams": {
+            "pipelineAllowMerge": true,
+            "pipelineAllowStart": true
+          },
+          "cdePipelineParams": {
+            "pipelineAllowMerge": true,
+            "pipelineAllowStart": true
+          },
+          "impala": {
+            "forceStreamMode": true
+          },
+          "containerSelection": {
+            "containerMode": "INHERIT"
+          },
+          "lowerCaseSchemaIfEngineRequiresIt": true,
+          "sparkSQL": {
+            "skipPrerunValidate": false,
+            "pipelineAllowMerge": true,
+            "useGlobalMetastore": false,
+            "pipelineAllowStart": true,
+            "readParams": {
+              "mode": "AUTO",
+              "autoModeRepartitionInto": 10,
+              "map": {}
+            },
+            "overwriteOutputSchema": false,
+            "executionEngine": "SPARK_SUBMIT",
+            "sparkConfig": {
+              "inheritConf": "default",
+              "conf": []
+            }
+          }
+        },
+        "virtualInputs": [
+          {
+            "preFilter": {
+              "distinct": false,
+              "enabled": false
+            },
+            "originLabel": "titanic_survived",
+            "index": 0
+          },
+          {
+            "preFilter": {
+              "distinct": false,
+              "enabled": false
+            },
+            "originLabel": "titanic_not_survived",
+            "index": 1
+          }
+        ],
+        "postFilter": {
+          "distinct": false,
+          "enabled": false
+        },
+        "addOriginColumn": false
+      },
+      "processors": [],
+      "source_code": null,
+      "metadata": {
+        "project_key": "TITANIC_MIGRATION_POC"
+      }
+    },
+    {
+      "recipe_id": "compute_titanic_survived_stacked_by_Pclass",
+      "recipe_name": "compute_titanic_survived_stacked_by_Pclass",
+      "recipe_type": "grouping",
+      "inputs": [
+        "titanic_survived_stacked_recombined"
+      ],
+      "outputs": [
+        "titanic_survived_stacked_summary"
+      ],
+      "configuration": {
+        "preFilter": {
+          "distinct": false,
+          "enabled": false
+        },
+        "keys": [
+          {
+            "column": "Sex"
+          },
+          {
+            "column": "Pclass"
+          }
+        ],
+        "values": [
+          {
+            "last": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "PassengerId",
+            "count": true,
+            "sum": false,
+            "concat": false,
+            "type": "bigint",
+            "concatDistinct": false,
+            "sum2": false,
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "median": false,
+            "stddev": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Survived",
+            "count": false,
+            "sum": false,
+            "concat": false,
+            "type": "bigint",
+            "concatDistinct": false,
+            "sum2": false,
+            "min": false,
+            "countDistinct": false,
+            "avg": true,
+            "median": false,
+            "stddev": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Name",
+            "count": false,
+            "sum": false,
+            "concat": false,
+            "type": "string",
+            "concatDistinct": false,
+            "sum2": false,
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "median": false,
+            "stddev": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Age",
+            "count": false,
+            "sum": false,
+            "concat": false,
+            "type": "double",
+            "concatDistinct": false,
+            "sum2": false,
+            "min": false,
+            "countDistinct": false,
+            "avg": true,
+            "median": false,
+            "stddev": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "SibSp",
+            "count": false,
+            "sum": false,
+            "concat": false,
+            "type": "bigint",
+            "concatDistinct": false,
+            "sum2": false,
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "median": false,
+            "stddev": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Parch",
+            "count": false,
+            "sum": false,
+            "concat": false,
+            "type": "bigint",
+            "concatDistinct": false,
+            "sum2": false,
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "median": false,
+            "stddev": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "FamilySize",
+            "count": false,
+            "sum": false,
+            "concat": false,
+            "type": "bigint",
+            "concatDistinct": false,
+            "sum2": false,
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "median": false,
+            "stddev": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "IsAlone",
+            "count": false,
+            "sum": false,
+            "concat": false,
+            "type": "bigint",
+            "concatDistinct": false,
+            "sum2": false,
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "median": false,
+            "stddev": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Ticket",
+            "count": false,
+            "sum": false,
+            "concat": false,
+            "type": "string",
+            "concatDistinct": false,
+            "sum2": false,
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "median": false,
+            "stddev": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Fare",
+            "count": false,
+            "sum": false,
+            "concat": false,
+            "type": "double",
+            "concatDistinct": false,
+            "sum2": false,
+            "min": false,
+            "countDistinct": false,
+            "avg": true,
+            "median": false,
+            "stddev": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "FarePerPerson",
+            "count": false,
+            "sum": false,
+            "concat": false,
+            "type": "double",
+            "concatDistinct": false,
+            "sum2": false,
+            "min": false,
+            "countDistinct": false,
+            "avg": true,
+            "median": false,
+            "stddev": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Cabin",
+            "count": false,
+            "sum": false,
+            "concat": false,
+            "type": "string",
+            "concatDistinct": false,
+            "sum2": false,
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "median": false,
+            "stddev": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "HasCabin",
+            "count": false,
+            "sum": false,
+            "concat": false,
+            "type": "bigint",
+            "concatDistinct": false,
+            "sum2": false,
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "median": false,
+            "stddev": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Embarked",
+            "count": false,
+            "sum": false,
+            "concat": false,
+            "type": "string",
+            "concatDistinct": false,
+            "sum2": false,
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "median": false,
+            "stddev": false,
+            "first": false
+          }
+        ],
+        "globalCount": false,
+        "engineParams": {
+          "hive": {
+            "skipPrerunValidate": false,
+            "hiveconf": [],
+            "inheritConf": "default",
+            "addDkuUdf": false,
+            "executionEngine": "HIVESERVER2"
+          },
+          "sqlPipelineParams": {
+            "pipelineAllowMerge": true,
+            "pipelineAllowStart": true
+          },
+          "cdePipelineParams": {
+            "pipelineAllowMerge": true,
+            "pipelineAllowStart": true
+          },
+          "impala": {
+            "forceStreamMode": true
+          },
+          "containerSelection": {
+            "containerMode": "INHERIT"
+          },
+          "lowerCaseSchemaIfEngineRequiresIt": true,
+          "sparkSQL": {
+            "skipPrerunValidate": false,
+            "pipelineAllowMerge": true,
+            "useGlobalMetastore": false,
+            "pipelineAllowStart": true,
+            "readParams": {
+              "mode": "AUTO",
+              "autoModeRepartitionInto": 10,
+              "map": {}
+            },
+            "overwriteOutputSchema": false,
+            "executionEngine": "SPARK_SUBMIT",
+            "sparkConfig": {
+              "inheritConf": "default",
+              "conf": []
+            }
+          }
+        },
+        "enlargeYourBits": true,
+        "outputColumnNameOverrides": {},
+        "computedColumns": [],
+        "postFilter": {
+          "distinct": false,
+          "enabled": false
+        },
+        "selectAllColumns": false
+      },
+      "processors": [],
+      "source_code": null,
+      "metadata": {
+        "project_key": "TITANIC_MIGRATION_POC"
+      }
+    },
+    {
+      "recipe_id": "compute_titanic_survived_stacked_recombined_by_Sex",
+      "recipe_name": "compute_titanic_survived_stacked_recombined_by_Sex",
+      "recipe_type": "pivot",
+      "inputs": [
+        "titanic_survived_stacked_recombined"
+      ],
+      "outputs": [
+        "titanic_survived_stacked_recombined_by_Sex"
+      ],
+      "configuration": {
+        "schemaComputation": "ONLY_IF_NO_METADATA",
+        "identifierColumnsSelection": "EXPLICIT",
+        "modalitySlugification": "NONE",
+        "sortModalities": true,
+        "preFilter": {
+          "distinct": false,
+          "enabled": false
+        },
+        "engineParams": {
+          "hive": {
+            "skipPrerunValidate": false,
+            "hiveconf": [],
+            "inheritConf": "default",
+            "addDkuUdf": false,
+            "executionEngine": "HIVESERVER2"
+          },
+          "sqlPipelineParams": {
+            "pipelineAllowMerge": true,
+            "pipelineAllowStart": true
+          },
+          "cdePipelineParams": {
+            "pipelineAllowMerge": true,
+            "pipelineAllowStart": true
+          },
+          "impala": {
+            "forceStreamMode": true
+          },
+          "containerSelection": {
+            "containerMode": "INHERIT"
+          },
+          "lowerCaseSchemaIfEngineRequiresIt": true,
+          "sparkSQL": {
+            "skipPrerunValidate": false,
+            "pipelineAllowMerge": true,
+            "useGlobalMetastore": false,
+            "pipelineAllowStart": true,
+            "readParams": {
+              "mode": "AUTO",
+              "autoModeRepartitionInto": 10,
+              "map": {}
+            },
+            "overwriteOutputSchema": false,
+            "executionEngine": "SPARK_SUBMIT",
+            "sparkConfig": {
+              "inheritConf": "default",
+              "conf": []
+            }
+          }
+        },
+        "explicitIdentifiers": [
+          "Sex"
+        ],
+        "otherColumns": [],
+        "pivots": [
+          {
+            "valueLimit": "NO_LIMIT",
+            "minOccLimit": 0,
+            "topnLimit": 20,
+            "globalCount": false,
+            "explicitValues": [],
+            "keyColumns": [
+              "Pclass"
+            ],
+            "valueColumns": [
+              {
+                "last": false,
+                "max": false,
+                "column": "Survived",
+                "count": false,
+                "sum": false,
+                "concat": false,
+                "type": "bigint",
+                "$agg": "avg",
+                "countDistinct": false,
+                "min": false,
+                "avg": true,
+                "stddev": false,
+                "first": false
+              }
+            ]
+          }
+        ],
+        "computedColumns": [],
+        "customAggregates": [],
+        "enginesPreferences": {}
+      },
+      "processors": [],
+      "source_code": null,
+      "metadata": {
+        "project_key": "TITANIC_MIGRATION_POC"
+      }
+    },
+    {
+      "recipe_id": "compute_titanic_survived_stacked_recombined_joined",
+      "recipe_name": "compute_titanic_survived_stacked_recombined_joined",
+      "recipe_type": "join",
+      "inputs": [
+        "titanic_survived_stacked_recombined",
+        "titanic_survived_stacked_summary"
+      ],
+      "outputs": [
+        "titanic_survived_stacked_recombined_joined_enriched"
+      ],
+      "configuration": {
+        "joins": [
+          {
+            "table2": 1,
+            "table1": 0,
+            "conditionsMode": "AND",
+            "type": "LEFT",
+            "outerJoinOnTheLeft": true,
+            "on": [
+              {
+                "column1": {
+                  "name": "Pclass",
+                  "table": 0
+                },
+                "dateDiffUnit": "DAY",
+                "windowFrom": 0,
+                "column2": {
+                  "name": "Pclass",
+                  "table": 1
+                },
+                "maxMatches": 1,
+                "caseInsensitive": false,
+                "maxDistance": 0,
+                "normalizeText": false,
+                "type": "EQ",
+                "strict": false,
+                "windowTo": 0
+              },
+              {
+                "column1": {
+                  "name": "Sex",
+                  "table": 0
+                },
+                "dateDiffUnit": "DAY",
+                "windowFrom": 0,
+                "column2": {
+                  "name": "Sex",
+                  "table": 1
+                },
+                "maxMatches": 1,
+                "caseInsensitive": false,
+                "maxDistance": 0,
+                "normalizeText": false,
+                "type": "EQ",
+                "strict": false,
+                "windowTo": 0
+              }
+            ]
+          }
+        ],
+        "selectedColumns": [
+          {
+            "name": "PassengerId",
+            "table": 0
+          },
+          {
+            "name": "Survived",
+            "table": 0
+          },
+          {
+            "name": "Pclass",
+            "table": 0
+          },
+          {
+            "name": "Name",
+            "table": 0
+          },
+          {
+            "name": "Sex",
+            "table": 0
+          },
+          {
+            "name": "Age",
+            "table": 0
+          },
+          {
+            "name": "SibSp",
+            "table": 0
+          },
+          {
+            "name": "Parch",
+            "table": 0
+          },
+          {
+            "name": "FamilySize",
+            "table": 0
+          },
+          {
+            "name": "IsAlone",
+            "table": 0
+          },
+          {
+            "name": "Ticket",
+            "table": 0
+          },
+          {
+            "name": "Fare",
+            "table": 0
+          },
+          {
+            "name": "FarePerPerson",
+            "table": 0
+          },
+          {
+            "name": "Cabin",
+            "table": 0
+          },
+          {
+            "name": "HasCabin",
+            "table": 0
+          },
+          {
+            "name": "Embarked",
+            "table": 0
+          },
+          {
+            "name": "PassengerId_count",
+            "table": 1
+          },
+          {
+            "name": "Survived_avg",
+            "table": 1
+          },
+          {
+            "name": "Age_avg",
+            "table": 1
+          },
+          {
+            "name": "Fare_avg",
+            "table": 1
+          },
+          {
+            "name": "FarePerPerson_avg",
+            "table": 1
+          }
+        ],
+        "resolvedSelectedColumns": [],
+        "engineParams": {
+          "hive": {
+            "skipPrerunValidate": false,
+            "hiveconf": [],
+            "inheritConf": "default",
+            "addDkuUdf": false,
+            "executionEngine": "HIVESERVER2"
+          },
+          "sqlPipelineParams": {
+            "pipelineAllowMerge": true,
+            "pipelineAllowStart": true
+          },
+          "cdePipelineParams": {
+            "pipelineAllowMerge": true,
+            "pipelineAllowStart": true
+          },
+          "impala": {
+            "forceStreamMode": true
+          },
+          "containerSelection": {
+            "containerMode": "INHERIT"
+          },
+          "lowerCaseSchemaIfEngineRequiresIt": true,
+          "sparkSQL": {
+            "skipPrerunValidate": false,
+            "pipelineAllowMerge": true,
+            "useGlobalMetastore": false,
+            "pipelineAllowStart": true,
+            "readParams": {
+              "mode": "AUTO",
+              "autoModeRepartitionInto": 10,
+              "map": {}
+            },
+            "overwriteOutputSchema": false,
+            "executionEngine": "SPARK_SUBMIT",
+            "sparkConfig": {
+              "inheritConf": "default",
+              "conf": []
+            }
+          }
+        },
+        "virtualInputs": [
+          {
+            "outputColumnsSelectionMode": "MANUAL",
+            "preFilter": {
+              "distinct": false,
+              "enabled": false
+            },
+            "originLabel": "titanic_survived_stacked_recombined",
+            "index": 0,
+            "computedColumns": []
+          },
+          {
+            "outputColumnsSelectionMode": "MANUAL",
+            "preFilter": {
+              "distinct": false,
+              "enabled": false
+            },
+            "originLabel": "titanic_survived_stacked_summary",
+            "index": 1,
+            "computedColumns": []
+          }
+        ],
+        "postFilter": {
+          "distinct": false,
+          "enabled": false
+        },
+        "computedColumns": [],
+        "enableAutoCastInJoinConditions": false
+      },
+      "processors": [],
+      "source_code": null,
+      "metadata": {
+        "project_key": "TITANIC_MIGRATION_POC"
+      }
+    },
+    {
+      "recipe_id": "compute_titanic_survived_stacked_recombined_joined_enriched_windows",
+      "recipe_name": "compute_titanic_survived_stacked_recombined_joined_enriched_windows",
+      "recipe_type": "window",
+      "inputs": [
+        "titanic_survived_stacked_recombined_joined_enriched"
+      ],
+      "outputs": [
+        "titanic_survived_stacked_recombined_joined_enriched_ranked"
+      ],
+      "configuration": {
+        "preFilter": {
+          "distinct": false,
+          "enabled": false
+        },
+        "ntileValues": "10",
+        "retrievedColumnsSelectionMode": "ALL",
+        "values": [
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "PassengerId",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Survived",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Pclass",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Name",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Sex",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Age",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "SibSp",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Parch",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "FamilySize",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "IsAlone",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Ticket",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Fare",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "FarePerPerson",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Cabin",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "HasCabin",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Embarked",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "PassengerId_count",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Survived_avg",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Age_avg",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "Fare_avg",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          },
+          {
+            "last": false,
+            "lagDiff": false,
+            "max": false,
+            "firstLastNotNull": false,
+            "column": "FarePerPerson_avg",
+            "count": false,
+            "lagValues": "1",
+            "sum": false,
+            "concat": false,
+            "lead": false,
+            "concatDistinct": false,
+            "dateDiffUnit": "DAY",
+            "min": false,
+            "countDistinct": false,
+            "avg": false,
+            "lag": false,
+            "leadValues": "1",
+            "stddev": false,
+            "value": true,
+            "leadDiff": false,
+            "first": false
+          }
+        ],
+        "legacyUnboundedWindowStreamBehavior": false,
+        "windows": [
+          {
+            "windowLimitMode": "ROWS",
+            "windowUpperBound": 0.0,
+            "enablePartitioning": true,
+            "enableOrdering": true,
+            "precedingRows": 0,
+            "limitFollowing": false,
+            "orders": [
+              {
+                "column": "Fare",
+                "desc": true
+              },
+              {
+                "column": "PassengerId",
+                "desc": false
+              }
+            ],
+            "limitPreceding": false,
+            "followingRows": 0,
+            "windowLowerBound": 0.0,
+            "enableLimits": false,
+            "partitioningColumns": [
+              "Pclass"
+            ]
+          }
+        ],
+        "computedColumns": [],
+        "postFilter": {
+          "distinct": false,
+          "enabled": false
+        },
+        "cumeDist": false,
+        "engineParams": {
+          "hive": {
+            "skipPrerunValidate": false,
+            "hiveconf": [],
+            "inheritConf": "default",
+            "addDkuUdf": false,
+            "executionEngine": "HIVESERVER2"
+          },
+          "sqlPipelineParams": {
+            "pipelineAllowMerge": true,
+            "pipelineAllowStart": true
+          },
+          "cdePipelineParams": {
+            "pipelineAllowMerge": true,
+            "pipelineAllowStart": true
+          },
+          "impala": {
+            "forceStreamMode": true
+          },
+          "containerSelection": {
+            "containerMode": "INHERIT"
+          },
+          "lowerCaseSchemaIfEngineRequiresIt": true,
+          "sparkSQL": {
+            "skipPrerunValidate": false,
+            "pipelineAllowMerge": true,
+            "useGlobalMetastore": false,
+            "pipelineAllowStart": true,
+            "readParams": {
+              "mode": "AUTO",
+              "autoModeRepartitionInto": 10,
+              "map": {}
+            },
+            "overwriteOutputSchema": false,
+            "executionEngine": "SPARK_SUBMIT",
+            "sparkConfig": {
+              "inheritConf": "default",
+              "conf": []
+            }
+          }
+        },
+        "ntile": false,
+        "rank": false,
+        "denseRank": false,
+        "outputColumnNameOverrides": {},
+        "rowNumber": true
+      },
+      "processors": [],
+      "source_code": null,
+      "metadata": {
+        "project_key": "TITANIC_MIGRATION_POC"
+      }
+    },
+    {
+      "recipe_id": "split_titanic_raw_prepared_distinct",
+      "recipe_name": "split_titanic_raw_prepared_distinct",
+      "recipe_type": "split",
+      "inputs": [
+        "titanic_raw_prepared_distinct"
+      ],
+      "outputs": [
+        "titanic_survived",
+        "titanic_not_survived"
+      ],
+      "configuration": {
+        "centileShuffle": false,
+        "centileSplits": [
+          {
+            "outputIndex": 0,
+            "share": 50
+          }
+        ],
+        "preFilter": {
+          "distinct": false,
+          "enabled": false
+        },
+        "defaultOutputIndex": 1,
+        "seed": 1337,
+        "randomColumns": [],
+        "centileOrders": [],
+        "rangeSetTime": false,
+        "randomSplits": [
+          {
+            "outputIndex": 0,
+            "share": 50
+          }
+        ],
+        "randomColumnsSplits": [
+          {
+            "outputIndex": 0,
+            "share": 50
+          }
+        ],
+        "computedColumns": [],
+        "writeComputedColumnsInOutput": false,
+        "mode": "FILTERS",
+        "centileTDigest": false,
+        "valueSplits": [
+          {
+            "outputIndex": 0,
+            "caseSensitive": false,
+            "value": ""
+          }
+        ],
+        "rangeSplits": [
+          {
+            "filter": {
+              "uiData": {
+                "mode": "&&",
+                "conditions": []
+              },
+              "distinct": false,
+              "enabled": true
+            },
+            "outputIndex": 0
+          }
+        ],
+        "engineParams": {
+          "hive": {
+            "skipPrerunValidate": false,
+            "hiveconf": [],
+            "inheritConf": "default",
+            "addDkuUdf": false,
+            "executionEngine": "HIVESERVER2"
+          },
+          "sqlPipelineParams": {
+            "pipelineAllowMerge": true,
+            "pipelineAllowStart": true
+          },
+          "cdePipelineParams": {
+            "pipelineAllowMerge": true,
+            "pipelineAllowStart": true
+          },
+          "impala": {
+            "forceStreamMode": true
+          },
+          "containerSelection": {
+            "containerMode": "INHERIT"
+          },
+          "lowerCaseSchemaIfEngineRequiresIt": true,
+          "sparkSQL": {
+            "skipPrerunValidate": false,
+            "pipelineAllowMerge": true,
+            "useGlobalMetastore": false,
+            "pipelineAllowStart": true,
+            "readParams": {
+              "mode": "AUTO",
+              "autoModeRepartitionInto": 10,
+              "map": {}
+            },
+            "overwriteOutputSchema": false,
+            "executionEngine": "SPARK_SUBMIT",
+            "sparkConfig": {
+              "inheritConf": "default",
+              "conf": []
+            }
+          }
+        },
+        "filterSplits": [
+          {
+            "filter": {
+              "uiData": {
+                "mode": "&&",
+                "$latestOperator": "&&",
+                "$filterOptions": "rules",
+                "conditions": [
+                  {
+                    "input": "Survived",
+                    "col": "Survived",
+                    "$showList": false,
+                    "num": 1,
+                    "items": [],
+                    "operator": "== [number]"
+                  }
+                ]
+              },
+              "$status": {
+                "schema": {
+                  "columns": [
+                    {
+                      "name": "PassengerId",
+                      "type": "bigint"
+                    },
+                    {
+                      "name": "Survived",
+                      "type": "bigint"
+                    },
+                    {
+                      "name": "Pclass",
+                      "type": "bigint"
+                    },
+                    {
+                      "name": "Name",
+                      "type": "string",
+                      "maxLength": 65500
+                    },
+                    {
+                      "name": "Sex",
+                      "type": "string",
+                      "maxLength": 65500
+                    },
+                    {
+                      "name": "Age",
+                      "type": "double"
+                    },
+                    {
+                      "name": "SibSp",
+                      "type": "bigint"
+                    },
+                    {
+                      "name": "Parch",
+                      "type": "bigint"
+                    },
+                    {
+                      "name": "FamilySize",
+                      "type": "bigint"
+                    },
+                    {
+                      "name": "IsAlone",
+                      "type": "bigint"
+                    },
+                    {
+                      "name": "Ticket",
+                      "type": "string",
+                      "maxLength": 65500
+                    },
+                    {
+                      "name": "Fare",
+                      "type": "double"
+                    },
+                    {
+                      "name": "FarePerPerson",
+                      "type": "double"
+                    },
+                    {
+                      "name": "Cabin",
+                      "type": "string",
+                      "maxLength": 65500
+                    },
+                    {
+                      "name": "HasCabin",
+                      "type": "bigint"
+                    },
+                    {
+                      "name": "Embarked",
+                      "type": "string",
+                      "maxLength": 65500
+                    }
+                  ]
+                }
+              },
+              "distinct": false,
+              "enabled": true
+            },
+            "outputIndex": 0
+          }
+        ]
+      },
+      "processors": [],
+      "source_code": null,
+      "metadata": {
+        "project_key": "TITANIC_MIGRATION_POC"
+      }
+    }
+  ],
+  "metadata": {}
+}

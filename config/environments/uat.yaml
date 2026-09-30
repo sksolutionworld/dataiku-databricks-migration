@@ -1,0 +1,4 @@
+catalog: slmt_uat
+schema: exp_seif
+warehouse_id: "462032f1b53db994"
+write_mode: controlled

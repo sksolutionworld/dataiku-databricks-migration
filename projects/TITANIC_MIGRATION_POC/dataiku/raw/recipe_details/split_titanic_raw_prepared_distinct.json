@@ -1,0 +1,256 @@
+{
+  "recipe_name": "split_titanic_raw_prepared_distinct",
+  "recipe_type": "split",
+  "list_metadata": {
+    "name": "split_titanic_raw_prepared_distinct",
+    "projectKey": "TITANIC_MIGRATION_POC",
+    "type": "split",
+    "neverRecomputeExistingPartitions": false,
+    "customMeta": {
+      "kv": {}
+    },
+    "redispatchPartitioning": false,
+    "maxRunningActivities": 0,
+    "hashPropagationBehavior": "INHERIT",
+    "variables": {},
+    "dkuProperties": [],
+    "inputs": {
+      "main": {
+        "items": [
+          {
+            "ref": "titanic_raw_prepared_distinct",
+            "deps": []
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "main": {
+        "items": [
+          {
+            "ref": "titanic_survived",
+            "appendMode": false
+          },
+          {
+            "ref": "titanic_not_survived",
+            "appendMode": false
+          }
+        ]
+      }
+    },
+    "labels": [],
+    "creationTag": {
+      "versionNumber": 0,
+      "lastModifiedBy": {
+        "login": "kumar@sksolutionworld.com"
+      },
+      "lastModifiedOn": 1790735994075
+    },
+    "versionTag": {
+      "versionNumber": 1,
+      "lastModifiedBy": {
+        "login": "kumar@sksolutionworld.com"
+      },
+      "lastModifiedOn": 1790736472489
+    },
+    "tags": [],
+    "customFields": {},
+    "checklists": {
+      "checklists": []
+    }
+  },
+  "settings": {
+    "centileShuffle": false,
+    "centileSplits": [
+      {
+        "outputIndex": 0,
+        "share": 50
+      }
+    ],
+    "preFilter": {
+      "distinct": false,
+      "enabled": false
+    },
+    "defaultOutputIndex": 1,
+    "seed": 1337,
+    "randomColumns": [],
+    "centileOrders": [],
+    "rangeSetTime": false,
+    "randomSplits": [
+      {
+        "outputIndex": 0,
+        "share": 50
+      }
+    ],
+    "randomColumnsSplits": [
+      {
+        "outputIndex": 0,
+        "share": 50
+      }
+    ],
+    "computedColumns": [],
+    "writeComputedColumnsInOutput": false,
+    "mode": "FILTERS",
+    "centileTDigest": false,
+    "valueSplits": [
+      {
+        "outputIndex": 0,
+        "caseSensitive": false,
+        "value": ""
+      }
+    ],
+    "rangeSplits": [
+      {
+        "filter": {
+          "uiData": {
+            "mode": "&&",
+            "conditions": []
+          },
+          "distinct": false,
+          "enabled": true
+        },
+        "outputIndex": 0
+      }
+    ],
+    "engineParams": {
+      "hive": {
+        "skipPrerunValidate": false,
+        "hiveconf": [],
+        "inheritConf": "default",
+        "addDkuUdf": false,
+        "executionEngine": "HIVESERVER2"
+      },
+      "sqlPipelineParams": {
+        "pipelineAllowMerge": true,
+        "pipelineAllowStart": true
+      },
+      "cdePipelineParams": {
+        "pipelineAllowMerge": true,
+        "pipelineAllowStart": true
+      },
+      "impala": {
+        "forceStreamMode": true
+      },
+      "containerSelection": {
+        "containerMode": "INHERIT"
+      },
+      "lowerCaseSchemaIfEngineRequiresIt": true,
+      "sparkSQL": {
+        "skipPrerunValidate": false,
+        "pipelineAllowMerge": true,
+        "useGlobalMetastore": false,
+        "pipelineAllowStart": true,
+        "readParams": {
+          "mode": "AUTO",
+          "autoModeRepartitionInto": 10,
+          "map": {}
+        },
+        "overwriteOutputSchema": false,
+        "executionEngine": "SPARK_SUBMIT",
+        "sparkConfig": {
+          "inheritConf": "default",
+          "conf": []
+        }
+      }
+    },
+    "filterSplits": [
+      {
+        "filter": {
+          "uiData": {
+            "mode": "&&",
+            "$latestOperator": "&&",
+            "$filterOptions": "rules",
+            "conditions": [
+              {
+                "input": "Survived",
+                "col": "Survived",
+                "$showList": false,
+                "num": 1,
+                "items": [],
+                "operator": "== [number]"
+              }
+            ]
+          },
+          "$status": {
+            "schema": {
+              "columns": [
+                {
+                  "name": "PassengerId",
+                  "type": "bigint"
+                },
+                {
+                  "name": "Survived",
+                  "type": "bigint"
+                },
+                {
+                  "name": "Pclass",
+                  "type": "bigint"
+                },
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "maxLength": 65500
+                },
+                {
+                  "name": "Sex",
+                  "type": "string",
+                  "maxLength": 65500
+                },
+                {
+                  "name": "Age",
+                  "type": "double"
+                },
+                {
+                  "name": "SibSp",
+                  "type": "bigint"
+                },
+                {
+                  "name": "Parch",
+                  "type": "bigint"
+                },
+                {
+                  "name": "FamilySize",
+                  "type": "bigint"
+                },
+                {
+                  "name": "IsAlone",
+                  "type": "bigint"
+                },
+                {
+                  "name": "Ticket",
+                  "type": "string",
+                  "maxLength": 65500
+                },
+                {
+                  "name": "Fare",
+                  "type": "double"
+                },
+                {
+                  "name": "FarePerPerson",
+                  "type": "double"
+                },
+                {
+                  "name": "Cabin",
+                  "type": "string",
+                  "maxLength": 65500
+                },
+                {
+                  "name": "HasCabin",
+                  "type": "bigint"
+                },
+                {
+                  "name": "Embarked",
+                  "type": "string",
+                  "maxLength": 65500
+                }
+              ]
+            }
+          },
+          "distinct": false,
+          "enabled": true
+        },
+        "outputIndex": 0
+      }
+    ]
+  }
+}

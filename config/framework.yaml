@@ -1,0 +1,27 @@
+schema_version: "1.0"
+raw_evidence_immutable: true
+require_reconciliation: true
+require_capability_scan: true
+require_validation: true
+default_renderer: spark_sql
+statuses:
+  - DISCOVERED
+  - ANALYZED
+  - PLANNED
+  - CONVERTED
+  - VALIDATED
+  - REQUIRES_REVIEW
+  - FAILED
+supported_recipe_types:
+  shaker: supported
+  distinct: supported
+  split: supported
+  vstack: supported
+  grouping: supported
+  pivot: supported
+  join: supported
+  window: supported
+  sql: assess
+  python: assess
+  r: manual
+  shell: manual

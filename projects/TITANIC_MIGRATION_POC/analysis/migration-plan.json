@@ -1,0 +1,71 @@
+{
+  "project_key": "TITANIC_MIGRATION_POC",
+  "status": "PLANNED",
+  "ordered_recipe_ids": [
+    "compute_titanic_raw_prepared",
+    "compute_titanic_raw_prepared_distinct",
+    "split_titanic_raw_prepared_distinct",
+    "compute_titanic_survived_stacked",
+    "compute_titanic_survived_stacked_by_Pclass",
+    "compute_titanic_survived_stacked_recombined_by_Sex",
+    "compute_titanic_survived_stacked_recombined_joined",
+    "compute_titanic_survived_stacked_recombined_joined_enriched_windows",
+    "compute_titanic_migration_output"
+  ],
+  "capabilities": [
+    {
+      "recipe_id": "compute_titanic_migration_output",
+      "recipe_type": "shaker",
+      "disposition": "SUPPORTED",
+      "reason": "Deterministic converter available"
+    },
+    {
+      "recipe_id": "compute_titanic_raw_prepared",
+      "recipe_type": "shaker",
+      "disposition": "SUPPORTED",
+      "reason": "Deterministic converter available"
+    },
+    {
+      "recipe_id": "compute_titanic_raw_prepared_distinct",
+      "recipe_type": "distinct",
+      "disposition": "SUPPORTED",
+      "reason": "Deterministic converter available"
+    },
+    {
+      "recipe_id": "compute_titanic_survived_stacked",
+      "recipe_type": "vstack",
+      "disposition": "SUPPORTED",
+      "reason": "Deterministic converter available"
+    },
+    {
+      "recipe_id": "compute_titanic_survived_stacked_by_Pclass",
+      "recipe_type": "grouping",
+      "disposition": "SUPPORTED",
+      "reason": "Deterministic converter available"
+    },
+    {
+      "recipe_id": "compute_titanic_survived_stacked_recombined_by_Sex",
+      "recipe_type": "pivot",
+      "disposition": "SUPPORTED",
+      "reason": "Deterministic converter available"
+    },
+    {
+      "recipe_id": "compute_titanic_survived_stacked_recombined_joined",
+      "recipe_type": "join",
+      "disposition": "SUPPORTED",
+      "reason": "Deterministic converter available"
+    },
+    {
+      "recipe_id": "compute_titanic_survived_stacked_recombined_joined_enriched_windows",
+      "recipe_type": "window",
+      "disposition": "SUPPORTED",
+      "reason": "Deterministic converter available"
+    },
+    {
+      "recipe_id": "split_titanic_raw_prepared_distinct",
+      "recipe_type": "split",
+      "disposition": "SUPPORTED",
+      "reason": "Deterministic converter available"
+    }
+  ]
+}

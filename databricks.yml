@@ -1,0 +1,29 @@
+bundle:
+  name: dataiku-databricks-migration
+
+include:
+  - projects/*/databricks/resources/*.yml
+
+variables:
+  catalog:
+    description: Unity Catalog catalog for migration execution
+    default: slmt_uat
+  schema:
+    description: Unity Catalog schema for migration execution
+    default: exp_seif
+  table_suffix:
+    description: Mandatory suffix protecting existing tables during migration tests
+    default: __migration_candidate
+
+targets:
+  dev:
+    default: true
+    mode: development
+  uat:
+    mode: development
+    variables:
+      catalog: slmt_uat
+      schema: exp_seif
+      table_suffix: __migration_candidate
+  prod:
+    mode: production

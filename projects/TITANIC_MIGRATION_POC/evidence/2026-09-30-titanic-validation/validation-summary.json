@@ -1,0 +1,40 @@
+{
+  "project_key": "TITANIC_MIGRATION_POC",
+  "validation_date": "2026-09-30",
+  "status": "VALIDATED",
+  "execution": {
+    "workspace_url": "https://adb-7405606041874672.12.azuredatabricks.net/",
+    "catalog": "slmt_uat",
+    "schema": "exp_seif",
+    "source_table": "slmt_uat.exp_seif.titanic_raw",
+    "candidate_suffix": "__migration_candidate"
+  },
+  "stage_row_counts": [
+    {"stage": "01_raw_prepared", "expected": 891, "actual": 891, "status": "PASS"},
+    {"stage": "02_raw_prepared_distinct", "expected": 891, "actual": 891, "status": "PASS"},
+    {"stage": "03_survived", "expected": 342, "actual": 342, "status": "PASS"},
+    {"stage": "04_not_survived", "expected": 549, "actual": 549, "status": "PASS"},
+    {"stage": "05_survived_stacked", "expected": 891, "actual": 891, "status": "PASS"},
+    {"stage": "06_summary", "expected": 6, "actual": 6, "status": "PASS"},
+    {"stage": "07_pivot", "expected": 2, "actual": 2, "status": "PASS"},
+    {"stage": "08_enriched", "expected": 891, "actual": 891, "status": "PASS"},
+    {"stage": "09_windowed", "expected": 891, "actual": 891, "status": "PASS"},
+    {"stage": "10_output", "expected": 891, "actual": 891, "status": "PASS"}
+  ],
+  "final_output_checks": {
+    "row_count": 891,
+    "survived_rows": 342,
+    "not_survived_rows": 549,
+    "passenger_id_nulls": 0,
+    "passenger_id_duplicates": 0,
+    "joined_rows_for_comparison": 891,
+    "business_column_differences": 0,
+    "floating_point_tolerance": 0.000001
+  },
+  "compatibility_notes": [
+    "Comparisons use explicit named columns because physical column order differs between outputs.",
+    "Floating-point values are compared with a tolerance of 1e-6.",
+    "Trailing spaces in Name were normalized to reproduce the Dataiku output; remaining differences are zero."
+  ],
+  "evidence_source": "Results observed from user-executed Databricks UI notebooks and SQL queries."
+}

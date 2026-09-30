@@ -1,0 +1,91 @@
+{
+  "$defs": {
+    "ProcessorContract": {
+      "properties": {
+        "processor_type": {
+          "title": "Processor Type",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": true,
+          "title": "Parameters",
+          "type": "object"
+        },
+        "disabled": {
+          "default": false,
+          "title": "Disabled",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "processor_type"
+      ],
+      "title": "ProcessorContract",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "recipe_id": {
+      "title": "Recipe Id",
+      "type": "string"
+    },
+    "recipe_name": {
+      "title": "Recipe Name",
+      "type": "string"
+    },
+    "recipe_type": {
+      "title": "Recipe Type",
+      "type": "string"
+    },
+    "inputs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Inputs",
+      "type": "array"
+    },
+    "outputs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Outputs",
+      "type": "array"
+    },
+    "configuration": {
+      "additionalProperties": true,
+      "title": "Configuration",
+      "type": "object"
+    },
+    "processors": {
+      "items": {
+        "$ref": "#/$defs/ProcessorContract"
+      },
+      "title": "Processors",
+      "type": "array"
+    },
+    "source_code": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Code"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    }
+  },
+  "required": [
+    "recipe_id",
+    "recipe_name",
+    "recipe_type"
+  ],
+  "title": "RecipeContract",
+  "type": "object"
+}

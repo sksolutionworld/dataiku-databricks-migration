@@ -1,0 +1,265 @@
+{
+  "columnsSelection": {
+    "mode": "ALL",
+    "list": [
+      {
+        "d": true,
+        "name": "PassengerId"
+      },
+      {
+        "d": true,
+        "name": "Survived"
+      },
+      {
+        "d": true,
+        "name": "Pclass"
+      },
+      {
+        "d": true,
+        "name": "Name"
+      },
+      {
+        "d": true,
+        "name": "Sex"
+      },
+      {
+        "d": true,
+        "name": "Age"
+      },
+      {
+        "d": true,
+        "name": "SibSp"
+      },
+      {
+        "d": true,
+        "name": "Parch"
+      },
+      {
+        "d": true,
+        "name": "FamilySize"
+      },
+      {
+        "d": true,
+        "name": "IsAlone"
+      },
+      {
+        "d": true,
+        "name": "Ticket"
+      },
+      {
+        "d": true,
+        "name": "Fare"
+      },
+      {
+        "d": true,
+        "name": "FarePerPerson"
+      },
+      {
+        "d": true,
+        "name": "Cabin"
+      },
+      {
+        "d": true,
+        "name": "HasCabin"
+      },
+      {
+        "d": true,
+        "name": "Embarked"
+      },
+      {
+        "d": true,
+        "name": "SexClassPassengerCount"
+      },
+      {
+        "d": true,
+        "name": "SexClassSurvivalRate"
+      },
+      {
+        "d": true,
+        "name": "SexClassAverageAge"
+      },
+      {
+        "d": true,
+        "name": "SexClassAverageFare"
+      },
+      {
+        "d": true,
+        "name": "SexClassAverageFarePerPerson"
+      },
+      {
+        "d": true,
+        "name": "FareRankWithinClass"
+      }
+    ]
+  },
+  "explorationSampling": {
+    "_refreshTrigger": 0,
+    "selection": {
+      "latestPartitionsN": 1,
+      "maxRecords": 10000,
+      "maxRecordsForDisplay": -1,
+      "ordering": {
+        "rules": [],
+        "enabled": false
+      },
+      "withinFirstN": -1,
+      "maxStoredBytes": 104857600,
+      "ascending": true,
+      "timeout": -1,
+      "filter": {
+        "distinct": false,
+        "enabled": false
+      },
+      "partitionSelectionMethod": "ALL",
+      "targetRatio": 0.02,
+      "maxReadUncompressedBytes": -1,
+      "samplingMethod": "HEAD_SEQUENTIAL"
+    },
+    "autoRefreshSample": false
+  },
+  "explorationFilters": [],
+  "columnOrder": [],
+  "columnUseScientificNotationByName": {},
+  "origin": "PREPARE_RECIPE",
+  "exploreUIParams": {
+    "autoRefresh": true
+  },
+  "steps": [
+    {
+      "preview": false,
+      "metaType": "PROCESSOR",
+      "disabled": false,
+      "type": "ColumnRenamer",
+      "params": {
+        "renamings": [
+          {
+            "from": "rownumber",
+            "to": "FareRankWithinClass"
+          },
+          {
+            "from": "PassengerId_count",
+            "to": "SexClassPassengerCount"
+          },
+          {
+            "from": "Survived_avg",
+            "to": "SexClassSurvivalRate"
+          },
+          {
+            "from": "Age_avg",
+            "to": "SexClassAverageAge"
+          },
+          {
+            "from": "Fare_avg",
+            "to": "SexClassAverageFare"
+          },
+          {
+            "from": "FarePerPerson_avg",
+            "to": "SexClassAverageFarePerPerson"
+          }
+        ]
+      },
+      "alwaysShowComment": false
+    },
+    {
+      "preview": true,
+      "metaType": "PROCESSOR",
+      "disabled": false,
+      "type": "ColumnsSelector",
+      "params": {
+        "columns": [
+          "PassengerId",
+          "Name",
+          "Sex",
+          "Age",
+          "Pclass",
+          "Survived",
+          "SibSp",
+          "Parch",
+          "FamilySize",
+          "IsAlone",
+          "Ticket",
+          "Fare",
+          "FarePerPerson",
+          "Cabin",
+          "HasCabin",
+          "Embarked",
+          "SexClassPassengerCount",
+          "SexClassSurvivalRate",
+          "SexClassAverageAge",
+          "SexClassAverageFare",
+          "SexClassAverageFarePerPerson",
+          "FareRankWithinClass"
+        ],
+        "keep": true,
+        "appliesTo": "COLUMNS"
+      },
+      "alwaysShowComment": false
+    }
+  ],
+  "maxProcessedMemTableBytes": -1,
+  "previewMode": "ALL_ROWS",
+  "vizSampling": {
+    "_refreshTrigger": 0,
+    "selection": {
+      "useMemTable": false,
+      "filter": {
+        "distinct": false,
+        "enabled": false
+      },
+      "latestPartitionsN": 1,
+      "maxRecords": -1,
+      "ordering": {
+        "rules": [],
+        "enabled": false
+      },
+      "withinFirstN": -1,
+      "partitionSelectionMethod": "ALL",
+      "targetRatio": 0.02,
+      "maxReadUncompressedBytes": -1,
+      "samplingMethod": "FULL",
+      "ascending": true
+    },
+    "autoRefreshSample": false
+  },
+  "analysisColumnData": {},
+  "flagNumericValues": true,
+  "columnWidthsByName": {
+    "Pclass": 100,
+    "SexClassAverageFare": 183,
+    "Age_avg": 141,
+    "Sex": 100,
+    "SexClassAverageFarePerPerson": 246,
+    "FamilySize": 100,
+    "Name": 300,
+    "Cabin": 100,
+    "FareRankWithinClass": 158,
+    "FarePerPerson": 134,
+    "SexClassAverageAge": 176,
+    "rownumber": 100,
+    "SexClassSurvivalRate": 190,
+    "IsAlone": 100,
+    "Age": 134,
+    "Embarked": 100,
+    "FarePerPerson_avg": 169,
+    "Survived": 100,
+    "Ticket": 100,
+    "PassengerId": 100,
+    "HasCabin": 100,
+    "SexClassPassengerCount": 180,
+    "SibSp": 100,
+    "Fare": 134,
+    "Fare_avg": 141,
+    "Parch": 100,
+    "PassengerId_count": 143,
+    "Survived_avg": 148
+  },
+  "sorting": [],
+  "globalSearchQuery": "",
+  "coloring": {
+    "scheme": "MEANING_AND_STATUS",
+    "individualColumns": [],
+    "coloringGroups": [],
+    "valueColoringMode": "HASH",
+    "individualColumnsRules": []
+  }
+}

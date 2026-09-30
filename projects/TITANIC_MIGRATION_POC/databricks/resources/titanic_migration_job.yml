@@ -1,0 +1,21 @@
+resources:
+  jobs:
+    titanic_migration:
+      name: titanic-migration-${bundle.target}
+      tasks:
+        - task_key: pipeline
+          notebook_task:
+            notebook_path: ../notebooks/pipeline.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+              table_suffix: ${var.table_suffix}
+        - task_key: validation
+          depends_on:
+            - task_key: pipeline
+          notebook_task:
+            notebook_path: ../notebooks/validation.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+              table_suffix: ${var.table_suffix}

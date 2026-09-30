@@ -1,0 +1,4 @@
+catalog: slmt_prd
+schema: exp_seif
+warehouse_id: ""
+write_mode: approval-required

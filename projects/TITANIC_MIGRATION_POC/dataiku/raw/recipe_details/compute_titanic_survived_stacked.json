@@ -1,0 +1,148 @@
+{
+  "recipe_name": "compute_titanic_survived_stacked",
+  "recipe_type": "vstack",
+  "list_metadata": {
+    "name": "compute_titanic_survived_stacked",
+    "projectKey": "TITANIC_MIGRATION_POC",
+    "type": "vstack",
+    "neverRecomputeExistingPartitions": false,
+    "customMeta": {
+      "kv": {}
+    },
+    "redispatchPartitioning": false,
+    "maxRunningActivities": 0,
+    "hashPropagationBehavior": "INHERIT",
+    "variables": {},
+    "dkuProperties": [],
+    "inputs": {
+      "main": {
+        "items": [
+          {
+            "ref": "titanic_survived",
+            "deps": []
+          },
+          {
+            "ref": "titanic_not_survived",
+            "deps": []
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "main": {
+        "items": [
+          {
+            "ref": "titanic_survived_stacked_recombined",
+            "appendMode": false
+          }
+        ]
+      }
+    },
+    "labels": [],
+    "creationTag": {
+      "versionNumber": 0,
+      "lastModifiedBy": {
+        "login": "kumar@sksolutionworld.com"
+      },
+      "lastModifiedOn": 1790736589372
+    },
+    "versionTag": {
+      "versionNumber": 2,
+      "lastModifiedBy": {
+        "login": "kumar@sksolutionworld.com"
+      },
+      "lastModifiedOn": 1790742383168
+    },
+    "tags": [],
+    "customFields": {},
+    "checklists": {
+      "checklists": []
+    }
+  },
+  "settings": {
+    "mode": "UNION",
+    "selectedColumns": [
+      "PassengerId",
+      "Survived",
+      "Pclass",
+      "Name",
+      "Sex",
+      "Age",
+      "SibSp",
+      "Parch",
+      "FamilySize",
+      "IsAlone",
+      "Ticket",
+      "Fare",
+      "FarePerPerson",
+      "Cabin",
+      "HasCabin",
+      "Embarked"
+    ],
+    "originColumnName": "original_dataset",
+    "engineParams": {
+      "hive": {
+        "skipPrerunValidate": false,
+        "hiveconf": [],
+        "inheritConf": "default",
+        "addDkuUdf": false,
+        "executionEngine": "HIVESERVER2"
+      },
+      "sqlPipelineParams": {
+        "pipelineAllowMerge": true,
+        "pipelineAllowStart": true
+      },
+      "cdePipelineParams": {
+        "pipelineAllowMerge": true,
+        "pipelineAllowStart": true
+      },
+      "impala": {
+        "forceStreamMode": true
+      },
+      "containerSelection": {
+        "containerMode": "INHERIT"
+      },
+      "lowerCaseSchemaIfEngineRequiresIt": true,
+      "sparkSQL": {
+        "skipPrerunValidate": false,
+        "pipelineAllowMerge": true,
+        "useGlobalMetastore": false,
+        "pipelineAllowStart": true,
+        "readParams": {
+          "mode": "AUTO",
+          "autoModeRepartitionInto": 10,
+          "map": {}
+        },
+        "overwriteOutputSchema": false,
+        "executionEngine": "SPARK_SUBMIT",
+        "sparkConfig": {
+          "inheritConf": "default",
+          "conf": []
+        }
+      }
+    },
+    "virtualInputs": [
+      {
+        "preFilter": {
+          "distinct": false,
+          "enabled": false
+        },
+        "originLabel": "titanic_survived",
+        "index": 0
+      },
+      {
+        "preFilter": {
+          "distinct": false,
+          "enabled": false
+        },
+        "originLabel": "titanic_not_survived",
+        "index": 1
+      }
+    ],
+    "postFilter": {
+      "distinct": false,
+      "enabled": false
+    },
+    "addOriginColumn": false
+  }
+}

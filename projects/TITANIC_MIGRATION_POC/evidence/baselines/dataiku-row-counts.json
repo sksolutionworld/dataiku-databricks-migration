@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "project_key": "TITANIC_MIGRATION_POC",
+  "source": "Dataiku-generated tables in slmt_uat.exp_seif",
+  "captured_date": "2026-09-30",
+  "table_prefix": "node_68f3ce48_titanic_migration_poc_",
+  "row_counts": {
+    "titanic_raw_prepared": 891,
+    "titanic_raw_prepared_distinct": 891,
+    "titanic_survived": 342,
+    "titanic_not_survived": 549,
+    "titanic_survived_stacked": 891,
+    "titanic_survived_stacked_by_pclass": 6,
+    "titanic_survived_stacked_recombined_by_sex": 2,
+    "titanic_survived_stacked_recombined_joined": 891,
+    "titanic_survived_stacked_recombined_joined_enriched_windows": 891,
+    "titanic_migration_output": 891
+  }
+}

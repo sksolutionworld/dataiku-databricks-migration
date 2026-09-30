@@ -1,0 +1,54 @@
+{
+  "project_key": "TITANIC_MIGRATION_POC",
+  "evidence_source": "dataiku/raw/recipe_details",
+  "recipes": {
+    "compute_titanic_raw_prepared": {
+      "dataiku_type": "shaker",
+      "functions": ["prepare_titanic"],
+      "status": "VERIFIED_WITH_SOURCE_COMPATIBILITY_NORMALIZATION",
+      "compatibility_notes": [
+        "Remove trailing ASCII spaces, tabs, CR, and LF from Name to match Dataiku ingestion behavior; Databricks CSV upload retained trailing ASCII spaces for PassengerId 16 and 858."
+      ]
+    },
+    "compute_titanic_raw_prepared_distinct": {
+      "dataiku_type": "distinct",
+      "functions": ["distinct_rows"],
+      "status": "VERIFIED_FROM_EXPORT"
+    },
+    "split_titanic_raw_prepared_distinct": {
+      "dataiku_type": "split",
+      "functions": ["split_survival"],
+      "status": "VERIFIED_FROM_EXPORT"
+    },
+    "compute_titanic_survived_stacked": {
+      "dataiku_type": "vstack",
+      "functions": ["stack_survival"],
+      "status": "VERIFIED_FROM_EXPORT"
+    },
+    "compute_titanic_survived_stacked_by_Pclass": {
+      "dataiku_type": "grouping",
+      "functions": ["summarize_by_sex_and_class"],
+      "status": "VERIFIED_FROM_EXPORT"
+    },
+    "compute_titanic_survived_stacked_recombined_by_Sex": {
+      "dataiku_type": "pivot",
+      "functions": ["pivot_survival_by_class"],
+      "status": "VERIFIED_FROM_EXPORT"
+    },
+    "compute_titanic_survived_stacked_recombined_joined": {
+      "dataiku_type": "join",
+      "functions": ["join_summary"],
+      "status": "VERIFIED_FROM_EXPORT"
+    },
+    "compute_titanic_survived_stacked_recombined_joined_enriched_windows": {
+      "dataiku_type": "window",
+      "functions": ["add_fare_rank"],
+      "status": "VERIFIED_FROM_EXPORT"
+    },
+    "compute_titanic_migration_output": {
+      "dataiku_type": "shaker",
+      "functions": ["select_final_columns"],
+      "status": "VERIFIED_FROM_EXPORT"
+    }
+  }
+}

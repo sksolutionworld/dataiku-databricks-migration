@@ -1,0 +1,76 @@
+{
+  "$defs": {
+    "CapabilityResult": {
+      "properties": {
+        "recipe_id": {
+          "title": "Recipe Id",
+          "type": "string"
+        },
+        "recipe_type": {
+          "title": "Recipe Type",
+          "type": "string"
+        },
+        "disposition": {
+          "title": "Disposition",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "recipe_id",
+        "recipe_type",
+        "disposition",
+        "reason"
+      ],
+      "title": "CapabilityResult",
+      "type": "object"
+    },
+    "MigrationStatus": {
+      "enum": [
+        "DISCOVERED",
+        "ANALYZED",
+        "PLANNED",
+        "CONVERTED",
+        "VALIDATED",
+        "REQUIRES_REVIEW",
+        "FAILED"
+      ],
+      "title": "MigrationStatus",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "project_key": {
+      "title": "Project Key",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/MigrationStatus",
+      "default": "PLANNED"
+    },
+    "ordered_recipe_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Ordered Recipe Ids",
+      "type": "array"
+    },
+    "capabilities": {
+      "items": {
+        "$ref": "#/$defs/CapabilityResult"
+      },
+      "title": "Capabilities",
+      "type": "array"
+    }
+  },
+  "required": [
+    "project_key",
+    "ordered_recipe_ids",
+    "capabilities"
+  ],
+  "title": "MigrationPlan",
+  "type": "object"
+}
