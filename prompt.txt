@@ -1,0 +1,495 @@
+You are reviewing and completing an enterprise Dataiku-to-Databricks migration framework.
+
+Repository root:
+<PASTE_LOCAL_REPOSITORY_PATH>
+
+Objective:
+Review the repository end to end and implement one safe CLI command that:
+
+1. Connects to Dataiku DSS.
+2. Downloads a Dataiku project ZIP.
+3. Downloads detailed configuration for every recipe.
+4. Stores the acquired files as immutable source evidence.
+5. Extracts and normalizes the project.
+6. Builds typed canonical contracts.
+7. reconciles the project ZIP with recipe API results.
+8. Builds and validates the dependency DAG.
+9. Detects supported, partially supported, and unsupported recipes/processors.
+10. Converts supported Dataiku recipes into an intermediate representation (IR).
+11. Renders equivalent Databricks PySpark or Spark SQL code.
+12. Generates a Databricks project, tests, job configuration, traceability, and migration report.
+13. Never executes generated Databricks code or deploys anything unless a separate explicit flag is provided.
+
+Project parameters:
+- Dataiku base URL: ${DATAIKU_BASE_URL}
+- Dataiku project key: ${DATAIKU_PROJECT_KEY}
+- Dataiku API key environment variable: DATAIKU_API_KEY
+- Output root: projects/${DATAIKU_PROJECT_KEY}
+- Target Databricks catalog: ${DATABRICKS_CATALOG}
+- Target Databricks schema: ${DATABRICKS_SCHEMA}
+- Candidate table suffix: __migration_candidate
+- Default renderer: pyspark
+- Environment: uat
+
+Security requirements:
+- Do not hard-code API keys, passwords, access tokens, cookies, or credentials.
+- Read the Dataiku API key only from DATAIKU_API_KEY.
+- Do not print secret values in logs, exceptions, reports, or command output.
+- Use TLS certificate validation.
+- Support an optional CA bundle path through DATAIKU_CA_BUNDLE.
+- Do not disable SSL verification.
+- Do not make Databricks API calls during conversion.
+- Do not overwrite raw evidence after successful acquisition.
+- Do not overwrite source or production tables.
+- Generated target tables must use the configured candidate suffix.
+- Do not execute shell commands assembled from untrusted project or recipe names.
+- Validate project keys, paths, catalog names, schema names, and table identifiers.
+- Redact sensitive fields found in downloaded JSON when displaying diagnostics, but retain immutable raw evidence with appropriately restricted access.
+- Never silently guess missing transformation logic.
+
+Required architecture:
+Dataiku project ZIP + recipe API details
+    -> acquisition
+    -> immutable raw evidence
+    -> normalization
+    -> typed contracts
+    -> reconciliation
+    -> dependency DAG
+    -> capability scanning
+    -> migration plan
+    -> converters
+    -> intermediate representation
+    -> Databricks renderer
+    -> generated project
+    -> validation assets
+    -> evidence and migration report
+
+Expected main command:
+python -m migration_framework.cli migrate-project \
+  --base-url "$DATAIKU_BASE_URL" \
+  --project-key "$DATAIKU_PROJECT_KEY" \
+  --output-root "projects/$DATAIKU_PROJECT_KEY" \
+  --environment uat \
+  --catalog "$DATABRICKS_CATALOG" \
+  --schema "$DATABRICKS_SCHEMA" \
+  --table-suffix "__migration_candidate" \
+  --renderer pyspark
+
+The command name can be adjusted to match the existing CLI conventions, but there must be one documented end-to-end command.
+
+First, review the existing repository before modifying anything.
+
+Review these areas:
+- README and architecture documentation
+- pyproject.toml and dependencies
+- existing CLI commands
+- acquisition adapters and scripts
+- normalization code
+- contracts/models
+- reconciliation
+- DAG creation and cycle detection
+- capability scanner
+- migration runner and execution context
+- converter registry
+- visual recipe converters
+- Prepare processor converters
+- code recipe handling
+- IR contracts
+- PySpark and Spark SQL renderers
+- Databricks bundle/job renderer
+- validation framework
+- evidence and reporting
+- project fixtures, unit tests, golden tests, contract tests, and integration tests
+- agent and skill instructions
+- configuration loading and environment overlays
+- logging, error handling, security, and retry behavior
+
+Do not redesign working components without evidence. Reuse the current project architecture and naming conventions.
+
+Implementation requirements
+
+A. Acquisition
+
+Implement or verify an acquisition service that:
+
+1. Uses dataikuapi.DSSClient.
+2. Reads connection values from CLI arguments or environment variables.
+3. Downloads the complete project export ZIP.
+4. Calls the Dataiku API to list every project recipe.
+5. Fetches each recipe’s complete settings/configuration.
+6. Captures recipe inputs, outputs, type, payload, processors, code, metadata, and dependencies when available.
+7. Saves files under:
+
+projects/<project-key>/dataiku/
+├── raw/
+│   ├── project-export.zip
+│   ├── project_export/
+│   ├── recipe_details/
+│   │   ├── <recipe-id>.json
+│   │   └── ...
+│   └── acquisition-manifest.json
+
+The acquisition manifest must include:
+- project key
+- Dataiku host, without credentials
+- acquisition timestamp
+- source endpoint or acquisition method
+- file names
+- file sizes
+- SHA-256 checksums
+- recipe count
+- acquisition status
+- framework version
+
+Use bounded retries for transient failures. Authentication, authorization, certificate, and invalid-project failures must fail immediately with helpful messages.
+
+Write downloads atomically using temporary files followed by rename.
+
+If acquisition is repeated:
+- default behavior: reuse valid immutable evidence when checksums pass
+- --refresh: create a new timestamped acquisition snapshot
+- never silently replace previous evidence
+
+B. Normalization and contracts
+
+Do not let converters depend directly on raw Dataiku JSON.
+
+Normalize raw inputs into typed internal contracts, such as:
+- ProjectContract
+- DatasetContract
+- RecipeContract
+- ProcessorContract
+- DependencyContract
+- ConversionResult
+- ValidationResult
+- MigrationReport
+
+A RecipeContract should include:
+- recipe_id
+- recipe_name
+- recipe_type
+- inputs
+- outputs
+- configuration
+- processors
+- source_code
+- metadata
+- source evidence references
+
+Contracts must:
+- validate required fields
+- preserve unknown fields in metadata when useful
+- include schema/version identifiers
+- be serializable to deterministic JSON
+- have unit tests
+
+C. Reconciliation
+
+Compare recipe and dataset information from:
+- the project export
+- recipe API results
+
+Report:
+- missing recipes
+- inconsistent recipe types
+- different inputs or outputs
+- missing payloads
+- code available only from one source
+- orphan datasets
+- ambiguous dependencies
+
+Do not continue silently when a material inconsistency could change generated code. Mark the recipe as REQUIRES_REVIEW.
+
+D. Dependency DAG
+
+Create a deterministic DAG using datasets and recipes.
+
+It must:
+- produce stable topological ordering
+- detect cycles
+- report missing producers
+- allow external/source datasets
+- support recipes with multiple inputs and outputs
+- preserve dataset-to-recipe lineage
+- generate analysis/dag.json
+
+E. Capability scanning
+
+Classify every recipe and every Prepare processor as:
+- SUPPORTED
+- PARTIALLY_SUPPORTED
+- REQUIRES_REVIEW
+- UNSUPPORTED
+
+Generate:
+projects/<project-key>/analysis/
+├── manifest.json
+├── normalized-project.json
+├── normalized-recipes.json
+├── reconciliation-report.json
+├── dag.json
+├── capability-report.json
+└── migration-plan.json
+
+The capability report must explain the reason for every classification.
+
+F. Conversion
+
+Use a converter registry. Do not implement one giant conditional function.
+
+Review or implement converters for:
+- Sync
+- Prepare
+- Filter
+- Distinct
+- Group
+- Join
+- Stack/Union
+- Window
+- Pivot
+- Split
+- Sort, noting that persisted Delta tables do not preserve physical row order
+- SQL recipes
+- Python recipes
+- R and Shell recipes as assessment/manual-review cases unless deterministic conversion already exists
+
+Prepare processors must have their own registry.
+
+For each converter:
+- consume canonical contracts, not raw JSON
+- produce typed IR
+- preserve input/output lineage
+- record assumptions and warnings
+- record source evidence references
+- fail closed for unsupported semantics
+- have unit and golden tests
+
+Never invent a transformation when the source configuration is incomplete.
+
+G. Intermediate representation
+
+Use typed, renderer-neutral IR operations, for example:
+- ReadDataset
+- SelectColumns
+- RenameColumn
+- CastColumn
+- CreateColumn
+- FillNull
+- FilterRows
+- DropDuplicates
+- Aggregate
+- Join
+- Union
+- WindowOperation
+- Pivot
+- WriteDataset
+
+Every operation must include lineage and traceability back to:
+- Dataiku recipe ID
+- recipe type
+- processor index or identifier
+- source JSON file
+
+H. Databricks generation
+
+Generate:
+
+projects/<project-key>/databricks/
+├── lib/
+│   ├── __init__.py
+│   ├── config.py
+│   ├── transformations.py
+│   └── quality.py
+├── notebooks/
+│   ├── pipeline.py
+│   └── validation.py
+├── resources/
+│   └── <normalized-project-name>_job.yml
+└── tests/
+    ├── expected/
+    ├── test_config.py
+    ├── test_transformations.py
+    ├── test_baseline.py
+    └── test_recipe_traceability.py
+
+Avoid duplicate POC files such as pipeline_poc.py when pipeline.py already exists.
+
+Generated Databricks code must:
+- use three-part Unity Catalog table names
+- make catalog, schema, and suffix configurable
+- use candidate table suffixes by default
+- avoid hard-coded workspace paths
+- use deterministic column selection
+- avoid SELECT * for validation comparisons
+- use explicit join keys and join types
+- preserve null behavior
+- make deduplication columns explicit
+- use stable tie-breakers for window ordering
+- document type conversions
+- use Delta tables unless configuration specifies otherwise
+
+For code recipes:
+- preserve original code as evidence
+- assess compatibility
+- do not execute arbitrary source code during migration
+- mark manual work clearly when safe deterministic conversion is impossible
+
+I. Validation generation
+
+Generate validation code but do not execute it automatically.
+
+Validation should include:
+- schema comparison by column name
+- compatible type comparison
+- row counts for every materialized stage
+- null counts
+- duplicate-key checks
+- aggregate comparisons
+- category/distribution checks when configured
+- explicit-column bidirectional EXCEPT ALL where types match
+- key-based field comparison where physical column order or compatible types differ
+- configurable floating-point tolerance
+- business-key completeness
+- recipe traceability coverage
+
+Reports must distinguish:
+- exact equality
+- equality after approved normalization
+- tolerance-based equality
+- mismatch
+- not tested
+
+J. Reporting
+
+Generate:
+projects/<project-key>/evidence/<run-id>/
+├── acquisition-summary.json
+├── reconciliation-report.json
+├── conversion-traceability.json
+├── validation-plan.json
+└── migration-report.json
+
+Migration statuses:
+- DISCOVERED
+- ANALYZED
+- PLANNED
+- CONVERTED
+- VALIDATED
+- REQUIRES_REVIEW
+- FAILED
+
+Do not label a project VALIDATED unless generated Databricks code was actually executed and its results were compared against Dataiku. A conversion-only run should normally end as CONVERTED or REQUIRES_REVIEW.
+
+K. CLI behavior
+
+The single command must support:
+- --base-url
+- --project-key
+- --output-root
+- --environment
+- --catalog
+- --schema
+- --table-suffix
+- --renderer
+- --ca-bundle
+- --refresh
+- --resume
+- --stop-after
+- --fail-on-unsupported
+- --log-level
+- --run-id
+
+Useful stop stages:
+- acquisition
+- normalization
+- analysis
+- conversion
+- rendering
+- validation-generation
+- reporting
+
+The command must:
+- return exit code 0 on success
+- return nonzero on failure
+- print a concise final summary
+- show paths to generated outputs
+- show supported/unsupported/review counts
+- never print secrets
+- write structured logs
+- support safe resume after failure
+- produce deterministic output from identical evidence
+
+L. Testing
+
+Add or update:
+- unit tests for contracts, normalizers, DAG, scanner, registries, converters, renderers, and redaction
+- contract/schema tests
+- golden tests using captured fixtures
+- integration test using a mocked Dataiku API
+- tests for retry and error behavior
+- tests verifying secrets are not printed
+- tests verifying raw evidence is not overwritten
+- tests verifying candidate suffixes are applied
+- tests for unsupported recipe handling
+- tests for deterministic output
+- tests for path traversal and unsafe identifiers
+
+Do not require a live Dataiku or Databricks connection for the normal test suite.
+
+M. Documentation
+
+Update README.md with:
+- prerequisites
+- installation
+- environment variables
+- CA certificate setup
+- the single end-to-end command
+- dry-run/conversion-only behavior
+- expected output structure
+- supported recipe matrix
+- unsupported behavior
+- resuming and refreshing
+- testing
+- Databricks upload/deployment steps
+- security guidance
+- troubleshooting
+
+Add `.env.example` containing variable names and safe placeholders only.
+
+Add a sample command for PowerShell and Bash.
+
+N. Review output
+
+Before editing, provide:
+1. Current architecture summary.
+2. What already works.
+3. Missing or incomplete items.
+4. Proposed minimal changes.
+5. Files that will be modified.
+
+Then implement the changes.
+
+After implementation:
+1. Run formatting, linting, type checks, and tests available in the repository.
+2. Show the exact test results.
+3. Run the CLI against an existing local fixture without network calls.
+4. Show an example of the final one-command invocation.
+5. List generated artifacts.
+6. List all unsupported or review-required features.
+7. Confirm that no credentials were committed.
+8. Do not push, deploy, or call Databricks.
+9. Do not modify unrelated files.
+10. Do not claim success for checks that were not executed.
+
+Acceptance criteria:
+- A new user can clone the repository, configure environment variables, and run one command.
+- That command acquires the project ZIP and recipe configurations from Dataiku.
+- Raw evidence is immutable and checksum-protected.
+- The project is normalized into typed contracts.
+- A deterministic DAG and migration plan are created.
+- Supported recipes generate Databricks code.
+- Unsupported logic is explicitly reported, never guessed.
+- Validation and traceability assets are generated.
+- The normal test suite requires no live external services.
+- Secrets are neither committed nor printed.
+- The generated project cannot overwrite source or production tables by default.
