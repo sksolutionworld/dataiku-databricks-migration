@@ -1,0 +1,14 @@
+Enhance our existing three-project Dataiku POC.
+
+Project A (PoCMigrationProject) currently has no scenario.
+
+1. Create scenario BUILD_TITANIC in Project A.
+2. Configure it to build the datasets required by Projects B and C, including necessary upstream dependencies.
+3. Update Project C’s BUILD_REPORTING scenario to execute in this order:
+    * Trigger and wait for A’s BUILD_TITANIC.
+    * Trigger and wait for B’s BUILD_ANALYTICS.
+    * Build C’s titanic_final_reporting.
+4. Configure a time-based trigger on Project C to run every 10 minutes for the POC.
+5. Verify at least two automatic scheduled executions and capture scenario histories.
+6. Validate dependency order, successful dataset refreshes, and overlapping-run behavior.
+7. Preserve all existing datasets, recipes, and project flows. Do not modify the migration converter.
