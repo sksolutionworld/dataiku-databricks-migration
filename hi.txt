@@ -1,0 +1,24 @@
+Create two new Dataiku projects to test cross-project dependencies and scenario orchestration for our Dataiku-to-Databricks migration POC.
+
+Existing Project A: PoCMigrationProject (Titanic)
+
+Project B – TitanicPassengerAnalytics
+
+* Reuse the existing dataset titanic_survived_stacked_recombined from Project A through Dataiku dataset sharing.
+* Create a Group/Prepare recipe to generate passenger_analytics.
+* Create a scenario named BUILD_ANALYTICS.
+
+Project C – TitanicReporting
+
+* Reuse titanic_survived_stacked_summary from Project A and passenger_analytics from Project B.
+* Create a Join/Prepare recipe to generate titanic_final_reporting.
+* Create a scenario named BUILD_REPORTING that triggers Project B’s scenario before building its output.
+
+Requirements:
+
+* Preserve actual cross-project dataset references.
+* Validate dataset schemas and join keys before creating recipes.
+* Do not duplicate source datasets.
+* Test full builds, selective dataset refreshes, and cross-project scenario execution.
+* Do not modify the existing Project A flow.
+* Report all created projects, recipes, datasets, scenarios, and dependencies.
