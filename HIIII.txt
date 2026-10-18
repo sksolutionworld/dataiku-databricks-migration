@@ -1,0 +1,50 @@
+Act as a Senior Dataiku Architect, Azure Databricks Architect, and Python Engineering Lead.
+
+Background
+
+We are migrating approximately 228 Dataiku projects to Azure Databricks.
+
+We already have a separate, working migration conversion agent that downloads Dataiku project ZIP files, retrieves recipe details, analyzes transformation logic, and generates Databricks Python notebooks, reusable libraries, Databricks Asset Bundles, and job DAGs.
+
+This new workspace is exclusively for Migration Discovery, Dependency Analysis, Migration Planning, and Scenario Orchestration Planning.
+
+Currently, this workspace contains only one Excel workbook with Dataiku project information.
+
+Your task — Phase 1 only
+
+1. Inspect the current workspace and locate the Excel file automatically.
+2. Read every worksheet and identify the actual column names and available information.
+3. Identify all unique Dataiku projects.
+4. Check whether the workbook contains:
+    * Cross-project dependencies.
+    * Upstream and downstream datasets.
+    * Scenario names and dependencies.
+    * Scenario triggers and scheduling information.
+    * Project owners, complexity, priority, and status.
+5. Identify missing, duplicated, inconsistent, or ambiguous data.
+6. Determine whether the Excel alone is sufficient to construct a reliable global dependency graph and migration plan.
+7. Recommend how to enrich missing information using read-only Dataiku APIs, if necessary.
+8. Propose a modular Python architecture for a future Migration Planning Agent.
+
+Required output
+
+Create only:
+
+* inventory_assessment.md — actual findings from the workbook.
+* proposed_architecture.md — recommended design for the planning agent.
+* data_gaps.md — missing information and how to obtain it.
+
+Include actual workbook evidence such as worksheet names, column names, record counts, and examples of dependencies.
+
+Important rules
+
+* Do not assume that all 228 projects are present; verify the actual count.
+* Do not invent project dependencies or scenario schedules.
+* Do not modify the source Excel.
+* Do not connect to Dataiku or Databricks yet.
+* Do not create the full planning agent yet.
+* Do not generate migration waves until dependency completeness has been assessed.
+* Do not create or modify GitHub Actions pipelines.
+* Do not generate Databricks code.
+
+Execute Phase 1 only, create the three assessment documents, summarize your findings, and stop for my approval.
