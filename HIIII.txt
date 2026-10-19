@@ -605,3 +605,45 @@ No deployment.
 Do not modify the original Excel workbook.
 
 At completion, provide the exact steps to launch the updated dashboard and explain how to investigate SCC-04 using it.
+
+
+..............
+
+
+Additional Task — Document the Blocked Projects Analysis
+
+The migration planning workspace now includes blocked_projects_analysis.xlsx, containing the analysis of 94 unassigned/blocked projects.
+
+First, verify whether the existing interactive dashboard has already integrated this analysis. Do not assume the integration is complete.
+
+If the functionality exists, document exactly how users can:
+
+1. Open the Blocked Projects Analysis view.
+2. Search and filter the 94 blocked projects.
+3. Distinguish directly blocked projects (40) from projects blocked only by upstream dependencies (54).
+4. Identify the 16 root causes.
+5. Select a blocked project and trace its root blocker.
+6. Interpret the recommended blocker resolution order.
+7. Understand the difference between “Releases alone” and “Total blocked”.
+8. Identify which projects become provisionally eligible when a root blocker is resolved.
+9. Investigate SCC-04 and its downstream impact.
+10. Understand why projected eligibility does not mean approval for migration.
+
+Use actual examples and evidence from the existing analysis.
+
+If any functionality is not implemented in the dashboard, explicitly mark it as Not available in the current dashboard. Explain how to find the information in the generated Excel analysis instead.
+
+Update both:
+
+* docs/DASHBOARD_USER_GUIDE.md
+* docs/DASHBOARD_QUICK_START.md
+
+Also include a section explaining how the Blocked Projects Analysis relates to the existing migration waves and master plan.
+
+Important:
+
+* Do not modify dashboard functionality as part of this documentation task.
+* Do not change any migration assignments or blocker status.
+* Do not mark hypothetical cycle resolutions as confirmed.
+* Do not invent UI controls.
+* No API calls or deployments.
