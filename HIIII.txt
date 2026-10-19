@@ -521,3 +521,23 @@ Summarize:
 7. Remaining information required before production execution.
 
 Complete Phase 5 and stop. Do not proceed with implementation or deployment.
+
+...........
+
+Using the existing Phase 1–5 migration planning artifacts, analyze all 94 unassigned projects.
+
+For each project, identify:
+
+1. Exact reason it is unassigned.
+2. Root blocking project or dependency cycle.
+3. Whether the project is directly blocked or only blocked by an upstream dependency.
+4. Evidence from the original Excel workbook.
+5. Action required to unblock it.
+6. Number of downstream projects potentially released.
+7. Whether it can be assigned to a migration wave after the blocker is resolved.
+
+Generate output/blocked_projects_analysis.xlsx with a summary dashboard and detailed project-level analysis.
+
+Also produce a ranked list of the top 10 root blockers to resolve first.
+
+Do not modify the original workbook, remove dependency edges, assume cycles are resolved, or change existing wave assignments. No API calls.
