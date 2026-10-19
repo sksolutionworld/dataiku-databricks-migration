@@ -129,3 +129,55 @@ Final response
 Summarize actual graph statistics, all detected cycles, unresolved dependencies, project scope discrepancies, and recommended next steps.
 
 Complete Phase 2 only and stop for approval before Phase 3.
+
+............
+
+
+Continue the Dataiku-to-Databricks Migration Planning project.
+
+Phase 1 and Phase 2 are completed.
+
+I approve Phase 3A — Migration Readiness Assessment and Dependency Cycle Classification.
+
+Objective
+
+Prepare the existing 227-project dependency model for reliable migration-wave generation.
+
+Use only the existing Excel workbook and Phase 2 generated artifacts.
+
+Tasks
+
+1. Analyze all 5 dataset-lineage cyclic components and 9 combined-graph cyclic components.
+2. For each cycle, show the involved projects, dataset dependencies, scenario relationships, and original Excel evidence.
+3. Classify cycles as potentially temporal, scenario-induced, or unresolved, but do not claim a cycle is resolved without evidence.
+4. Identify projects outside cyclic components that could be considered for early migration.
+5. Analyze the 29 unresolved findings and distinguish critical blockers from issues that can be resolved later.
+6. Reconcile the 227-versus-228 project discrepancy using available workbook evidence. Do not invent the missing project.
+7. Analyze scheduling information, including the 57 SERVER-timezone schedules and scenarios without triggers.
+8. Identify high-impact upstream projects and their downstream consumers.
+9. Produce a migration-readiness assessment for every project.
+
+Deliverables
+
+Create:
+
+* output/cycle_classification.xlsx
+* output/migration_readiness.xlsx
+* output/blocker_register.xlsx
+* output/phase3a_assessment.md
+
+Rules
+
+* Excel-only analysis.
+* No Dataiku or Databricks API calls.
+* No changes to the existing conversion agent.
+* No GitHub Actions changes.
+* Do not remove or reverse dependency edges.
+* Do not assume all cyclic dependencies are errors.
+* Do not generate final migration waves yet.
+* Every classification must include evidence and confidence.
+* Clearly identify issues requiring business or technical confirmation.
+
+Run appropriate tests and verify output consistency.
+
+Stop after Phase 3A and wait for approval.
