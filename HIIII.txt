@@ -260,3 +260,132 @@ After generating the artifacts, report:
 6. Recommendations for Phase 4.
 
 Complete Phase 3B only and stop for approval.
+
+
+............
+
+
+Continue the Dataiku-to-Databricks Migration Planning project.
+
+Phases 1, 2, 3A, and 3B are complete.
+
+I approve Phase 4 — Databricks Scenario Orchestration and Scheduling Blueprint.
+
+Objective
+
+Design an evidence-based Databricks Lakeflow Jobs orchestration and scheduling blueprint for the 227 in-scope Dataiku projects.
+
+Use only the original Excel workbook and existing planning artifacts.
+
+Do not create or deploy Databricks jobs.
+
+Tasks
+
+1. Scenario inventory
+
+Analyze all discovered Dataiku scenarios, steps, calls, and triggers.
+
+Identify:
+
+* Scenario owner project.
+* Scenario name and status.
+* Trigger type and configuration.
+* Cross-project scenario calls.
+* Build steps and target datasets.
+* Full-flow versus selective dataset builds, where evidenced.
+* Manual-only and called-only scenarios.
+* Conditional and parallel execution requirements.
+
+2. Scenario execution graph
+
+Build a separate scenario-level execution graph.
+
+Preserve:
+
+* Scenario-to-scenario calls.
+* Step execution order.
+* Dataset build targets.
+* Conditional execution.
+* Failure handling where available.
+
+Do not infer execution order solely from dataset lineage.
+
+3. Databricks orchestration design
+
+Recommend a Databricks Lakeflow Jobs design using:
+
+* Multi-task jobs.
+* Run Job tasks for cross-project orchestration where appropriate.
+* Task dependencies.
+* Job parameters.
+* Retries and failure handling.
+* Concurrency controls.
+* Selective dataset refresh strategies.
+
+Distinguish job definitions from job runs.
+
+Avoid duplicate upstream execution and unnecessary full-project refreshes.
+
+4. Scheduling blueprint
+
+Translate supported Dataiku triggers into proposed Databricks scheduling configurations.
+
+Classify each schedule as:
+
+* Ready for translation.
+* Requires timezone confirmation.
+* Missing scheduling fields.
+* Requires manual review.
+* Unsupported or custom trigger.
+
+Do not invent missing timezones, weekdays, or month days.
+
+5. Migration coexistence
+
+Account for mixed environments where some projects still run in Dataiku while others have migrated to Databricks.
+
+Identify:
+
+* Cross-platform upstream dependencies.
+* Temporary data handoff requirements.
+* Cutover sequencing.
+* Risks of duplicate scheduled execution.
+
+6. Deliverables
+
+Generate:
+
+* output/scenario_execution_graph.json
+* output/databricks_job_blueprint.json
+* output/scheduling_blueprint.xlsx
+* output/scenario_dependency_graph.html
+* output/cross_platform_dependencies.xlsx
+* output/phase4_assessment.md
+
+For every proposed Databricks job, record its source Dataiku scenario, upstream dependencies, proposed execution mechanism, scheduling readiness, and unresolved requirements.
+
+7. Validation
+
+Implement deterministic tests to verify:
+
+* Scenario calls are preserved.
+* Ordering constraints are respected.
+* No unsupported schedule is silently translated.
+* No unresolved cycle is automatically removed.
+* No duplicate schedule ownership is assumed.
+* Every job proposal is traceable to workbook evidence.
+
+Restrictions
+
+* Excel and local artifacts only.
+* No Dataiku API calls.
+* No Databricks API calls.
+* No deployment.
+* No modification of the existing conversion agent.
+* No GitHub Actions changes.
+* No automatic migration-wave approval.
+* No invented schedule parameters.
+
+Generate the blueprint and reports only.
+
+Complete Phase 4 and stop for my approval before Phase 5.
