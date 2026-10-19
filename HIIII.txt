@@ -541,3 +541,67 @@ Generate output/blocked_projects_analysis.xlsx with a summary dashboard and deta
 Also produce a ranked list of the top 10 root blockers to resolve first.
 
 Do not modify the original workbook, remove dependency edges, assume cycles are resolved, or change existing wave assignments. No API calls.
+
+
+.............
+
+[12:14 pm, 19/10/2026] SK: Using the existing Phase 1–5 migration planning artifacts, analyze all 94 unassigned projects.
+
+For each project, identify:
+
+1. Exact reason it is unassigned.
+2. Root blocking project or dependency cycle.
+3. Whether the project is directly blocked or only blocked by an upstream dependency.
+4. Evidence from the original Excel workbook.
+5. Action required to unblock it.
+6. Number of downstream projects potentially released.
+7. Whether it can be assigned to a migration wave after the blocker is resolved.
+
+Generate output/blocked_projects_analysis.xlsx with a summary dashboard and detailed project-level analysis.
+
+Also produce a ranked list of the top 10 root blockers to resolve first.
+
+Do not modify the original workbook, remove dependency edges, assume cycles are resolved, or change existing wave assignments. No API calls.
+[12:42 pm, 19/10/2026] SK: Continue the existing Dataiku-to-Databricks Migration Planning project.
+
+Phase 1–5 planning and the analysis of all 94 blocked projects are complete.
+
+I want to enhance the EXISTING interactive migration dashboard with a new Blocked Projects Analysis section.
+
+Requirements:
+
+1. Inspect the current dashboard implementation and blocked_projects_analysis.xlsx (8 sheets).
+2. Reuse the existing dashboard architecture. Do not create a separate dashboard.
+3. Display all 94 blocked projects with search and filters.
+4. Show whether each project is directly blocked or blocked by upstream dependencies.
+5. When selecting a project, display:
+    * Project name
+    * Root blocker ID
+    * Upstream dependency chain
+    * Dependency cycle, if applicable
+    * Downstream impact
+    * Proposed resolution
+    * Confidence level
+    * Evidence from the original Excel workbook
+6. Add a Root Blockers view showing all 16 root causes.
+7. Show the recommended resolution order and projected number of projects released after each decision.
+8. Add an interactive dependency graph highlighting the selected project’s blocking path, if supported by the existing visualization.
+9. Clearly distinguish confirmed facts from hypotheses and projected outcomes.
+10. Add a short Help section explaining how to use the new view.
+
+Validation:
+
+* All 94 projects must appear exactly once in the blocked-project inventory.
+* Preserve all 16 root causes.
+* Do not change existing dependency edges or migration waves.
+* Do not mark any blocker as resolved or project as approved.
+* Run existing tests and add tests for the new dashboard functionality.
+
+Use only existing local planning artifacts.
+
+No Dataiku API calls.
+No Databricks API calls.
+No deployment.
+Do not modify the original Excel workbook.
+
+At completion, provide the exact steps to launch the updated dashboard and explain how to investigate SCC-04 using it.
