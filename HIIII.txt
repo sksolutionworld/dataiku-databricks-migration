@@ -181,3 +181,82 @@ Rules
 Run appropriate tests and verify output consistency.
 
 Stop after Phase 3A and wait for approval.
+
+
+................
+
+
+Continue the Dataiku-to-Databricks Migration Planning project.
+
+Phase 1, Phase 2, and Phase 3A are completed.
+
+I approve Phase 3B — Provisional Migration Wave Planning.
+
+Objective
+
+Generate an evidence-based migration-wave plan using the existing Excel workbook and the outputs of Phases 2 and 3A.
+
+The plan must distinguish projects that can be safely assigned to migration waves from projects requiring further confirmation.
+
+Tasks
+
+1. Load the verified dependency graphs and migration-readiness assessments.
+2. Use the data-lineage dependency graph as the primary basis for migration ordering.
+3. Preserve scenario calls and build-target relationships as separate orchestration constraints.
+4. Identify foundation projects with no unresolved upstream migration dependencies.
+5. Use deterministic topological sorting for acyclic, eligible components.
+6. Group independent projects into parallel migration waves.
+7. Respect all confirmed upstream dependencies.
+8. Identify high-impact foundation projects and recommend their priority for review.
+9. Do not automatically remove, reverse, or ignore cyclic dependencies.
+10. Keep projects in unresolved cyclic components unassigned unless a verified ordering exists.
+11. Keep projects with critical scope or dependency blockers unassigned.
+12. For conditional projects, distinguish those eligible for provisional waves from those awaiting a shared architectural decision, such as SharePoint integration.
+13. Produce a separate list of projects requiring human approval.
+14. Preserve evidence and explain why each project belongs to its proposed wave.
+15. Include validation and cutover prerequisites for each wave.
+
+Deliverables
+
+Generate:
+
+* output/provisional_migration_waves.xlsx
+* output/provisional_migration_waves.json
+* output/unassigned_projects.xlsx
+* output/wave_dependency_graph.html
+* output/phase3b_assessment.md
+
+The Excel plan should include project key, wave number, readiness classification, upstream projects, downstream projects, dependency depth, critical blockers, conditional risks, and approval status.
+
+Important constraints
+
+* Excel and existing local artifacts only.
+* No Dataiku or Databricks API calls.
+* Do not modify the existing conversion agent.
+* Do not modify GitHub Actions.
+* Do not generate Databricks jobs or schedules yet.
+* Do not invent project priorities or business criticality.
+* Do not treat hypothetical cycle classifications as confirmed.
+* Do not treat provisional waves as production-approved.
+* Do not assign every project to a wave merely for completeness.
+
+Validation
+
+Run deterministic tests to ensure:
+
+* No downstream project is placed before a confirmed upstream dependency.
+* No unresolved cyclic component is silently broken.
+* All projects are accounted for as assigned, conditional, or unassigned.
+* Repeated runs produce identical outputs.
+* Every assignment is traceable to evidence.
+
+After generating the artifacts, report:
+
+1. Total migration waves.
+2. Number of projects assigned.
+3. Number of projects remaining unassigned.
+4. Projects eligible for parallel migration.
+5. Top critical blockers.
+6. Recommendations for Phase 4.
+
+Complete Phase 3B only and stop for approval.
