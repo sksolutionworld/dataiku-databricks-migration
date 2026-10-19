@@ -48,3 +48,84 @@ Important rules
 * Do not generate Databricks code.
 
 Execute Phase 1 only, create the three assessment documents, summarize your findings, and stop for my approval.
+
+
+....
+
+PHASE 2
+
+Continue the Dataiku-to-Databricks Migration Planning project.
+
+Phase 1 is complete and the following documents exist:
+
+* inventory_assessment.md
+* data_gaps.md
+* proposed_architecture.md
+
+I approve Phase 2 — Dependency Graph Construction and Validation only.
+
+Objective
+
+Build a deterministic, reusable Python dependency analysis engine using the existing Excel workbook.
+
+The objective is to identify all cross-project relationships across the 227 discovered projects and prepare a reliable dependency model for future migration planning.
+
+Requirements
+
+1. Reuse the actual workbook schema and Phase 1 findings. Do not assume column names.
+2. Read the Excel in read-only mode without changing its contents.
+3. Extract dataset-level cross-project lineage.
+4. Extract cross-project scenario calls.
+5. Extract scenario build targets and hidden-code dependencies where supported by the workbook.
+6. Extract scenario triggers and scheduling metadata.
+7. Preserve the original dependency type, direction, source worksheet, and source row for every relationship.
+8. Maintain separate dataset lineage, scenario call, build-target, and scheduling graphs.
+9. Produce a combined typed dependency graph for exploration, without treating every edge as an execution-order constraint.
+10. Detect strongly connected components and classify the five reported dependency cycles as unresolved pending evidence. Do not remove or reverse edges automatically.
+11. Identify missing projects, broken references, contradictory relationships, and ambiguous dependencies.
+12. Reconcile the difference between the expected 228 projects and the 227 discovered projects.
+13. Identify upstream and downstream projects and calculate dependency impact.
+14. Flag high-impact projects, including those with large downstream fan-out.
+15. Use NetworkX and deterministic algorithms for graph operations.
+
+Deliverables
+
+Create a modular Python implementation with unit tests and produce:
+
+* output/project_dependencies.json
+* output/scenario_dependencies.json
+* output/cross_project_dag.json
+* output/dependency_cycles.json
+* output/unresolved_dependencies.json
+* output/dependency_impact.xlsx
+* output/dependency_graph.html
+* output/phase2_assessment.md
+
+The cross_project_dag.json filename is a proposed contract name only. If the graph contains cycles, explicitly mark it as non-DAG and preserve the full graph. Never claim that a cyclic graph is a valid DAG.
+
+The interactive HTML graph should allow filtering by project, dependency type, and upstream/downstream relationships.
+
+Validation
+
+* Compare extracted counts against Phase 1 findings.
+* Verify that every edge has traceable source evidence.
+* Verify deterministic output across repeated runs.
+* Test missing references, cycles, duplicate edges, and disconnected projects.
+* Clearly distinguish observed relationships from inferred relationships.
+* Do not fabricate missing metadata.
+
+Restrictions
+
+* No Dataiku API calls yet.
+* No Databricks deployment.
+* No modifications to the existing conversion agent.
+* No migration-wave generation.
+* No scenario schedule creation.
+* No GitHub Actions modifications.
+* Do not automatically resolve cycles.
+
+Final response
+
+Summarize actual graph statistics, all detected cycles, unresolved dependencies, project scope discrepancies, and recommended next steps.
+
+Complete Phase 2 only and stop for approval before Phase 3.
