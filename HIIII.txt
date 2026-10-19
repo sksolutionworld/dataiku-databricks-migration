@@ -389,3 +389,135 @@ Restrictions
 Generate the blueprint and reports only.
 
 Complete Phase 4 and stop for my approval before Phase 5.
+
+
+......................
+
+Continue the Dataiku-to-Databricks Migration Planning project.
+
+Phases 1, 2, 3A, 3B, and 4 are complete.
+
+I approve Phase 5 — Final Migration Master Plan and Architecture Review.
+
+Objective
+
+Consolidate all existing migration-planning artifacts into a complete, evidence-backed, reviewable master plan for the 227 in-scope Dataiku projects.
+
+This is a planning and reporting phase only. Do not deploy or modify any Dataiku or Databricks resources.
+
+Tasks
+
+1. Consolidate project migration plans
+
+Combine:
+
+* Verified project inventory.
+* Cross-project dataset dependencies.
+* Scenario dependencies.
+* Migration readiness classifications.
+* Provisional migration waves.
+* Unassigned projects and blockers.
+
+Produce one project-level master migration plan covering all 227 projects.
+
+Preserve provisional status and clearly distinguish approved from unapproved projects.
+
+2. Consolidate Databricks orchestration
+
+Include:
+
+* Proposed Databricks job definitions.
+* Cross-job dependencies.
+* Selective dataset build targets.
+* Scenario execution ordering.
+* Scheduled, called-only, manual-only, and conflicting scenarios.
+* Scenario cycles and unresolved custom execution logic.
+
+Do not automatically convert unresolved scenario cycles into executable job chains.
+
+3. Scheduling and cutover
+
+Create a scheduling migration plan that identifies:
+
+* Translatable schedules.
+* Missing timezone and calendar details.
+* Schedule ownership conflicts.
+* Duplicate-run risks.
+* Proposed cutover sequencing.
+* Rollback considerations.
+
+Do not invent missing scheduling values.
+
+4. Migration coexistence
+
+Identify dependencies between projects remaining in Dataiku and projects migrating to Databricks.
+
+Propose handoff strategies and cutover prerequisites without assuming that all datasets are already accessible in Databricks.
+
+5. Blocker and decision register
+
+Consolidate all unresolved findings.
+
+For each blocker, include:
+
+* Description.
+* Affected projects and scenarios.
+* Severity.
+* Business or technical owner, if known.
+* Recommended resolution.
+* Evidence source.
+* Approval status.
+
+Prioritize decisions by how many downstream projects they could unblock.
+
+6. Final deliverables
+
+Generate:
+
+* output/final_migration_master_plan.xlsx
+* output/final_migration_master_plan.json
+* output/final_orchestration_blueprint.json
+* output/final_scheduling_plan.xlsx
+* output/final_blocker_register.xlsx
+* output/migration_executive_summary.md
+* output/migration_architecture_review.md
+* output/phase5_assessment.md
+
+The master Excel must contain all 227 projects, their provisional wave assignments, upstream and downstream dependencies, readiness, blockers, and approval status.
+
+Provide separate worksheets for migration waves, scenario orchestration, scheduling, cutover, and unresolved decisions.
+
+7. Quality and validation
+
+* Reconcile project counts across all phases.
+* Preserve original workbook evidence.
+* Verify that no blocked project is marked approved.
+* Verify that unresolved scenario cycles remain flagged.
+* Verify that schedule conflicts remain paused.
+* Ensure all generated outputs are deterministic.
+* Run all existing tests and add integration tests where appropriate.
+
+Restrictions
+
+* Use only the original Excel workbook and existing local planning artifacts.
+* No Dataiku API calls.
+* No Databricks API calls.
+* No deployment.
+* No modifications to the existing conversion agent.
+* No GitHub Actions changes.
+* No automatic approval of migration waves.
+* No invented business priorities, schedules, or dependencies.
+
+Final response
+
+Summarize:
+
+1. Total projects accounted for.
+2. Provisional migration waves.
+3. Assigned versus unassigned projects.
+4. Scheduling readiness.
+5. Critical blockers and approvals required.
+6. Recommended first migration wave for human review.
+7. Remaining information required before production execution.
+
+Complete Phase 5 and stop. Do not proceed with implementation or deployment.
