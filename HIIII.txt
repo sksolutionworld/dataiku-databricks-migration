@@ -1728,3 +1728,13 @@ Requirements:
 11. Validate that no projects or dependencies are lost.
 
 Before implementation, report whether the approved Excel contains reliable project owner information and identify the source field. If ownership cannot be established reliably, report the gap rather than inventing names.
+
+.......
+
+Update output/migration_waves_simple.html to treat project ownership information from the approved Excel (Project Summary.owner) as accepted for migration planning.
+
+* Retain the ownership source information showing 227/227 projects and 19 distinct owners.
+* Remove the “Ownership not yet confirmed by owners” warning and its action to circulate the owner list.
+* Do not modify the approved Excel or its empty owner review columns.
+* Do not change migration waves, project statuses, dependencies, scenario schedules, or other missing-information findings.
+* Regenerate the dashboard and run existing tests.
