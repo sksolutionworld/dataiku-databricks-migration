@@ -1584,3 +1584,23 @@ Constraints:
 * Reuse existing analysis and scripts to minimize token usage.
 
 Output a concise proposed migration-wave reassignment report for review.
+
+
+.......
+
+
+Continue migration dependency resolution for LIN-03 AMMONIA, LIN-04 COOKSTOVE and LIN-05 TRADE_FLOWS.
+
+Use only the approved Dataiku workbook and existing analysis.
+
+For each group:
+
+1. Identify cyclic project dependencies.
+2. Examine scenario schedules, triggers and cross-project calls.
+3. Distinguish confirmed runtime dependencies from uncertain execution behavior.
+4. Determine whether grouping the projects into one migration unit is justified.
+5. Calculate downstream projects that could receive provisional migration waves.
+
+Do not modify the workbook, dashboards or current wave assignments.
+
+Produce one concise report showing evidence, proposed grouping, unresolved questions and potential project releases. Do not automatically approve any group.
