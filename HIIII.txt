@@ -1537,3 +1537,28 @@ for run in scenario.get_last_runs(limit=10):
     print(json.dumps(run.trigger, indent=2, default=str))
     print("RUN INFO:")
     print(json.dumps(run.get_info(), indent=2, default=str))
+    ..........
+
+
+    Analyze LIN-01 using the approved Dataiku Excel workbook and the existing migration analysis.
+
+Objective: Determine how to migrate the six cyclically dependent projects together to Azure Databricks without changing their business logic or execution behavior.
+
+1. Identify all six LIN-01 projects and their internal dependencies.
+2. Preserve all ten recorded lineage edges.
+3. Treat MD_MALAYSIA_MASTER → COUNTRYCURVEAGGREGATIONS as a confirmed configured dataset-modification trigger.
+4. Analyze scenario schedules, dataset-modification triggers, cross-project scenario calls, and execution order.
+5. Identify whether the projects require sequential execution, previous-run data, or multiple execution passes.
+6. Propose a Databricks Workflows orchestration approach that preserves the existing behavior.
+7. Identify any remaining questions that cannot be answered from the workbook.
+
+Constraints:
+
+* Do not modify the approved Excel workbook.
+* Do not modify existing dashboards or wave assignments.
+* Do not remove dependency edges to eliminate cycles.
+* Do not assume that schedule timing alone proves a previous-run dependency.
+* Do not generate Databricks notebooks yet.
+* Keep the analysis concise and evidence-based.
+
+Output: output/LIN01_migration_execution_plan.md containing the dependency diagram, proposed execution sequence, evidence, unresolved questions, and migration recommendation
