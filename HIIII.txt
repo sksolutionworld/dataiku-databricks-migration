@@ -1460,3 +1460,47 @@ If scenario information is unavailable in the approved Excel, do not invent it. 
 Do not modify the approved Excel or existing migration wave assignments. Do not connect to Dataiku APIs without approval.
 
 Reuse existing code and minimize token usage
+
+
+............
+
+Analyze the 53 unassigned projects in our existing Dataiku-to-Databricks migration wave plan.
+
+Use the approved Excel workbook and existing dependency analysis as the source of truth.
+
+Do not modify the Excel workbook, dashboard, or migration wave assignments.
+
+Create one report:
+
+output/53_unassigned_projects_analysis.csv
+
+For each of the 53 projects, include:
+
+1. Project key
+2. Issue category (Dependency Cycle / Contradictory Information / Upstream Blocked)
+3. Exact issue in simple language
+4. Related project keys
+5. Dataset or scenario responsible, if recorded
+6. Excel worksheet and row containing the evidence
+7. Root blocking project or dependency cycle
+8. Whether additional Dataiku information is required (Yes/No)
+9. Exact information required, if applicable
+10. Recommended next action
+
+Group the results into:
+
+* 15 projects with dependency cycles
+* 4 projects with contradictory information
+* 34 projects blocked by upstream dependencies
+
+For dependency cycles, show the exact relationships forming each cycle.
+
+For contradictory information, show both conflicting records.
+
+For upstream-blocked projects, identify which of the 19 directly affected projects must be resolved first.
+
+Do not invent missing information or recommend changing approved dependencies without evidence.
+
+Keep the report simple and concise. Reuse existing analysis to minimize token usage.
+
+After generating the CSV, summarize the main issues and explain which problems should be addressed first.
