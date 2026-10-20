@@ -1640,3 +1640,31 @@ Investigate Egypt contradiction Row 26 using the approved Excel and the followin
 Classify the MD_ dataset reference as an apparent stale or incorrect reference, while preserving the confirmed source-to-consumer project dependency.
 
 Return the classification and any remaining uncertainty. Do not modify the approved Excel, migration waves, or dashboards.
+
+.....
+
+Update the complete Dataiku-to-Databricks migration assessment for all 227 projects.
+
+Use the approved Dataiku precheck Excel as the authoritative source, together with the investigation findings already documented in this Copilot session.
+
+1. Reassess all 53 currently unassigned projects, including dependency cycles, contradictory references, and downstream blocked projects.
+2. Incorporate the live Dataiku UI findings:
+    * Egypt: DS_Egypt_Gas_Supply_LNGImports_C10_PI exists, but the separately referenced MD_Egypt_Gas_Supply_LNGImports_C10_PI was not found. The consumer recipe references the DS-prefixed dataset. Classify the MD-prefixed reference as likely missing/stale, pending owner confirmation.
+    * Electrolysis: Medium_Phase1_ONLY was not found in Tester_Medium_Electrolysis_EU or Medium_Merges_Electrolysis_EU. The referenced 4B_MERGES_ELECTROLYSIS_EU project was not found in the project search. Classify as likely missing/stale, pending owner confirmation.
+    * Preserve previously verified shared-object relationships and scenario-trigger dependencies.
+3. Recalculate dependency waves using confirmed dependencies only. Do not silently remove unresolved dependencies to force projects into waves.
+4. Update output/migration_waves_simple.html, output/migration_waves_simple.csv, output/missing_information.csv, and the 53-project investigation report.
+5. Preserve the approved Excel and original complex dashboard unchanged.
+6. Retain the existing simple dashboard layout, wave colors, and expandable scenario schedules.
+7. Clearly distinguish confirmed findings, likely findings, unresolved issues, and projects blocked downstream.
+8. Run validation to ensure every one of the 227 projects appears exactly once.
+
+Finally, report:
+
+* Previous versus updated wave counts
+* Assigned versus unassigned project totals
+* Issues resolved, still pending, and requiring owner confirmation
+* Files modified
+* Any assumptions made
+
+Do not invent missing project mappings, dataset names, or dependencies.
