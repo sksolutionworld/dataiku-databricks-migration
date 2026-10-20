@@ -1504,3 +1504,17 @@ Do not invent missing information or recommend changing approved dependencies wi
 Keep the report simple and concise. Reuse existing analysis to minimize token usage.
 
 After generating the CSV, summarize the main issues and explain which problems should be addressed first.
+
+.........
+
+Focus only on LIN-01.
+
+Using the approved Excel workbook, identify the exact six-project dependency cycle and all supporting dataset and scenario references.
+
+Check whether the existing scenario schedule, scenario steps, and dependency information can establish the execution order.
+
+Do not ask me to check Dataiku until you have exhausted the approved workbook evidence.
+
+If information is still missing, give me exactly ONE specific item to retrieve from Dataiku, including the project, dataset or scenario, and what needs to be confirmed.
+
+Do not modify the approved Excel or migration waves yet.
