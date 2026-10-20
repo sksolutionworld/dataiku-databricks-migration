@@ -1707,3 +1707,24 @@ Keep the approved Excel and original dashboard unchanged. Update only the simple
 Show exactly how many of the original 53 projects move into grouped migration or ready status, and how many remain blocked. Include the reason for each classification.
 
 Do not remove real dependencies or invent missing datasets.
+
+..........
+
+
+Enhance the existing Dataiku-to-Databricks migration dashboard to display project owner information for all 227 projects.
+
+Requirements:
+
+1. First inspect the approved Dataiku precheck Excel and existing extracted metadata for project owner information.
+2. Reuse existing information wherever available. Do not make new API calls unless necessary.
+3. Do not assume that the project creator or administrator is the project owner.
+4. If the owner is unavailable, display “Owner not identified” and include the project in Missing Information.
+5. Add a Project Owner column to the Migration Waves project listing.
+6. Display individual project owners within each Grouped Migration Unit.
+7. Add an optional Project Owner filter if it can be implemented without significant complexity.
+8. Preserve all 227 projects, existing migration wave assignments, statuses, scenario schedules, and dependency information.
+9. Do not modify the approved Excel or original dashboard.
+10. Update only the simple dashboard and its supporting generated files.
+11. Validate that no projects or dependencies are lost.
+
+Before implementation, report whether the approved Excel contains reliable project owner information and identify the source field. If ownership cannot be established reliably, report the gap rather than inventing names.
