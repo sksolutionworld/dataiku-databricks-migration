@@ -1562,3 +1562,25 @@ Constraints:
 * Keep the analysis concise and evidence-based.
 
 Output: output/LIN01_migration_execution_plan.md containing the dependency diagram, proposed execution sequence, evidence, unresolved questions, and migration recommendation
+
+
+...........
+
+Continue the Dataiku-to-Databricks migration planning using the existing LIN-01 analysis.
+
+1. Mark LIN-01’s six projects as one proposed atomic migration group, with status ORCHESTRATION_VALIDATION_PENDING.
+2. Preserve all 10 lineage dependencies and the confirmed Malaysia Master → Country Curve Aggregations trigger.
+3. Recalculate the dependency graph by treating LIN-01 as one grouped node.
+4. Determine how many of its 28 downstream blocked projects can receive provisional migration waves.
+5. Analyze the next unresolved group, LIN-02 (AU_ACCU), using the same evidence-based approach.
+6. Report updated assigned/unassigned counts and any remaining blockers.
+
+Constraints:
+
+* Do not modify the approved Excel workbook.
+* Do not modify existing dashboards or wave assignments yet.
+* Do not delete dependency edges.
+* Do not generate Databricks notebooks or workflows yet.
+* Reuse existing analysis and scripts to minimize token usage.
+
+Output a concise proposed migration-wave reassignment report for review.
