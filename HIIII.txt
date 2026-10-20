@@ -1518,3 +1518,22 @@ Do not ask me to check Dataiku until you have exhausted the approved workbook ev
 If information is still missing, give me exactly ONE specific item to retrieve from Dataiku, including the project, dataset or scenario, and what needs to be confirmed.
 
 Do not modify the approved Excel or migration waves yet.
+
+..........
+
+import dataiku
+import json
+
+client = dataiku.api_client()
+
+project = client.get_project("COUNTRYCURVEAGGREGATIONS")
+scenario = project.get_scenario("CCAGGREGATIONSAUTOMATEDRUN")
+
+# Fetch the latest 10 runs without starting a new scenario
+for run in scenario.get_last_runs(limit=10):
+    print("\nRUN:", run.id)
+    print("START:", run.start_time)
+    print("TRIGGER:")
+    print(json.dumps(run.trigger, indent=2, default=str))
+    print("RUN INFO:")
+    print(json.dumps(run.get_info(), indent=2, default=str))
