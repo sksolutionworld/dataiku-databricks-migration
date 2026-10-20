@@ -1625,3 +1625,18 @@ Do not assume similarly named projects or datasets are interchangeable.
 Report whether each issue is a missing dataset, stale reference, incorrect project mapping, or still requires verification.
 
 Do not modify the approved Excel, migration waves, or dashboards. Return findings only.
+
+...
+
+Investigate Egypt contradiction Row 26 using the approved Excel and the following verified live Dataiku evidence:
+
+* Source project: MD_EGYPT_GAS_SUPPLY_LNGIMPORTS_C10_SI
+* Consumer project: MD_GLOBAL_GAS_AGGREGATOR_SI
+* Actual recipe input: DS_Egypt_Gas_Supply_LNGImports_C10_PI
+* Actual recipe output: DS_Egypt_C10_prep
+* The DS_ input dataset exists and has data.
+* The previously flagged MD_Egypt_Gas_Supply_LNGImports_C10_PI dataset was not found in the source project.
+
+Classify the MD_ dataset reference as an apparent stale or incorrect reference, while preserving the confirmed source-to-consumer project dependency.
+
+Return the classification and any remaining uncertainty. Do not modify the approved Excel, migration waves, or dashboards.
