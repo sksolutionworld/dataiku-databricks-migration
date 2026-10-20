@@ -1604,3 +1604,24 @@ For each group:
 Do not modify the workbook, dashboards or current wave assignments.
 
 Produce one concise report showing evidence, proposed grouping, unresolved questions and potential project releases. Do not automatically approve any group.
+
+
+.........
+
+Investigate the Egypt contradictory references using the approved Dataiku precheck Excel.
+
+Live Dataiku findings:
+
+* Project MD_EGYPT_GAS_SUPPLY_LNGIMPORTS_C10_SI exists.
+* Dataset DS_Egypt_Gas_Supply_LNGImports_C10_PI exists in that project.
+* Medium_Phase1_ONLY was not found in that project’s Flow.
+
+Compare these findings against Broken References rows 26 and 39 and the corresponding Lineage Edges.
+
+Identify the exact source project, consumer project, dataset name, and reason for each contradiction.
+
+Do not assume similarly named projects or datasets are interchangeable.
+
+Report whether each issue is a missing dataset, stale reference, incorrect project mapping, or still requires verification.
+
+Do not modify the approved Excel, migration waves, or dashboards. Return findings only.
