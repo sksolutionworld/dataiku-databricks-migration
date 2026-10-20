@@ -1738,3 +1738,157 @@ Update output/migration_waves_simple.html to treat project ownership information
 * Do not modify the approved Excel or its empty owner review columns.
 * Do not change migration waves, project statuses, dependencies, scenario schedules, or other missing-information findings.
 * Regenerate the dashboard and run existing tests.
+
+.....
+
+Task: Analyze the Dataiku-to-Databricks Migration Framework and Generate Technical Documentation
+
+Act as a Senior Software Architect, Python Engineer, and Azure Databricks Migration Specialist.
+
+Objective
+
+Thoroughly analyze the existing dataiku-databricks-migration repository and create accurate, easy-to-understand documentation explaining how our migration framework is designed and implemented.
+
+The documentation will be used to present the framework to managers, architects, developers, and technical stakeholders.
+
+Do not include any Titanic-specific project or demo instructions.
+
+1. Complete Repository Analysis
+
+Read the actual repository source code, configurations, scripts, tests, templates, and existing documentation.
+
+Identify:
+
+* Overall framework architecture.
+* Repository structure and module responsibilities.
+* Application entry points and execution sequence.
+* Dataiku project ZIP processing.
+* Dataiku Recipe Details API integration.
+* Raw evidence collection and normalization.
+* Canonical data models and contracts.
+* Dependency reconciliation and DAG generation.
+* Recipe classification and conversion engine.
+* Deterministic conversion versus AI/LLM-based processing.
+* Generation of Databricks Python notebooks and shared libraries.
+* Unity Catalog mapping and dataset resolution.
+* Environment configuration and deployment.
+* Databricks Asset Bundle support.
+* Logging, exception handling, validation, and testing.
+* Supported and unsupported Dataiku recipe types.
+
+Document only functionality verified in the repository.
+
+2. Architecture and Workflow Guide
+
+Create docs/MIGRATION_FRAMEWORK_GUIDE.md.
+
+Include:
+
+1. Executive summary — what the framework does and why it exists.
+2. High-level architecture with Mermaid diagram.
+3. Complete end-to-end processing flow.
+4. Detailed explanation of each architectural component.
+5. Repository folder structure and module responsibilities.
+6. How the framework processes Dataiku project exports and API metadata.
+7. How dependency ordering and DAG execution work.
+8. How Dataiku recipes become Databricks code.
+9. How notebooks and shared Python modules are generated.
+10. How generated code is configured, deployed, and executed.
+11. How validation and error handling work.
+12. Current implementation status and limitations.
+
+For each component, identify the actual source file, class, and function.
+
+3. Technical Deep Dive
+
+Create docs/MIGRATION_TECHNICAL_DEEP_DIVE.md.
+
+Explain the internal implementation, including:
+
+* Important classes and functions.
+* Data structures and contracts.
+* Module interactions.
+* Conversion registry and recipe handlers.
+* Input/output dataset mapping.
+* Dependency graph construction.
+* Code-generation strategy.
+* Configuration handling.
+* Generated artifact structure.
+* Validation and test coverage.
+* Error handling and recovery behavior.
+
+Include Mermaid sequence diagrams based on actual code paths.
+
+Explain why each component exists and how it interacts with the others.
+
+4. Architecture Presentation Guide
+
+Create docs/MIGRATION_PRESENTATION_GUIDE.md.
+
+Prepare a 15–20 minute technical presentation covering:
+
+* Problem statement.
+* Framework objectives.
+* High-level architecture.
+* Repository walkthrough.
+* End-to-end migration workflow.
+* Conversion engine.
+* Dependency handling.
+* Generated Databricks artifacts.
+* Deployment approach.
+* Validation and limitations.
+* Key technical decisions.
+* Future improvement opportunities.
+
+For each section provide:
+
+* What to show on screen.
+* What to explain in simple English.
+* Relevant repository files.
+* Approximate presentation duration.
+
+Include 15–20 likely audience questions with answers grounded in the implementation.
+
+5. Quick Reference Guide
+
+Create docs/MIGRATION_QUICK_REFERENCE.md.
+
+Include a concise reference covering:
+
+* Architecture summary.
+* Main components.
+* Important Python modules.
+* Processing stages.
+* Supported recipe types.
+* Actual execution commands.
+* Configuration requirements.
+* Generated artifacts.
+* Deployment commands, if supported.
+* Known limitations.
+
+Mandatory Requirements
+
+* Do not hallucinate functionality.
+* Do not assume that planned features are already implemented.
+* Clearly label implemented, partially implemented, planned, and unsupported capabilities.
+* Reference actual repository paths and functions.
+* Use Mermaid diagrams for architecture and execution flows.
+* Use clear, professional English.
+* Do not expose credentials, API keys, tokens, or private URLs.
+* Do not modify source code, configuration, tests, or existing documentation.
+* Create or update only the four requested Markdown files.
+* Do not execute migrations or deployments.
+* Do not include Titanic-specific documentation.
+
+Final Deliverables
+
+Generate these four documents:
+
+1. docs/MIGRATION_FRAMEWORK_GUIDE.md
+2. docs/MIGRATION_TECHNICAL_DEEP_DIVE.md
+3. docs/MIGRATION_PRESENTATION_GUIDE.md
+4. docs/MIGRATION_QUICK_REFERENCE.md
+
+Before finishing, cross-check every technical statement against the repository implementation.
+
+Finally, summarize the actual architecture, important modules, implemented capabilities, identified gaps, and the recommended order in which I should read the documents.
