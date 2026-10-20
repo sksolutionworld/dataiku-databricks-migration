@@ -1668,3 +1668,20 @@ Finally, report:
 * Any assumptions made
 
 Do not invent missing project mappings, dataset names, or dependencies.
+
+.........
+
+
+Proceed with resolving the 53 unassigned projects using all verified Dataiku UI findings and the approved Excel.
+
+Reconcile contradictory records against actual recipe inputs, dataset existence, shared objects, and scenario dependencies.
+
+Remove a blocking edge from the migration-planning graph only when evidence proves it is invalid or stale. Preserve an audit record explaining every correction.
+
+Recalculate all migration waves and automatically release downstream projects whose dependencies are now resolved.
+
+For genuine dependency cycles, assess whether the projects can be migrated together as a dependency group. Show these separately from unresolved errors.
+
+Update the simple dashboard and supporting CSV reports. Keep the approved Excel and original complex dashboard unchanged.
+
+Report exactly how many of the original 53 projects were cleared, how many remain blocked, and why. Do not claim an issue is resolved without supporting evidence.
