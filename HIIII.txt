@@ -1685,3 +1685,25 @@ For genuine dependency cycles, assess whether the projects can be migrated toget
 Update the simple dashboard and supporting CSV reports. Keep the approved Excel and original complex dashboard unchanged.
 
 Report exactly how many of the original 53 projects were cleared, how many remain blocked, and why. Do not claim an issue is resolved without supporting evidence.
+
+.........
+
+Review all 53 unassigned projects and determine which can be assigned to migration waves using strongly connected components (SCCs).
+
+Treat each genuine circular dependency group as a single migration planning unit, preserving all internal dependencies.
+
+Build a DAG of these groups and the remaining individual projects, then recalculate migration waves.
+
+In the dashboard, distinguish:
+
+* Ready: no unresolved blockers
+* Grouped migration: circular dependencies requiring coordinated migration and validation
+* Blocked: missing or contradictory dependencies requiring resolution
+
+Do not classify grouped migration projects as fully ready. Preserve scenario schedules and trigger relationships.
+
+Keep the approved Excel and original dashboard unchanged. Update only the simple dashboard and supporting reports.
+
+Show exactly how many of the original 53 projects move into grouped migration or ready status, and how many remain blocked. Include the reason for each classification.
+
+Do not remove real dependencies or invent missing datasets.
