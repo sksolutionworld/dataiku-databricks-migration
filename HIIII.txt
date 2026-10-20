@@ -1433,3 +1433,30 @@ Reuse existing analysis wherever possible.
 Calculate the migration waves and create the new, simple, color-coded dashboard.
 
 Do not modify the existing dashboard.
+
+
+...........
+
+Enhance the existing output/migration_waves_simple.html dashboard to include Dataiku scenario schedules.
+
+Keep all existing migration waves, colors, counts, and dependency calculations unchanged.
+
+First check the approved Excel workbook for scenario information.
+
+For each project, capture where available:
+
+* Scenario name and ID
+* Schedule enabled or disabled
+* Trigger type (time-based, dataset-based, or other)
+* Scheduled execution time and timezone
+* Frequency (daily, weekly, monthly, etc.)
+* Scenarios that trigger other projects or scenarios
+* Scenario execution order
+
+Add a simple expandable Scenario Schedule section within each project’s details.
+
+If scenario information is unavailable in the approved Excel, do not invent it. Generate output/missing_scenario_schedule.csv listing the exact project keys and fields required from Dataiku.
+
+Do not modify the approved Excel or existing migration wave assignments. Do not connect to Dataiku APIs without approval.
+
+Reuse existing code and minimize token usage
