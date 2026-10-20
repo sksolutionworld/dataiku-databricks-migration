@@ -1181,3 +1181,255 @@ Strict Constraints
 Use the existing implementation and generated artifacts as the single source of truth.
 
 Expected outcome: A complete, accurate, easy-to-follow dashboard documentation package that developers, architects, migration leads and project owners can use without assistance
+
+..............
+
+Dataiku to Databricks — Simple Migration Wave Dashboard
+
+OBJECTIVE
+
+Create a NEW, lightweight, color-coded Dataiku-to-Databricks Migration Wave Dashboard for our 227 Dataiku projects.
+
+The dashboard must clearly show:
+
+* Which projects can migrate FIRST
+* Which projects can migrate SECOND
+* Which projects can migrate THIRD
+* Which projects belong to subsequent waves
+* Which projects cannot yet be assigned and why
+* What additional information must be collected, if any
+
+Keep the solution SIMPLE, accurate, and optimized for minimum GitHub Copilot token usage.
+
+1. APPROVED EXCEL — FINAL SOURCE OF TRUTH
+
+IMPORTANT:
+
+Our existing Dataiku migration Excel workbook was extracted directly from Dataiku using APIs.
+
+This Excel workbook has been reviewed and APPROVED.
+
+Treat it as the FINAL APPROVED SOURCE OF TRUTH for migration planning.
+
+Mandatory rules:
+
+1. Locate the existing approved Excel workbook in the repository.
+2. Use its project inventory and dependency information as authoritative.
+3. Read relevant worksheets, including hidden worksheets where necessary.
+4. Do not ask me to revalidate approved Excel information.
+5. Do not modify the original Excel workbook.
+6. Do not override approved information with previous dashboard hypotheses.
+7. Do not invent missing dependencies.
+8. Do not remove or reverse approved dependency relationships.
+9. Reuse existing analysis only when consistent with the approved Excel.
+10. If essential information is missing or contradictory, report it separately.
+
+The objective is to calculate migration waves from approved data, not to reinvestigate every Dataiku project.
+
+2. REUSE EXISTING WORK — MINIMIZE TOKENS
+
+The repository already contains migration planning analysis and an existing dashboard.
+
+To reduce token consumption:
+
+* Reuse existing reliable dependency data and parsing logic.
+* Do not rebuild the entire migration framework.
+* Do not recreate the existing dashboard.
+* Do not analyze unrelated repository files.
+* Do not perform unnecessary project-by-project investigations.
+* Do not generate lengthy documentation.
+* Do not use AI reasoning for calculations that can be performed deterministically in Python.
+* Use standard Python libraries and existing installed dependencies where practical.
+
+Only perform the processing necessary to create the new dashboard.
+
+3. MIGRATION WAVE CALCULATION
+
+Analyze the approved Excel and calculate dependency-based migration waves.
+
+Use topological ordering.
+
+A project must never be scheduled before its required upstream projects.
+
+Assign projects as follows:
+
+WAVE 1:
+Projects with no unresolved in-scope upstream dependencies.
+
+WAVE 2:
+Projects whose in-scope prerequisites are all assigned to Wave 1.
+
+WAVE 3:
+Projects whose in-scope prerequisites are all assigned to earlier waves.
+
+WAVE 4 AND ABOVE:
+Automatically create additional waves as required.
+
+Projects within the same wave may be migrated in parallel where their dependencies permit.
+
+For out-of-scope upstream dependencies, use approved workbook information to determine whether they are external prerequisites. Do not silently assume they have been migrated.
+
+If a project cannot safely be assigned because of missing evidence, contradictions, cycles, or unresolved upstream dependencies, place it in the Unassigned group.
+
+Do not force blocked projects into a migration wave.
+
+4. EXACT DASHBOARD COLORS
+
+Use these exact colors consistently across summary cards, wave headings, project status indicators, and filters.
+
+Migration Stage	Color	HEX
+Wave 1 — Migrate First	GREEN	#16A34A
+Wave 2 — Migrate Second	BLUE	#2563EB
+Wave 3 — Migrate Third	YELLOW	#EAB308
+Wave 4 — Migrate Fourth	PURPLE	#9333EA
+Wave 5 and Above	TEAL	#0D9488
+Unassigned / Blocked	RED	#DC2626
+
+Use readable text contrast and a clean, professional layout.
+
+5. CREATE ONLY THREE DASHBOARD SECTIONS
+
+SECTION A — SUMMARY
+
+Display:
+
+* Total Dataiku projects
+* Total assigned projects
+* Total unassigned projects
+* Number of projects in each migration wave
+* Color-coded wave cards
+
+Recalculate all counts from the approved workbook.
+
+Do not hardcode previous dashboard counts.
+
+SECTION B — MIGRATION WAVES
+
+Display actual projects grouped by wave.
+
+For each project, show:
+
+* Project key
+* Project name, if available
+* Assigned migration wave
+* Upstream prerequisite project keys
+* Dependency status
+
+Features:
+
+* Search by project key or name
+* Filter by migration wave
+* Expand or collapse project lists
+* Clear color coding
+* CSV export of migration wave assignments
+
+Do not include complicated dependency graphs, SCC visualizations, root-cause investigation tabs, or troubleshooting workflows.
+
+SECTION C — MISSING INFORMATION
+
+Display projects that cannot safely be assigned.
+
+For each project, show:
+
+* Project key
+* Reason for being unassigned
+* Related upstream projects
+* Missing or contradictory information, if applicable
+* Exact Dataiku information required to proceed
+* Relevant Excel worksheet and row, where available
+
+Distinguish between:
+
+1. Missing information
+2. Contradictory information
+3. Confirmed dependency cycles
+4. Projects blocked by unresolved upstream projects
+
+Do not describe a confirmed cycle as missing data.
+
+Group identical information requests so that I can extract the required information from Dataiku in one batch.
+
+If no additional information is needed, explicitly state that.
+
+Provide a CSV export.
+
+6. VALIDATION
+
+Before generating the final dashboard:
+
+1. Verify the number of in-scope projects against the approved Excel.
+2. Ensure every project appears exactly once, either in a migration wave or the Unassigned group.
+3. Ensure no project is scheduled before its in-scope prerequisites.
+4. Detect dependency cycles.
+5. Preserve all approved dependency edges.
+6. Do not silently discard contradictory or incomplete records.
+7. Recalculate wave counts deterministically.
+8. Ensure dashboard and CSV outputs contain consistent results.
+9. Clearly distinguish dependency-based migration eligibility from actual migration completion or business approval.
+
+7. OUTPUT FILES
+
+Create ONLY these three new files:
+
+1. output/migration_waves_simple.html
+    * Standalone HTML dashboard
+    * Three sections only
+    * Exact wave colors
+    * Search and filtering
+    * No external services required
+2. output/migration_waves_simple.csv
+    * Project key
+    * Project name
+    * Migration wave
+    * Prerequisites
+    * Assignment status
+3. output/missing_information.csv
+    * Project key
+    * Unassigned reason
+    * Related projects
+    * Missing information required
+    * Excel evidence reference
+
+Do not modify or delete:
+
+* The approved Excel workbook
+* output/wave_dependency_graph.html
+* Existing dependency analysis
+* Existing migration framework
+* Other previously generated files
+
+8. IMPORTANT RESTRICTIONS
+
+* Do not create a new agent.
+* Use the existing VS Code Copilot Agent.
+* Do not connect to Dataiku APIs unless explicitly requested.
+* Do not perform manual project-by-project verification.
+* Do not modify Dataiku projects.
+* Do not generate additional reports or documentation.
+* Do not ask unnecessary questions.
+* Do not make speculative dependency corrections.
+* Do not change approved workbook data.
+* Keep the HTML lightweight and easy to share.
+
+9. FINAL RESPONSE
+
+After completing the work, provide only:
+
+1. Location of the new dashboard.
+2. Total projects analyzed.
+3. Project count for each migration wave.
+4. Total unassigned projects.
+5. Whether additional Dataiku information is required.
+6. Location of the missing-information CSV.
+
+Keep the final response concise.
+
+START NOW
+
+Use the approved Dataiku API-extracted Excel workbook as the final source of truth.
+
+Reuse existing analysis wherever possible.
+
+Calculate the migration waves and create the new, simple, color-coded dashboard.
+
+Do not modify the existing dashboard.
