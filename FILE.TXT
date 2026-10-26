@@ -1,0 +1,153 @@
+Task: Create a Standalone Databricks Migration Quality Gateway
+
+Act as a Principal Python Architect, Azure Databricks Engineer, DevOps Engineer, and Multi-Agent Systems Architect.
+
+Objective
+
+Create a new standalone repository named:
+
+databricks-migration-quality-gateway
+
+This repository will provide an independent quality-control and handoff layer between two existing working repositories:
+
+1. dataiku-databricks-migration — generates Databricks notebooks, Python libraries, jobs, and Asset Bundles.
+2. Our existing Databricks GitHub Actions pipeline repository — deploys Databricks bundles.
+
+Do not modify either existing repository.
+
+Architecture
+
+Design two cooperating components.
+
+Agent 1: Code Review Agent
+
+This is the primary agent.
+
+Responsibilities:
+
+* Inspect generated Databricks project bundles.
+* Validate Python code, imports, dependencies, and file structure.
+* Validate Databricks bundle configuration.
+* Check generated job/task DAG consistency.
+* Detect unresolved conversion markers and unsupported transformations.
+* Check for exposed credentials and unsafe configuration.
+* Check compatibility with the destination pipeline repository.
+* Produce actionable findings with severity levels.
+* Propose safe corrections.
+* Require approval for changes affecting business logic.
+* Revalidate after approved corrections.
+* Produce a structured review report.
+* Authorize handoff only when all mandatory gates pass.
+
+Use deterministic validators for objective checks. AI assistance may be used for diagnosis and proposed fixes but must not override validation gates.
+
+Agent 2: Code Transfer Sub-Agent
+
+This component is invoked only after Code Review Agent approval.
+
+Responsibilities:
+
+* Verify the review approval and artifact identity.
+* Validate source and destination paths.
+* Confirm the destination is the expected local Git repository.
+* Detect naming conflicts and existing changes.
+* Transfer only approved artifacts.
+* Preserve bundle structure and relative paths.
+* Verify checksums and transferred file integrity.
+* Prevent accidental overwrites.
+* Produce a handoff manifest and report.
+* Roll back its own changes if transfer fails.
+
+Never bypass the review gate.
+
+Do not commit, push, deploy, or execute Databricks jobs.
+
+Phase 1 — Repository Discovery
+
+Inspect both existing repositories in read-only mode, if available in the VS Code workspace.
+
+Identify:
+
+* Actual migration bundle output structure.
+* Existing Databricks bundle configuration.
+* Generated Python notebook and library conventions.
+* Existing pipeline repository structure.
+* Pipeline bundle placement conventions.
+* Existing GitHub Actions deployment behavior.
+* Environment-specific settings.
+* Existing validation tooling.
+
+If a repository is unavailable, clearly identify the missing information. Do not invent its structure.
+
+Phase 2 — New Repository Foundation
+
+Create the standalone repository with:
+
+* Clear modular architecture.
+* Python package structure.
+* Agent interfaces.
+* Typed configuration and data contracts.
+* Validation result and severity models.
+* Review-gate policy definition.
+* Handoff manifest schema.
+* Structured logging interfaces.
+* Report formats.
+* Unit-test structure.
+* README and architecture documentation.
+
+The repository must be independently executable and testable once implementation stages are completed.
+
+Do not introduce a large agent framework unless justified.
+
+Prefer Python standard libraries and existing approved dependencies.
+
+Phase 3 — Implementation Roadmap
+
+Design an incremental plan:
+
+1. Repository foundation and contracts.
+2. Code Review Agent with deterministic preflight checks.
+3. Review reports and correction proposals.
+4. Controlled correction and revalidation.
+5. Code Transfer Sub-Agent with safe local handoff.
+6. End-to-end orchestration and tests.
+7. Assessment of the two existing Databricks-to-SharePoint scripts for reusable components.
+
+Do not implement all stages now.
+
+Mandatory Requirements
+
+* Preserve existing Migration Agent behavior.
+* Preserve existing pipeline repository behavior.
+* No changes to existing GitHub Actions workflows.
+* No changes to original generated bundles.
+* No automatic business-logic corrections.
+* No credential or token exposure.
+* No automatic Git commit or push.
+* No Databricks deployment or job execution.
+* No automatic file transfer during this stage.
+* No unnecessary framework installation.
+* Include dry-run support in the proposed design.
+* Make review approval mandatory before transfer.
+* Include tests for review-gate enforcement and transfer authorization.
+* Clearly distinguish implemented functionality from future placeholders.
+
+Execute Now
+
+Implement only the repository foundation and architecture contracts.
+
+Do not implement production file transfer, automatic corrections, or actual deployment.
+
+Create the new repository and its initial documentation and tests.
+
+At completion, provide:
+
+1. Repository structure.
+2. Architecture explanation.
+3. Files created.
+4. Tests executed and results.
+5. Existing repository compatibility findings.
+6. Recommended next implementation stage.
+7. Explicit confirmation that neither existing repository was modified.
+
+Stop and wait for my approval before proceeding.
