@@ -1,0 +1,51 @@
+Analyze the complete Databricks pipeline repository currently open in this VS Code workspace.
+
+Objective
+
+Perform a comprehensive, read-only technical assessment of the existing repository and create a detailed architecture and implementation document.
+
+We are planning to integrate automatically generated Databricks notebooks and Python libraries from a separate Dataiku-to-Databricks Migration Agent repository. Before designing that integration, we must understand exactly how this pipeline repository currently works.
+
+Instructions
+
+1. Inspect the complete repository structure, including Python code, YAML, JSON, configuration, CI/CD workflows, scripts, templates, tests and documentation.
+2. Trace the actual execution logic from source code. Do not rely only on the README or existing documentation.
+3. Identify and explain:
+    * Repository architecture and purpose of each major component.
+    * Entry points and complete execution flow.
+    * Databricks Asset Bundle configuration and generation, if implemented.
+    * How Databricks jobs, tasks, dependencies and execution order are defined.
+    * How notebooks, Python libraries and other artifacts are discovered, packaged and deployed.
+    * Environment configuration (dev, UAT, prod), variable handling and overrides.
+    * GitHub Actions or other CI/CD workflows, including triggers, approvals, authentication, validation and deployment.
+    * Branching strategy and deployment promotion logic, where implemented.
+    * Naming conventions, code quality checks, formatting, linting, security checks and tests.
+    * Error handling, retries, logging, monitoring and rollback mechanisms.
+    * Existing integration mechanisms for receiving generated code from another repository.
+    * Hardcoded paths, assumptions, limitations and missing functionality relevant to migration integration.
+4. Distinguish clearly between implemented functionality, documented intentions and functionality that is missing.
+5. For each important technical finding, reference the actual repository file path and relevant function, class, configuration key or workflow step.
+6. Include an end-to-end execution flow diagram using Mermaid.
+7. Explain how a new converted Dataiku project could potentially enter this repository, based strictly on existing capabilities. Do not design or implement a new integration yet.
+8. Identify any unanswered questions that require my input.
+
+Deliverable
+
+Create a single Markdown document:
+
+docs/PIPELINE_REPOSITORY_TECHNICAL_ASSESSMENT.md
+
+Use clear headings, architecture diagrams, tables and practical explanations. Make it detailed enough for another engineer or AI agent to understand the repository without repeating the entire investigation.
+
+Strict restrictions
+
+* Do not modify existing application code, pipeline definitions, workflows, configurations or tests.
+* Do not install packages or run deployment commands.
+* Do not commit, push, transfer or deploy anything.
+* Do not expose secrets or credentials in the document.
+* Only create the requested Markdown assessment document.
+* Do not assume features exist without verifying the implementation.
+
+Final response
+
+Summarize the repository architecture, the main findings, existing bundle/deployment approach, integration capabilities and gaps. Confirm the document location.
