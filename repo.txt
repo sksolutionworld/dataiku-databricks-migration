@@ -49,3 +49,809 @@ Strict restrictions
 Final response
 
 Summarize the repository architecture, the main findings, existing bundle/deployment approach, integration capabilities and gaps. Confirm the document location.
+
+...........
+
+
+COMPLETE TECHNICAL ASSESSMENT — DATAIKU TO DATABRICKS MIGRATION AGENT
+
+1. OBJECTIVE
+
+Perform a comprehensive, READ-ONLY technical assessment of the Dataiku-to-Databricks Migration Agent project currently open in this VS Code workspace.
+
+This is a LOCAL PROJECT DIRECTORY, NOT a Git or GitHub repository.
+
+Analyze the actual framework implementation and create one detailed technical document explaining how the entire migration system works.
+
+The assessment must cover:
+
+* Framework architecture and implementation.
+* Dataiku project acquisition.
+* Recipe and dataset metadata extraction.
+* Normalization and canonical contracts.
+* Dependency DAG construction.
+* Conversion engine and supported Dataiku recipes.
+* Zone-based Databricks notebook generation.
+* Python library generation.
+* Databricks Asset Bundle generation.
+* Existing quality checks, linting and validation.
+* Local testing and automation.
+* Error handling and performance.
+* Compatibility with our separate Databricks pipeline repository.
+* Recommended improvements and integration readiness.
+
+The objective is to understand the current implementation before making any changes.
+
+Do not implement improvements during this assessment.
+
+2. CRITICAL RULE — NO GIT OR GITHUB
+
+This Migration Agent project is maintained as a local directory.
+
+Do NOT:
+
+* Execute Git commands.
+* Inspect Git history, commits, branches, tags, remotes or diffs.
+* Search for version-control metadata.
+* Access GitHub APIs.
+* Assume GitHub Actions workflows exist.
+* Initialize Git.
+* Create branches or pull requests.
+* Commit, push or publish anything.
+* Recommend Git-related changes as part of this assessment.
+
+Use only the files and implementation available in the current local workspace.
+
+If local automation scripts exist, document them. Do not invent CI/CD functionality.
+
+The separate Databricks pipeline repository uses GitHub Actions, but that is a different project and must not be confused with this local Migration Agent.
+
+3. CRITICAL RULE — TOKEN-EFFICIENT ANALYSIS
+
+This local project contains multiple downloaded Dataiku projects, extracted project exports, recipe metadata and generated Databricks artifacts.
+
+DO NOT analyze every downloaded project.
+
+Doing so would consume excessive tokens and provide little additional information about the reusable migration framework.
+
+Phase A — Discover the project structure
+
+First inspect the top-level directories and relevant configuration files.
+
+Classify directories into:
+
+1. Reusable Migration Agent framework source.
+2. Configuration, schemas and templates.
+3. Framework tests and utilities.
+4. Downloaded Dataiku projects.
+5. Extracted ZIP contents and recipe metadata.
+6. Generated Databricks notebooks and bundles.
+7. Logs, caches, virtual environments and temporary artifacts.
+
+Use lightweight directory listings and targeted filesystem searches.
+
+Do not recursively read all files.
+
+Phase B — Exclude project data
+
+Exclude the following from detailed analysis:
+
+* Downloaded Dataiku project directories.
+* Project export ZIP files.
+* Extracted Dataiku project files.
+* Recipe-details JSON collections.
+* Generated notebooks from multiple projects.
+* Generated bundle collections.
+* Historical migration reports.
+* Log files.
+* Virtual environments.
+* Python caches.
+* Temporary files.
+* Large binary files.
+* Model artifacts and datasets.
+
+You may count project directories and files using filesystem metadata if useful.
+
+Do not open their contents merely to count them.
+
+Phase C — Inspect framework implementation
+
+Read only the reusable framework source code, configurations, contracts, converter implementations, renderers, bundle generators, tests and relevant local scripts.
+
+Follow actual function calls and module dependencies.
+
+Avoid repeatedly reading the same files.
+
+Phase D — Representative artifact verification
+
+If the framework source code alone cannot confirm the generated bundle structure, inspect at most ONE small, already-converted project.
+
+Only inspect:
+
+* databricks.yml.
+* One job resource YAML.
+* One notebook header and import section.
+* Relevant library directory structure.
+* Necessary manifest or configuration metadata.
+
+Do not inspect complete transformation logic from the sample project unless absolutely necessary.
+
+If verification requires examining many projects, record the behavior as NOT VERIFIED.
+
+Phase E — Avoid unnecessary execution
+
+Do not:
+
+* Run migrations.
+* Download projects.
+* Call Dataiku APIs.
+* Connect to Databricks.
+* Generate new notebooks.
+* Regenerate bundles.
+* Run full-project validations.
+* Execute expensive integration tests.
+* Install packages.
+* Run commands that modify project data.
+
+Token efficiency is mandatory.
+
+4. FRAMEWORK ARCHITECTURE
+
+Analyze and document:
+
+* Current project directory structure.
+* Purpose of each major reusable module.
+* Main application entry points.
+* CLI commands and execution modes.
+* Configuration loading and precedence.
+* Important classes and functions.
+* Module dependencies.
+* Third-party Python dependencies.
+* Internal state management.
+* Logging and exception handling.
+* Error recovery and resumability.
+* Output directory management.
+
+Identify whether the framework is modular, monolithic or hybrid based on the actual code.
+
+Include a Mermaid architecture diagram.
+
+Reference actual source file paths and important functions.
+
+5. DATAIKU ACQUISITION
+
+Investigate how the framework obtains Dataiku project information.
+
+Cover:
+
+* Dataiku project export ZIP acquisition.
+* Recipe Details API integration.
+* Project metadata retrieval.
+* Recipe metadata extraction.
+* Dataset metadata extraction.
+* Prepare processor settings.
+* Scenario and scheduling metadata, if implemented.
+* Project ZIP extraction and cleanup.
+* Raw evidence storage.
+* Authentication configuration.
+* TLS certificate handling.
+* API timeouts and retries.
+* Error handling.
+* Missing metadata behavior.
+
+Explain the inputs and outputs of each acquisition component.
+
+Do not call live APIs.
+
+6. NORMALIZATION AND CANONICAL CONTRACTS
+
+Inspect:
+
+* Project normalizer.
+* Dataset normalizer.
+* Recipe normalizer.
+* Prepare processor normalizer.
+* Typed models and contracts.
+* Pydantic usage, if implemented.
+* JSON schemas.
+* Validation rules.
+* Reconciliation between ZIP and Recipe Details API.
+* Missing-field handling.
+* Metadata consistency checks.
+* Normalized dependency representations.
+
+Determine which functionality is:
+
+* IMPLEMENTED.
+* PARTIALLY IMPLEMENTED.
+* DOCUMENTED ONLY.
+* MISSING.
+* NOT VERIFIED.
+
+Do not assume the conceptual architecture is fully implemented.
+
+7. DEPENDENCY ANALYSIS AND DAG GENERATION
+
+Investigate:
+
+* Recipe dependency discovery.
+* Dataset upstream/downstream relationships.
+* DAG construction.
+* Topological sorting.
+* Zone identification.
+* Recipe grouping by zone.
+* Zone execution ordering.
+* Cross-zone dependencies.
+* Cross-project dataset dependencies.
+* External input dataset handling.
+* Catalog/schema/table resolution.
+* Circular dependency detection.
+* Missing dependency handling.
+* Capability scanning.
+* Migration plan generation.
+
+Explain how the framework preserves Dataiku execution order when generating Databricks notebooks and jobs.
+
+Identify potential ordering issues.
+
+Include a Mermaid dependency diagram.
+
+8. CONVERSION ENGINE
+
+Inspect the reusable converter implementation.
+
+Document:
+
+* Converter registry.
+* Recipe converter dispatch.
+* Supported recipe types.
+* Prepare processor converter registry.
+* Supported prepare processors.
+* PySpark transformation generation.
+* Spark SQL generation.
+* Intermediate representation, if implemented.
+* Expression translation.
+* Filter conversion.
+* Join conversion.
+* Aggregation conversion.
+* Window functions.
+* Sorting and ranking.
+* Union and stacking.
+* Column renaming and mapping.
+* Null handling.
+* Type casting.
+* Date and timestamp handling.
+* Unsupported recipe behavior.
+* Conversion warnings and errors.
+* Fallback logic.
+* Deterministic output behavior.
+
+If GenAI or an LLM is used, identify exactly where and for what purpose.
+
+Create a conversion capability matrix based on the actual framework source code.
+
+Do not scan downloaded Dataiku projects to discover supported recipe types.
+
+Business logic preservation
+
+Explain how the framework attempts to preserve Dataiku business logic.
+
+Identify areas where semantic equivalence cannot be established through source inspection alone.
+
+Do not change or reinterpret transformation logic.
+
+9. ZONE-BASED NOTEBOOK GENERATION
+
+Analyze exactly how Databricks notebooks are generated.
+
+Cover:
+
+* Notebook generator modules.
+* Zone-to-notebook mapping.
+* Recipe grouping.
+* Notebook naming conventions.
+* Ordering prefixes.
+* Databricks notebook headers.
+* Python imports.
+* Shared library imports.
+* Notebook parameters and widgets.
+* Runtime configuration.
+* Input datasets.
+* Intermediate datasets.
+* Output datasets.
+* Table naming.
+* Notebook error handling.
+* Validation notebook generation.
+
+HIGH PRIORITY — NOTEBOOK NAMING ISSUE
+
+We identified that some generated notebooks may begin with numeric prefixes.
+
+Example of existing naming:
+
+01_import.py
+02_transform.py
+03_output.py
+
+Required naming convention:
+
+zone_01_import.py
+zone_02_transform.py
+zone_03_output.py
+
+Investigate:
+
+1. Which source module generates notebook filenames?
+2. Why numeric prefixes are used.
+3. Whether numbering controls execution order.
+4. How filenames are referenced in Databricks job YAML.
+5. Whether DAG task IDs depend on notebook names.
+6. Whether imports or other generated references depend on filenames.
+7. How to change the generator safely.
+8. Which tests would need updating.
+9. Whether existing generated bundles require backward compatibility.
+
+Do not rename notebooks or modify generator logic yet.
+
+10. PYTHON LIBRARY GENERATION
+
+Analyze:
+
+* How reusable Python modules are generated.
+* How transformations are grouped into modules.
+* How config.py and other helper modules are generated.
+* How validation helpers are generated.
+* How imports are constructed.
+* How generated notebooks locate their libraries.
+* How external Python dependencies are handled.
+* Whether generated modules are packaged as wheels or workspace files.
+* Potential module-name collisions.
+* Missing import handling.
+* Library compatibility with Databricks serverless compute.
+
+Identify any unnecessary code duplication.
+
+Do not refactor the implementation.
+
+11. DATABRICKS ASSET BUNDLE GENERATION
+
+This is a HIGH-PRIORITY assessment area.
+
+Determine:
+
+* Which module generates databricks.yml.
+* Which module generates resources/*.yml.
+* How bundle.name is created.
+* How job names and job keys are generated.
+* How notebook tasks are created.
+* How task dependencies are generated.
+* How DAG ordering is represented in job YAML.
+* How notebook_path references are constructed.
+* How environment targets are defined.
+* How bundle variables are declared.
+* How catalog and schema values are handled.
+* How input table mappings are configured.
+* How Dataiku reference table mappings are configured.
+* How schedules and triggers are generated.
+* How job parameters are generated.
+* How permissions are configured.
+* How serverless or cluster compute is configured.
+* How external Python dependencies are declared.
+* How validation notebooks are included.
+* How bundle output directories are structured.
+* Whether bundle generation is deterministic.
+* Whether bundle files undergo structural validation.
+
+Distinguish current generator behavior from manual changes made to generated artifacts.
+
+Do not regenerate or modify bundles.
+
+12. EXISTING CODE QUALITY CHECKS
+
+Inventory all implemented checks during and after code generation.
+
+Investigate:
+
+* Python syntax validation.
+* Ruff.
+* flake8.
+* pylint.
+* Black or Ruff formatter.
+* Whitespace and indentation.
+* Line length.
+* Blank lines.
+* Trailing whitespace.
+* Unused imports.
+* Undefined variables.
+* Python naming conventions.
+* Notebook filename validation.
+* Import resolution.
+* Type checking.
+* Hardcoded secrets.
+* Security scanning.
+* Unsafe SQL construction.
+* YAML syntax validation.
+* Bundle structure validation.
+* Notebook reference validation.
+* Job resource validation.
+* DAG integrity checks.
+* Dependency declaration validation.
+* Unit tests.
+* Integration tests.
+* Automatic safe corrections.
+* Quality reporting.
+
+For every quality check, document:
+
+1. Whether it exists.
+2. Implementation file and function.
+3. When it executes.
+4. Whether it blocks generation.
+5. Whether it automatically fixes issues.
+6. Whether it could alter business logic.
+
+Recommend which lightweight checks should execute per notebook and which should execute once per generated bundle.
+
+Do not implement any new checks.
+
+13. SEPARATION OF AGENT RESPONSIBILITIES
+
+We have three separate components.
+
+A. Migration Agent — Local project
+
+Responsible for:
+
+* Dataiku acquisition.
+* Normalization.
+* Recipe conversion.
+* Business logic preservation.
+* Dependency DAG.
+* Zone-based notebook generation.
+* Python library generation.
+* Databricks Asset Bundle generation.
+* Lightweight generation-time quality checks.
+
+B. Independent Quality Gateway
+
+Responsible for:
+
+* Technical code-quality review.
+* Security assessment.
+* Databricks compatibility checks.
+* Configuration validation.
+* Approval-required technical corrections.
+* Technical deployment-readiness reporting.
+
+The Quality Gateway must not silently rewrite Dataiku business logic.
+
+C. Separate Databricks Pipeline Repository
+
+Responsible for:
+
+* Receiving approved generated artifacts.
+* Project discovery.
+* CI/CD validation.
+* Deployment.
+* Job execution.
+* Environment configuration.
+* Operational reporting.
+
+Do not propose rebuilding functionality already implemented in these components.
+
+14. PIPELINE REPOSITORY INTEGRATION
+
+The separate pipeline repository already deploys pre-generated Databricks Asset Bundles.
+
+Its expected structure is:
+
+projects/<PROJECT_KEY>/
+pipeline.yml
+databricks/
+databricks.yml
+resources/
+_job.yml
+src/
+notebooks/
+lib/
+
+Known pipeline requirements:
+
+* Project keys match [A-Z0-9_]+.
+* Project discovery requires databricks/databricks.yml.
+* Resource YAML files are under resources/*.yml.
+* Current pipeline expects exactly one job per bundle.
+* Notebook filenames must start with a letter.
+* Current CI/CD deployment target is dev.
+* The pipeline supplies catalog, schema and job_viewers_group through BUNDLE_VAR_*.
+* Project-specific input and Dataiku reference table mappings remain bundle-specific.
+* pipeline.yml controls deploy and run independently.
+* Current deployment is manually triggered.
+* The pipeline currently has no automated artifact intake.
+* Multi-zone execution has not yet been demonstrated in that repository.
+
+Compare the Migration Agent’s actual generated output with these requirements.
+
+Produce a compatibility matrix showing:
+
+* Pipeline requirement.
+* Current Migration Agent implementation.
+* Compatible / Incompatible / Unknown.
+* Source evidence.
+* Minimum recommended adjustment.
+* Responsible component.
+
+Do not access or modify the separate pipeline repository.
+
+Use only the requirements supplied above.
+
+15. PROPOSED ARTIFACT HANDOVER CONTRACT
+
+Recommend a minimal, versioned contract between the local Migration Agent, Quality Gateway and pipeline repository.
+
+Consider:
+
+* Project key.
+* Source project identifier.
+* Generator version, if available.
+* Conversion status.
+* Notebook inventory.
+* Job/task inventory.
+* DAG dependency information.
+* Generated bundle paths.
+* Required runtime dependencies.
+* Bundle variables.
+* Unresolved input mappings.
+* Quality-check results.
+* Unsupported conversion findings.
+* Artifact checksums.
+* Quality Gateway review status.
+* Deployment eligibility.
+
+Separate mandatory and optional fields.
+
+Recommend a safe future transfer approach that preserves the pipeline’s existing bundle structure.
+
+Do not implement transfer automation.
+
+Do not automatically mark any project as deployable.
+
+16. LOCAL TESTING AND AUTOMATION
+
+Analyze only automation actually present in this local project.
+
+Inspect:
+
+* Existing test directories.
+* Unit tests.
+* Integration tests.
+* Test configuration.
+* Local execution scripts.
+* Command-line utilities.
+* Dependency management.
+* Code-quality configuration.
+* Local validation commands.
+* Error reporting.
+* Retry and recovery logic.
+
+Do not assume GitHub Actions, GitLab CI or other CI/CD systems exist.
+
+Do not run expensive tests or any migration process.
+
+If a test has not been executed, record it as NOT EXECUTED.
+
+17. PERFORMANCE AND SCALABILITY
+
+Analyze the framework for:
+
+* Repeated API calls.
+* Redundant metadata processing.
+* Repeated normalization.
+* Repeated converter execution.
+* Inefficient file reads and writes.
+* Excessive intermediate artifact generation.
+* Unnecessary repeated notebook rendering.
+* Serial processing bottlenecks.
+* Caching opportunities.
+* Parallel processing support.
+* Incremental project or zone conversion.
+* Resume and retry capabilities.
+* Large-project scalability.
+
+We intend to migrate hundreds of Dataiku projects.
+
+Recommend improvements based on source-code evidence.
+
+Do not perform performance benchmarks or execute migrations.
+
+18. END-TO-END EXECUTION FLOW
+
+Trace the actual implemented migration flow.
+
+Use this conceptual sequence only as a reference:
+
+Dataiku Project Export ZIP + Recipe Details API
+→ Acquisition
+→ Raw Evidence
+→ Normalization
+→ Canonical Contracts
+→ Reconciliation
+→ Dependency DAG
+→ Capability Scanner
+→ Migration Plan
+→ Conversion Engine
+→ Notebook Generation
+→ Python Library Generation
+→ Databricks Asset Bundle Generation
+→ Quality Checks
+→ Generated Migration Artifacts
+
+Determine which stages are implemented and connected.
+
+Do not assume every stage exists.
+
+Include:
+
+* Mermaid component architecture diagram.
+* Mermaid end-to-end flowchart.
+* Mermaid dependency DAG example.
+* Component input/output table.
+
+19. RISKS AND TECHNICAL DEBT
+
+Identify:
+
+* Incorrect conversion risks.
+* Unsupported recipe and processor types.
+* Missing dataset dependencies.
+* Cross-project dependency limitations.
+* Notebook naming issues.
+* Invalid generated imports.
+* Incorrect task references.
+* DAG ordering problems.
+* Hardcoded environment values.
+* Missing runtime dependencies.
+* Security vulnerabilities.
+* Invalid bundle configuration.
+* Performance bottlenecks.
+* Missing tests.
+* Manual integration steps.
+* Potential output-table collisions.
+
+Prioritize findings by severity and practical impact.
+
+Provide source evidence for each significant finding.
+
+Do not invent defects.
+
+20. IMPLEMENTATION ROADMAP
+
+Recommend an incremental implementation roadmap, without making changes.
+
+Prioritize:
+
+1. Notebook naming corrections.
+2. Lightweight generation-time code-quality checks.
+3. Generated bundle structure and reference validation.
+4. Pipeline integration contract compatibility.
+5. Quality Gateway handover.
+6. Controlled artifact transfer to the pipeline repository.
+7. Multi-zone DAG integration testing.
+8. Scalability improvements.
+
+For each recommendation include:
+
+* Problem.
+* Proposed improvement.
+* Affected framework modules.
+* Tests required.
+* Potential compatibility risks.
+* Responsible component.
+* Suggested implementation order.
+
+Recommend the smallest safe first change.
+
+21. REQUIRED DOCUMENT
+
+Create exactly ONE Markdown document:
+
+docs/MIGRATION_AGENT_REPOSITORY_TECHNICAL_ASSESSMENT.md
+
+The document must contain:
+
+1. Executive Summary
+2. Assessment Scope and Exclusions
+3. Local Project Directory Inventory
+4. Framework Architecture
+5. Entry Points and Execution Modes
+6. Dataiku Acquisition
+7. Normalization and Canonical Contracts
+8. Dependency Analysis and DAG Generation
+9. Converter Registry and Supported Conversion Logic
+10. Zone-Based Notebook Generation
+11. Python Library Generation
+12. Databricks Asset Bundle Generation
+13. Existing Quality Checks
+14. Local Testing and Automation
+15. Performance and Scalability
+16. End-to-End Execution Flow
+17. Component Responsibility Boundaries
+18. Pipeline Integration Compatibility Matrix
+19. Proposed Artifact Handover Contract
+20. Implemented vs Partial vs Documented vs Missing
+21. Risks and Technical Debt
+22. Prioritized Implementation Roadmap
+23. Open Questions
+24. Appendix: Source File References
+
+Use concise tables, clear explanations and Mermaid diagrams.
+
+Reference actual source file paths, functions and configuration keys.
+
+Avoid copying large blocks of source code into the document.
+
+22. EVIDENCE REQUIREMENTS
+
+For every important finding:
+
+* Provide the actual local file path.
+* Identify the relevant function, class or configuration key.
+* Include line references where practical.
+* Distinguish verified implementation from assumptions.
+* Label unverified behavior as NOT VERIFIED.
+* Do not claim tests passed unless actually executed.
+* Do not reproduce secrets, API keys, credentials or sensitive configuration values.
+* Do not treat documentation alone as proof of implementation.
+
+Use the current local files as the authoritative source.
+
+23. STRICT RESTRICTIONS
+
+This is a READ-ONLY investigation with ONE permitted documentation output.
+
+You MUST NOT:
+
+* Run Git commands.
+* Inspect Git history.
+* Access GitHub APIs.
+* Initialize Git.
+* Modify application source code.
+* Modify converter logic.
+* Modify notebook generators.
+* Modify bundle generators.
+* Modify configuration.
+* Modify tests.
+* Rename generated notebooks.
+* Regenerate bundles.
+* Download Dataiku projects.
+* Call Dataiku APIs.
+* Connect to Databricks.
+* Run migrations.
+* Install packages.
+* Run deployments.
+* Scan every downloaded project.
+* Execute expensive tests.
+* Transfer artifacts.
+* Create additional files.
+* Modify the separate pipeline repository.
+* Modify the independent Quality Gateway.
+
+Only create the requested assessment Markdown document.
+
+24. FINAL RESPONSE
+
+After completing the assessment, provide a concise summary of:
+
+1. Current Migration Agent architecture.
+2. Main supported Dataiku conversions.
+3. Notebook naming issue and its implementation location.
+4. Existing Databricks bundle generation approach.
+5. Current quality checks and missing checks.
+6. Compatibility with the pipeline repository.
+7. Major technical risks.
+8. Recommended smallest safe first change.
+9. Exact assessment document path.
+
+Do not implement any recommendations.
+
+Wait for my approval before making changes.
