@@ -151,3 +151,42 @@ At completion, provide:
 7. Explicit confirmation that neither existing repository was modified.
 
 Stop and wait for my approval before proceeding.
+
+................
+
+Proceed with Stage 2 of databricks-migration-quality-gateway.
+
+The Stage 1 foundation, contracts, policies, agents, and tests are already created. Preserve this architecture.
+
+Implement the 59 configured quality checks incrementally, using the existing review registry, contracts, policy, and reporting interfaces.
+
+Requirements:
+
+1. Implement actual deterministic validation for bundle structure, Databricks YAML configuration, job DAG, Python syntax, dependency references, security, conversion markers, and pipeline compatibility.
+2. Use the real pipeline repository conventions already documented in docs/repository-compatibility.md.
+3. Distinguish mandatory failures, warnings, and checks that cannot be verified.
+4. Avoid false positives for Databricks-provided globals such as spark and dbutils.
+5. Do not assume that all production catalog references are invalid; evaluate their purpose and environment configuration.
+6. Do not automatically change generated notebooks or transformation logic.
+7. Preserve SHA-256 artifact fingerprinting, fail-closed policy enforcement, and human approval requirements.
+8. Use an isolated temporary copy for checks that generate files or require execution.
+9. Add PyYAML only if needed and document the dependency.
+10. Run existing tests and add positive and negative tests for every implemented check category.
+11. Review the actual MD_INDIA_GAS_DEMAND_POWER_C1 generated bundle.
+12. Produce JSON and Markdown review reports with real findings, file paths, severity, and suggested corrections.
+13. Verify that the transfer agent remains disabled and cannot bypass the review gate.
+
+Do not modify the existing Migration Agent or Databricks pipeline repository.
+
+Do not transfer bundles, commit, push, deploy, or execute Databricks jobs.
+
+At completion, report:
+
+* Number of checks implemented and executed.
+* Passed, failed, warning, and not-verified counts.
+* Actual bundle findings.
+* Tests executed and results.
+* Remaining limitations.
+* Recommended next stage.
+
+Stop after Stage 2 and wait for approval.
