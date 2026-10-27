@@ -658,3 +658,18 @@ Perform a read-only pre-adoption assessment of the existing MD_INDIA_GAS_DEMAND_
 Do not run staging adopt, apply corrections, modify files, transfer, commit, push or deploy.
 
 Provide the verification results and stop for my approval
+
+.....
+
+I approve adopting the existing MD_INDIA_GAS_DEMAND_POWER_C1 staging copy using Quality Gateway v0.5.0.
+
+Use the verified staging copy and its exact fingerprint from the latest read-only verification.
+
+* Use the tools virtual environment Python.
+* Run staging adopt only.
+* Confirm the staging ledger is created successfully.
+* Verify staging status shows the adopted generation and no problems.
+* Confirm all 136 Stage 4 corrections remain intact.
+* Confirm the original migration project, existing staging files, and pipeline repository remain unchanged.
+* Do not run apply, transfer, commit, push or deploy.
+* Stop after adoption and report the results.
