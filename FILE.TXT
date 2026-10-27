@@ -673,3 +673,20 @@ Use the verified staging copy and its exact fingerprint from the latest read-onl
 * Confirm the original migration project, existing staging files, and pipeline repository remain unchanged.
 * Do not run apply, transfer, commit, push or deploy.
 * Stop after adoption and report the results.
+
+...
+
+Generation 0 adoption is complete and verified.
+
+Proceed with the next read-only stage for MD_INDIA_GAS_DEMAND_POWER_C1 using Quality Gateway v0.5.0.
+
+1. Run a fresh review against the adopted staging copy using the tools virtual environment Python.
+2. Generate a new correction plan for Generation 1.
+3. Identify the configuration blockers that can be resolved through approved input values.
+4. Group the remaining blockers by required action and responsible owner.
+5. Report the exact number of blockers expected to clear in the first batch.
+6. Verify that the existing 136 corrections and Generation 0 ledger remain intact.
+
+Do not apply corrections, create another generation, transfer, commit, push or deploy.
+
+Stop after presenting the plan for my approval.
