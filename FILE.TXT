@@ -582,3 +582,22 @@ For each group, explain what is required, who must provide the decision or value
 Do not change Dataiku business logic, invent configuration values, modify the migration or pipeline repositories, or transfer anything.
 
 Keep the current staging copy unchanged. Produce a concise action plan and wait for my approval.
+
+........
+
+Improve the existing databricks-migration-quality-gateway to support efficient resolution of remaining blockers for future Dataiku-to-Databricks migrations.
+
+Requirements:
+
+1. Extend the correction plan and approval mechanism to accept explicit configuration values and approved docstring text, with schema validation.
+2. Support reviewing, planning and applying additional corrections against an existing isolated staging copy without recreating or overwriting previous approved corrections.
+3. Preserve all existing safety controls: plan fingerprint, approval binding, change detection, secret protection, atomic writes and audit reports.
+4. Allow safe configuration and documentation corrections to be applied incrementally, with offline quality checks rerun after each approved batch.
+5. Keep business-logic rewrites, security decisions and governance acknowledgements separately gated by explicit approval.
+6. Never invent missing values, docstrings, table names, catalog mappings or business logic.
+7. Do not execute Databricks CLI commands or require Databricks authentication. I will handle all Databricks CLI validation manually.
+8. Do not transfer, commit, push or deploy any bundle.
+9. Add automated regression tests covering incremental approvals, staging-copy preservation, invalid values and unauthorized changes.
+10. Keep the current MD_INDIA staging copy and both source repositories unchanged while implementing these gateway improvements.
+
+First produce the implementation plan, affected files and test strategy. Wait for my approval before modifying anything.
