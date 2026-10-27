@@ -564,3 +564,21 @@ At completion, provide:
 11. Recommended Stage 4 implementation plan.
 
 Stop after Stage 3. Do not implement any correction, authorize transfer, copy files, commit, push or deploy. Wait for explicit approval before proceeding.
+
+..........
+
+Stage 4 has completed. Before proceeding to Stage 5, analyze the remaining 88 blocking gate reasons from the latest staging review.
+
+Group them into:
+
+1. Missing configuration values
+2. Safe code corrections still possible
+3. Business logic requiring approval
+4. Security and governance decisions
+5. Manual environment validation
+
+For each group, explain what is required, who must provide the decision or value, and which items can be addressed offline.
+
+Do not change Dataiku business logic, invent configuration values, modify the migration or pipeline repositories, or transfer anything.
+
+Keep the current staging copy unchanged. Produce a concise action plan and wait for my approval.
