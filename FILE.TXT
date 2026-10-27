@@ -641,3 +641,20 @@ Proceed with implementing Quality Gateway v0.5.0 in the gateway repository only.
 When finished, provide the changed files, test results, remaining limitations and exact next steps for separately adopting the existing MD_INDIA staging copy.
 
 Stop after implementation and testing. Wait for my approval before any adoption or correction application
+
+........
+
+Quality Gateway v0.5.0 implementation and test results are accepted for the next verification step.
+
+Perform a read-only pre-adoption assessment of the existing MD_INDIA_GAS_DEMAND_POWER_C1 staging copy.
+
+1. Run staging status using the correct relative staging path.
+2. Verify the original bundle fingerprint and staging copy fingerprint against the recorded Stage 4 baselines.
+3. Confirm the existing 136 approved corrections are preserved.
+4. Confirm the MD_INDIA project and pipeline repository remain unchanged.
+5. Verify that no existing reports or staging files will be overwritten during adoption.
+6. Report any remaining compatibility or security risks.
+
+Do not run staging adopt, apply corrections, modify files, transfer, commit, push or deploy.
+
+Provide the verification results and stop for my approval
