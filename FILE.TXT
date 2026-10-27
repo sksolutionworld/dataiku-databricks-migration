@@ -601,3 +601,43 @@ Requirements:
 10. Keep the current MD_INDIA staging copy and both source repositories unchanged while implementing these gateway improvements.
 
 First produce the implementation plan, affected files and test strategy. Wait for my approval before modifying anything.
+
+.........
+
+My answers to the agent's five questions
+Copy-on-write generations: Approve. Each batch should create a separate staging generation, preserving previous work.
+Input types: Approve table, setting, and docstring only. Do not automatically override catalog/schema values copied from UAT.
+Explicit naming: Approve. Every supplied value must be associated with an exact approved finding ID.
+Report names: Approve generation-specific report names, preserving the existing Stage 4 reports.
+Adoption: Approve implementing staging adopt, but do not execute it against MD_INDIA yet. Adoption should require a separate approval after verifying the current staging fingerprint.
+One additional improvement: the agent should detect unchanged files and avoid unnecessary repeated validation, while always running the complete offline quality gate before authorizing transfer.
+
+....
+
+I have reviewed the proposed Quality Gateway v0.5.0 design.
+
+I approve the five design decisions with these conditions:
+
+1. Use copy-on-write staging generations. Preserve all previous generations and their reports.
+2. Support only table, setting and docstring input types initially. Never override existing catalog/schema mappings without separate explicit approval.
+3. Require exact finding IDs, input keys and approved values. Reject unknown, duplicate, empty or unauthorized inputs.
+4. Use generation-specific report filenames. Preserve all existing Stage 4 reports.
+5. Implement staging adopt, but DO NOT execute adoption against the current MD_INDIA staging copy. That will require my separate approval.
+
+Additional requirements:
+
+* Preserve the existing offline quality gate and all mandatory checks.
+* Optimize repeated checks where safe, but always run the full offline quality gate before transfer authorization.
+* Preserve business logic and transformation semantics.
+* Maintain backward compatibility with existing v1.0 plans and approvals.
+* Never run Databricks CLI or require Databricks authentication.
+* Do not modify the MD_INDIA project, current staging copy or pipeline repository.
+* Do not commit, push, transfer or deploy anything.
+* Implement automated regression tests for incremental corrections, generation integrity, approvals, secret protection and rollback/recovery.
+* Run the complete local test suite and lint checks.
+
+Proceed with implementing Quality Gateway v0.5.0 in the gateway repository only.
+
+When finished, provide the changed files, test results, remaining limitations and exact next steps for separately adopting the existing MD_INDIA staging copy.
+
+Stop after implementation and testing. Wait for my approval before any adoption or correction application
