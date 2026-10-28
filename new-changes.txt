@@ -43,45 +43,60 @@ STOP after the assessment. Wait for my approval before making changes.
 
 .......
 
-Perform a READ-ONLY assessment of the Migration Agent repository. Do not modify any files.
+Implement the approved Migration Agent improvements with the SMALLEST possible changes.
 
-We need minimal, backward-compatible improvements.
+The existing migration conversion and pipeline are working. Do not refactor or redesign them.
 
-**1. Notebook naming**
-- Apply the `zone_01_<zone_name>.py` naming convention to the existing project `MD_CHINA_GAS_DEMAND_POWER_C1_SI` only.
-- Ensure all future generated projects follow this naming convention.
-- Do NOT rename notebooks in any other previously downloaded, converted or migrated projects.
-- Update job notebook references only where the approved rename is applied.
-- Preserve the existing task keys and DAG dependencies.
+1. Notebook naming
 
-**2. Generated code quality**
-- Add safe Ruff formatting, lint and Python syntax checks for newly generated zone notebooks.
-- Do not modify PySpark business logic.
-- Do not reformat or modify notebooks belonging to other existing projects.
+* Update only the relevant agent instructions/templates so future generated notebooks use zone_01_<zone>.py, zone_02_<zone>.py, etc.
+* Keep existing task keys, zone order, dependencies and transformation logic unchanged.
+* For the existing project MD_CHINA_GAS_DEMAND_POWER_C1_SI only, rename its 8 zone notebook files and update their notebook_path references, traceability JSON and zone-mapping documentation.
+* Preserve the original notebook contents byte-for-byte.
+* Do not modify any other existing project.
 
-**3. Local configuration**
-- Support engineer-specific `.env` configuration.
-- Read `PIPELINE_REPO_PATH` from `.env`.
-- Do not hardcode local repository paths.
+2. Code quality
 
-**4. Bundle transfer**
-- Use `MD_CHINA_GAS_DEMAND_POWER_C1_SI` as the test project.
-- Transfer only its approved bundle into the existing pipeline repository structure.
-- Do not overwrite existing files without explicit approval.
-- Do not commit, push or deploy automatically.
+* Add a minimal, pinned Ruff development dependency and configuration.
+* Add one small script to check generated notebooks for Python syntax, Ruff lint and formatting.
+* Handle Databricks notebook markers and magic commands safely.
+* Initially run checks in read-only mode; do not automatically reformat existing notebooks.
+* Do not change PySpark or SQL business logic.
+* Add the check to the future notebook-generation instructions, without modifying the existing conversion engine.
 
-**Important constraints**
-- Preserve the current zone-by-zone conversion process.
-- Preserve existing transformations, job DAG and bundle structure.
-- Do not refactor working components.
-- Inspect only files necessary for these requirements.
-- Avoid scanning other generated projects or large Dataiku exports.
-- Reuse existing functions and configuration.
-- Minimize GitHub Copilot token usage.
+3. Local configuration
 
-Return a short table containing:
-Requirement | Current implementation | Affected files | Minimal proposed change
+* Reuse the existing load_env_file() implementation.
+* Add only PIPELINE_REPO_PATH to .env.example.
+* Do not introduce another configuration framework.
+* Do not read or display secret values.
 
-Identify any risks and targeted tests.
+4. Bundle transfer
 
-STOP after the assessment. Wait for my approval before making changes.
+* Create a minimal scripts/transfer_bundle.py.
+* Read PIPELINE_REPO_PATH from the existing .env loader.
+* Use MD_CHINA_GAS_DEMAND_POWER_C1_SI as the test project.
+* Copy only the approved Databricks bundle files into the pipeline repository’s existing projects/<KEY>/databricks/ structure.
+* Default to dry-run; require --apply to copy.
+* Never delete destination files or overwrite conflicts automatically.
+* Never commit, push or deploy.
+* Validate the pipeline repository destination before copying.
+
+5. Testing
+
+* Run targeted syntax, Ruff and transfer tests.
+* Verify that all 8 renamed notebook contents remain byte-for-byte identical.
+* Verify notebook references and job dependencies.
+* Verify that the other 7 existing projects remain unchanged.
+* Run existing Migration Agent unit tests.
+
+Constraints
+
+* No broad refactoring.
+* No new frameworks.
+* No changes to conversion algorithms.
+* No changes to unrelated project files.
+* Minimize Copilot token usage.
+* Do not run actual bundle transfer yet.
+
+At completion, report only changed files, tests passed/failed and any remaining issues. Stop
