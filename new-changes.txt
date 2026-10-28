@@ -590,3 +590,22 @@ for sheet_name, header_row in sheets:
     print(df.columns.tolist())
 
     display(df.head(3))
+
+    ......
+
+    Fix the SharePoint Excel ingestion column mismatch for china_coal_to_gas_price_model_bands.
+
+Scope: Only the existing SharePoint ingestion framework, source YAML and focused tests. Do not scan unrelated projects or modify generated notebooks, Python recipes or Migration Agent code.
+
+Use the existing technical assessment. Inspect only relevant files.
+
+Requirements:
+
+1. Reproduce Dataiku Excel reader behavior: skipRowsBeforeHeader, blank headers (col_0), duplicate headers (_1, _2) and parseDatesToISO.
+2. For Coal40vsGas50_Spot, generate Month_iso while preserving Month. Expected: 204 rows, 64 columns.
+3. Apply the documented sheet-specific settings to C2G Switching_Combined and C2G Switching_Spot.
+4. Keep existing ingestion behavior unchanged for other sources.
+5. Add focused offline tests for header naming and ISO date generation.
+6. Run only relevant tests. Do not deploy, execute Databricks jobs or write Unity Catalog tables.
+
+Report changed files, test results and remaining risks concisely. Do not perform broad repository analysis.
