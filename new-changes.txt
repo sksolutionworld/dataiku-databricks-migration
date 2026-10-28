@@ -177,3 +177,30 @@ Return only:
 * Exact commands currently available for validation, if any.
 
 Stop and wait for approval.
+
+....
+
+Work on the Quality Gateway repository only.
+
+Current scope:
+
+* DEV is the only active environment.
+* DEV Databricks catalog: slmt_uat
+* DEV Databricks schema: exp_seif
+* UAT and PROD are future environments. Do not implement or activate them now.
+* Test project: MD_CHINA_GAS_DEMAND_POWER_C1_SI
+
+Requirements:
+
+1. Preserve all existing 59 Quality Gateway checks and the existing review/authorize workflow.
+2. Reuse the current DEV configuration and existing gateway.toml/environment-variable support.
+3. Do not introduce a new .env framework.
+4. Do not add UAT/PROD functionality or modify deployment workflows.
+5. Check whether the already-transferred project can be reviewed using the existing policy configuration, without weakening security or code-quality rules.
+6. Identify any blocker caused by the bundle having only a uat target instead of dev.
+7. Do not change generated notebooks, Migration Agent code or Pipeline code.
+8. Make no code changes yet. Run only existing local tests if dependencies are available.
+
+Return a short summary of DEV compatibility, test results, and the minimum changes needed.
+
+Stop and wait for approval
