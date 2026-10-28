@@ -114,3 +114,19 @@ Test the existing bundle transfer script for project MD_CHINA_GAS_DEMAND_POWER_C
 7. Do not modify any code.
 
 Return a short summary and stop.
+
+.........
+
+The dedicated migration branch has already been created and checked out in the Deployment Pipeline repository.
+
+For project MD_CHINA_GAS_DEMAND_POWER_C1_SI:
+
+1. Verify the current branch and confirm it is the correct migration branch.
+2. Use the existing transfer script to copy the 15 approved bundle files from the Migration Agent into the pipeline repository. Do not use --overwrite.
+3. Create projects/MD_CHINA_GAS_DEMAND_POWER_C1_SI/pipeline.yml using the exact format of the existing pipeline projects.
+4. Set deploy and run to false for DEV, UAT and PROD.
+5. Do not modify other projects, existing workflows, conversion logic or notebooks.
+6. Do not commit, push or deploy anything.
+7. Verify the transferred files and report the results.
+
+Make only these minimal changes and stop.
