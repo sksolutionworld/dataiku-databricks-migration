@@ -241,3 +241,28 @@ Use the existing repository assessment, Quality Gateway findings and one working
 10. Run only local configuration and YAML checks that do not require Databricks access.
 
 Report the exact changes, test results and remaining blockers. Do not commit, push or deploy. Stop.
+
+.........
+
+Implement a minimal reusable Python-only Quality Gateway mode.
+
+This is the final scope. Do not repeat repository assessments.
+
+Requirements:
+
+1. Quality Gateway must validate only Python code quality:
+    * Python syntax
+    * Ruff / Flake8 lint
+    * Whitespace and formatting
+    * Safe import ordering
+    * Databricks Python notebook syntax
+    * Existing Python unit tests
+2. Automatically fix only safe, behavior-preserving Python formatting and lint issues without asking for approval.
+3. Do not inspect, validate, report or modify:
+    * Business logic or PySpark transformation semantics
+    * Dataiku recipe equivalence
+    * SharePoint input mappings
+    * Unity Catalog names, schemas or tables
+    * Production catalog reads
+    * DEV/UAT/PROD configuration
+  …
