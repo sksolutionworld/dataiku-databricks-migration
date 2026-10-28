@@ -561,3 +561,32 @@ Important constraints
 * Clearly distinguish confirmed findings from assumptions or missing evidence.
 
 Stop after producing the technical assessment and wait for approval before implementing changes.
+
+......
+
+import pandas as pd
+
+sheets = [
+    ("C2G Switching_Combined", 2),
+    ("C2G Switching_Spot", 213),
+    ("Coal40vsGas50_Spot", 2)
+]
+
+for sheet_name, header_row in sheets:
+    workbook_content.seek(0)
+
+    df = pd.read_excel(
+        workbook_content,
+        sheet_name=sheet_name,
+        header=header_row,
+        engine="openpyxl"
+    )
+
+    print(f"\n{'=' * 60}")
+    print(f"Sheet: {sheet_name}")
+    print(f"Rows: {len(df)}")
+    print(f"Columns: {len(df.columns)}")
+    print("Column names:")
+    print(df.columns.tolist())
+
+    display(df.head(3))
