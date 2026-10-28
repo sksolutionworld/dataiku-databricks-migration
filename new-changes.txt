@@ -204,3 +204,22 @@ Requirements:
 Return a short summary of DEV compatibility, test results, and the minimum changes needed.
 
 Stop and wait for approval
+
+.....
+
+Run the existing Quality Gateway READ-ONLY review for project MD_CHINA_GAS_DEMAND_POWER_C1_SI.
+
+Requirements:
+
+1. Do not modify Quality Gateway code, generated notebooks, Migration Agent code or Pipeline code.
+2. Use the existing DEV configuration: catalog slmt_uat, schema exp_seif.
+3. Do not enable UAT or PROD.
+4. Install only the existing required Flake8 dependency if missing.
+5. Use a separate clean checkout of the pipeline repository’s main branch as MQG_DESTINATION_REPO, without modifying or switching the current migration branch. If unavailable, stop and report the blocker.
+6. Run the existing review command only. Do not run plan, apply or authorize.
+7. Save the review report in the existing reports directory.
+8. Summarize findings by BLOCKER, CRITICAL, MAJOR and MINOR.
+9. Identify which findings relate to bundle configuration and which relate to generated Python code.
+10. Do not fix any findings automatically.
+
+Report the review result and the smallest changes needed to pass the DEV quality checks. Stop.
