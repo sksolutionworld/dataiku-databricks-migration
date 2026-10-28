@@ -473,3 +473,31 @@ This is a READ-ONLY technical assessment and implementation plan.
 Focus exclusively on reusable SharePoint ingestion and its integration with the migration and deployment process.
 
 Return the findings and recommended implementation plan, then STOP and wait for approval.
+
+
+........
+
+Proceed with implementation of the reusable SharePoint ingestion framework based on the completed read-only assessment.
+
+Do not repeat the assessment.
+
+Implement the shared ingestion library, source registry, runner notebook, shared Databricks bundle, and necessary pipeline integration in the existing Deployment Pipeline repository.
+
+Requirements:
+
+* Reuse the two existing SharePoint scripts rather than replacing their core behavior.
+* Support future migrated projects through configuration, without project-specific hardcoding.
+* Preserve original Dataiku-compatible Excel column names.
+* Support dry-run and full-snapshot overwrite only for phase one.
+* Keep unresolved SharePoint locations, credentials, and Unity Catalog table names as required configuration. Never invent values.
+* Keep the eight existing slmt_prd references unchanged.
+* Do not modify transformation logic, zone notebooks, or the validation notebook.
+* Implement only DEV. Keep UAT and PROD disabled.
+* Do not automatically deploy or execute ingestion.
+* Preserve the existing one-job-per-project structure.
+* Add offline tests and report their results.
+* Do not commit or push changes automatically.
+
+Implement the shared framework first. Leave the China-specific table mappings and deployment disabled until the missing configuration is approved.
+
+After implementation, report changed files, tests, remaining blockers, and the exact steps needed to validate and run DEV.
