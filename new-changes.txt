@@ -100,3 +100,17 @@ Constraints
 * Do not run actual bundle transfer yet.
 
 At completion, report only changed files, tests passed/failed and any remaining issues. Stop
+
+........
+
+Test the existing bundle transfer script for project MD_CHINA_GAS_DEMAND_POWER_C1_SI.
+
+1. Read PIPELINE_REPO_PATH using the existing .env loader.
+2. Confirm it points to the correct local Deployment Pipeline Git repository.
+3. Run the existing transfer script in DRY-RUN mode only.
+4. Show the exact source and destination paths, files to copy, identical files, and any conflicts.
+5. Confirm no other projects will be modified.
+6. Do not run --apply, --overwrite, Git commit/push, or Databricks deployment.
+7. Do not modify any code.
+
+Return a short summary and stop.
