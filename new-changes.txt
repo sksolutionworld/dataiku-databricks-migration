@@ -130,3 +130,50 @@ For project MD_CHINA_GAS_DEMAND_POWER_C1_SI:
 7. Verify the transferred files and report the results.
 
 Make only these minimal changes and stop.
+
+....
+
+Perform a READ-ONLY assessment of the Quality Gateway repository.
+
+Context:
+
+* Migration Agent generates one Databricks Python notebook per zone.
+* Notebook filenames follow zone_01_<name>.py.
+* Migration Agent already performs Python syntax, Ruff lint and formatting checks.
+* Generated bundles are transferred into the Deployment Pipeline repository.
+* The test project is MD_CHINA_GAS_DEMAND_POWER_C1_SI.
+* We will support DEV, UAT and PROD.
+
+Objective:
+Make Quality Gateway reusable for multiple engineers and migrated projects, with MINIMAL changes.
+
+Inspect only relevant existing files and determine:
+
+1. Which code-quality checks already exist (Ruff, syntax, SonarQube, security, tests, Databricks bundle validation).
+2. Whether the Gateway can validate any project using a configurable bundle path instead of hardcoded project paths.
+3. Whether local .env configuration is already supported.
+4. Whether PIPELINE_REPO_PATH or an equivalent configurable path can be reused to locate a project bundle.
+5. Whether the Gateway supports zone_01_*.py notebooks.
+6. Whether existing checks duplicate the Migration Agent’s checks unnecessarily.
+7. Whether DEV, UAT and PROD require any Gateway-specific configuration.
+8. What is minimally required to invoke the Gateway locally and later from GitHub Actions.
+
+Important constraints:
+
+* Do not modify files.
+* Do not install packages.
+* Do not execute validation or deployment.
+* Do not inspect unrelated projects or large generated artifacts.
+* Do not refactor or introduce a new framework.
+* Do not change the Migration Agent or Deployment Pipeline.
+* Prefer existing functions, scripts and configurations.
+* Minimize Copilot token usage.
+
+Return only:
+
+* Existing Quality Gateway architecture (maximum 5 lines).
+* A short table: Requirement | Already supported? | Relevant file | Minimal change.
+* Critical gaps only.
+* Exact commands currently available for validation, if any.
+
+Stop and wait for approval.
