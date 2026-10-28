@@ -501,3 +501,63 @@ Requirements:
 Implement the shared framework first. Leave the China-specific table mappings and deployment disabled until the missing configuration is approved.
 
 After implementation, report changed files, tests, remaining blockers, and the exact steps needed to validate and run DEV.
+
+........
+
+Task: Investigate Dataiku-to-Databricks Migration Column Mismatch
+
+We are migrating the Dataiku project MD_CHINA_GAS_DEMAND_POWER_C1_SI to Databricks using our existing migration framework.
+
+The SharePoint ingestion job is deployed in Databricks, but the latest dry run fails because expected columns are missing.
+
+Current findings
+
+* SharePoint authentication succeeds.
+* The Excel workbook downloads successfully.
+* Excel parsing now proceeds.
+* The job fails during expected-column validation.
+* The affected source is china_coal_to_gas_price_model_bands.
+* The affected sheet is Coal40vsGas50_Spot.
+* The Dataiku dataset contains 204 rows.
+* The original Excel workbook contains columns such as Month, FX rate, Transport tariff, and QHD FOB spot.
+* The Dataiku dataset contains transformed columns including MonthDate_iso, Year, Month, FX_Rate..., Transport_Tariff..., and QHD_FOB_Spot....
+* The current YAML expects columns including Month_iso, FX rate, Transport tariff_1, and QHD FOB spot_1.
+
+Investigation instructions
+
+1. Locate the original Dataiku Python recipe that produces Coal40vsGas50_Spot, using the project export ZIP, recipe details, and available migration evidence.
+2. Trace its complete upstream dataset dependencies and identify where Excel headers are read, renamed, sanitized, or transformed.
+3. Inspect the generated Databricks implementation, particularly:
+    * databricks/sources/china_coal_to_gas_price_model_bands.yml
+    * databricks/src/sharepoint_ingestion/ingestion.py
+    * databricks/src/sharepoint_ingestion/sharepoint_graph_api.py
+    * Relevant generated notebooks
+    * databricks/src/lib/transformations.py, if present
+4. Determine the actual expected Excel header row, including any duplicate columns and pandas-generated suffixes.
+5. Compare original Excel headers, Dataiku recipe input columns, Dataiku output columns, and Databricks generated columns.
+6. Identify whether the mismatch originates from incorrect read_options, expected_columns, column sanitization, or missing Dataiku transformation logic.
+7. Check whether other sheets in the same workbook have similar issues.
+8. Verify that the existing dry_run=true path cannot write or overwrite Unity Catalog tables.
+
+Required output
+
+Provide:
+
+* Root cause of the current failure, with file paths and line references.
+* A column-mapping comparison table.
+* Any missing Dataiku Python recipe logic in the generated Databricks implementation.
+* Exact recommended changes, organized by file.
+* Potential impact on downstream notebooks and Unity Catalog tables.
+* A validation plan covering dry run, schema comparison, row counts, and transformation parity.
+
+Important constraints
+
+* Do not modify any files.
+* Do not deploy or execute Databricks jobs.
+* Do not modify the original Dataiku project.
+* Do not guess column mappings.
+* Do not replace Dataiku business logic with simplified transformations.
+* Preserve the existing migration framework and Databricks Asset Bundle architecture.
+* Clearly distinguish confirmed findings from assumptions or missing evidence.
+
+Stop after producing the technical assessment and wait for approval before implementing changes.
