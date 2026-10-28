@@ -316,3 +316,160 @@ Implementation:
 * Do not perform another repository assessment.
 
 Proceed with implementation and tests. Stop after providing the results.
+
+........
+
+We are implementing an enterprise-scale Dataiku-to-Databricks migration framework that must support hundreds of projects.
+
+Work ONLY in the Deployment Pipeline repository (DataikuToDBMigrationPOC).
+
+Objective
+
+Identify the two existing SharePoint ingestion scripts and determine how to make them a reusable, configuration-driven SharePoint ingestion capability for ALL future migrated Dataiku projects.
+
+This must NOT be a project-specific implementation.
+
+Our first integration project is:
+MD_CHINA_GAS_DEMAND_POWER_C1_SI
+
+However, the solution must support any future Dataiku project containing SharePoint-backed datasets.
+
+1. Inspect the existing implementation
+
+Locate the two existing SharePoint scripts and inspect:
+
+* Script paths and responsibilities.
+* SharePoint authentication mechanism.
+* Supported SharePoint file formats.
+* How files, sites, folders and document libraries are identified.
+* How data is downloaded and loaded into Databricks.
+* Whether the scripts create or update Unity Catalog tables.
+* Current hardcoded project names, paths, credentials or table names.
+* Existing dependencies, error handling and logging.
+* Existing Databricks jobs and execution workflows.
+
+Reuse existing functionality wherever possible.
+
+Do not rewrite working code unnecessarily.
+
+2. Design reusable SharePoint ingestion
+
+Propose a configuration-driven approach supporting:
+
+* Multiple Dataiku projects.
+* Multiple SharePoint sources per project.
+* Different SharePoint sites and document libraries.
+* Different file paths and filenames.
+* Supported file formats based on existing capabilities.
+* Configurable target Unity Catalog catalog, schema and table.
+* Configurable loading behavior without assuming overwrite or append.
+* Secure credential retrieval.
+* Idempotent execution where applicable.
+* Error handling, logging and retry behavior.
+* Source-to-target traceability.
+
+The same ingestion implementation must work for future projects without copying or modifying the core SharePoint scripts.
+
+Use project-specific configuration or manifests only where needed.
+
+3. Integration with the Migration Agent
+
+Our Migration Agent converts Dataiku projects into Databricks notebooks and automatically transfers generated bundles into the Deployment Pipeline repository.
+
+Propose how future migrations can:
+
+1. Detect SharePoint-backed input datasets from Dataiku metadata.
+2. Record the SharePoint dependency in a project manifest.
+3. Resolve the dependency to an existing or newly ingested Unity Catalog table.
+4. Reuse the central SharePoint ingestion capability.
+5. Pass verified table mappings into the generated Databricks bundle.
+6. Report unresolved mappings without inventing catalog, schema or table names.
+
+Do not modify the Migration Agent repository.
+
+Clearly identify any changes that would be required there in a future integration phase.
+
+4. Current project validation
+
+For MD_CHINA_GAS_DEMAND_POWER_C1_SI, inspect these unresolved inputs:
+
+* input_c2g_switching_china
+* input_ds_ch_ip_coal_installedcapacity
+* input_ip_ch_coal_prices
+
+Determine whether the existing SharePoint scripts can ingest these sources.
+
+Identify their actual SharePoint source locations and destination tables only when supported by existing repository evidence.
+
+If information is missing, explicitly report it.
+
+Do not invent SharePoint URLs, filenames or Unity Catalog mappings.
+
+5. Environment configuration
+
+For now, ONLY DEV is active.
+
+DEV workspace:
+
+* Catalog: slmt_uat
+* Schema: exp_seif
+
+UAT and PROD configuration may remain in the repository but must not be executed or enabled.
+
+The current project intentionally reads eight reference/comparison tables from slmt_prd to match Dataiku behavior.
+
+Preserve these references unchanged.
+
+Do not automatically replace slmt_prd with slmt_uat.
+
+Do not change existing transformation or business logic.
+
+6. Pipeline integration
+
+Review how reusable SharePoint ingestion should integrate with the existing per-project Databricks job and GitHub Actions deployment workflow.
+
+Consider:
+
+* Whether ingestion runs as a separate reusable Databricks job or as upstream tasks.
+* How project jobs wait for their required SharePoint inputs.
+* How shared SharePoint datasets can be reused by multiple projects.
+* How duplicate ingestion and unnecessary reprocessing can be avoided.
+* How failed ingestion prevents dependent jobs from running.
+* How this approach scales to hundreds of migrated projects.
+
+Preserve the existing one-bundle/one-project deployment convention.
+
+Do not create separate copies of the SharePoint scripts for each project.
+
+7. Deliverables
+
+Provide:
+
+1. Exact paths of the two existing SharePoint scripts.
+2. Their current behavior and limitations.
+3. A proposed reusable architecture.
+4. Required configuration or manifest structure, with an example.
+5. Integration points with the Migration Agent.
+6. Integration points with the Deployment Pipeline.
+7. Current project’s three-input dependency mapping status.
+8. File-by-file implementation plan.
+9. Minimal changes needed for the first DEV implementation.
+10. Steps to validate and run the solution safely.
+
+Important restrictions
+
+This is a READ-ONLY technical assessment and implementation plan.
+
+* Do not modify files.
+* Do not create new files.
+* Do not install packages.
+* Do not commit or push.
+* Do not deploy or execute Databricks jobs.
+* Do not change business logic.
+* Do not perform Python code-quality or Quality Gateway work.
+* Do not repeat unrelated repository assessments.
+* Do not introduce unnecessary new frameworks.
+
+Focus exclusively on reusable SharePoint ingestion and its integration with the migration and deployment process.
+
+Return the findings and recommended implementation plan, then STOP and wait for approval.
