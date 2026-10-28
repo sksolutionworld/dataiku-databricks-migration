@@ -266,3 +266,53 @@ Requirements:
     * Production catalog reads
     * DEV/UAT/PROD configuration
   …
+
+  .......
+
+  Proceed with the following final requirements.
+
+Implement a Python-only Quality Gateway for generated Databricks Python notebooks and supporting Python files.
+
+Required checks:
+
+1. Python syntax and compilation.
+2. Ruff linting and PEP 8 standards.
+3. Python formatting, indentation and whitespace.
+4. Import ordering, unused imports and duplicate imports.
+5. Unused variables and basic Python static-quality warnings.
+6. Duplicate code-quality findings, missing docstrings and naming conventions.
+7. Databricks notebook source markers and Python cell structure.
+8. Existing Python unit tests, where available.
+
+Automatic fixes:
+
+* Automatically apply safe Ruff fixes and formatting.
+* Correct indentation, whitespace and import ordering when safe.
+* Fix other Python-only issues only when behavior is guaranteed to remain unchanged.
+* Do not request confirmation for safe formatting or lint fixes.
+* Report any issue that cannot be safely auto-fixed.
+
+Strict exclusions:
+
+* No Dataiku-to-Databricks logic comparison.
+* No business logic or transformation validation.
+* No changes to joins, filters, aggregations, calculations or PySpark expressions.
+* No input/output table validation.
+* No catalog, schema or environment checks.
+* No SharePoint or production table checks.
+* No Databricks bundle, job, DAG or deployment validation.
+* No data reconciliation or runtime execution checks.
+* No automatic function renaming or code refactoring that could affect behavior.
+
+Implementation:
+
+* Reuse existing Quality Gateway Python checks.
+* Create a dedicated Python-only mode or policy.
+* Keep the existing full Gateway functionality unchanged.
+* Run against MD_CHINA_GAS_DEMAND_POWER_C1_SI.
+* Apply fixes on a staging copy, not the original source.
+* Show the Python-quality results before and after fixes.
+* Do not commit, push or deploy.
+* Do not perform another repository assessment.
+
+Proceed with implementation and tests. Stop after providing the results.
