@@ -223,3 +223,21 @@ Requirements:
 10. Do not fix any findings automatically.
 
 Report the review result and the smallest changes needed to pass the DEV quality checks. Stop.
+
+.....
+Implement the minimum DEV bundle configuration changes for MD_CHINA_GAS_DEMAND_POWER_C1_SI in the Deployment Pipeline repository.
+
+Use the existing repository assessment, Quality Gateway findings and one working DEV project as references. Do not repeat the assessment.
+
+1. Update only this project’s databricks/databricks.yml.
+2. Add a DEV target following the existing pipeline’s production-mode convention, including required root_path and permissions.
+3. Declare job_viewers_group using the existing convention.
+4. Do not hardcode the DEV workspace host, catalog or schema. These come from config/environments/dev.yaml (slmt_uat / exp_seif).
+5. Preserve the existing UAT target without activating it. Add a personal target only if required for compatibility and consistent with the existing projects.
+6. Preserve all job definitions, notebook paths, task keys, dependencies, input-table mappings and table suffixes.
+7. Do not invent missing input-table values; report them as unresolved.
+8. Keep pipeline.yml deploy: false and run: false.
+9. Do not modify notebooks, Migration Agent, Quality Gateway or any other projects.
+10. Run only local configuration and YAML checks that do not require Databricks access.
+
+Report the exact changes, test results and remaining blockers. Do not commit, push or deploy. Stop.
