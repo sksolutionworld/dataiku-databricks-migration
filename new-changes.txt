@@ -40,3 +40,48 @@ Requirement | Current implementation | Affected files | Minimal proposed change
 Identify any risks and targeted tests.
 
 STOP after the assessment. Wait for my approval before making changes.
+
+.......
+
+Perform a READ-ONLY assessment of the Migration Agent repository. Do not modify any files.
+
+We need minimal, backward-compatible improvements.
+
+**1. Notebook naming**
+- Apply the `zone_01_<zone_name>.py` naming convention to the existing project `MD_CHINA_GAS_DEMAND_POWER_C1_SI` only.
+- Ensure all future generated projects follow this naming convention.
+- Do NOT rename notebooks in any other previously downloaded, converted or migrated projects.
+- Update job notebook references only where the approved rename is applied.
+- Preserve the existing task keys and DAG dependencies.
+
+**2. Generated code quality**
+- Add safe Ruff formatting, lint and Python syntax checks for newly generated zone notebooks.
+- Do not modify PySpark business logic.
+- Do not reformat or modify notebooks belonging to other existing projects.
+
+**3. Local configuration**
+- Support engineer-specific `.env` configuration.
+- Read `PIPELINE_REPO_PATH` from `.env`.
+- Do not hardcode local repository paths.
+
+**4. Bundle transfer**
+- Use `MD_CHINA_GAS_DEMAND_POWER_C1_SI` as the test project.
+- Transfer only its approved bundle into the existing pipeline repository structure.
+- Do not overwrite existing files without explicit approval.
+- Do not commit, push or deploy automatically.
+
+**Important constraints**
+- Preserve the current zone-by-zone conversion process.
+- Preserve existing transformations, job DAG and bundle structure.
+- Do not refactor working components.
+- Inspect only files necessary for these requirements.
+- Avoid scanning other generated projects or large Dataiku exports.
+- Reuse existing functions and configuration.
+- Minimize GitHub Copilot token usage.
+
+Return a short table containing:
+Requirement | Current implementation | Affected files | Minimal proposed change
+
+Identify any risks and targeted tests.
+
+STOP after the assessment. Wait for my approval before making changes.
