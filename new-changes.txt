@@ -677,3 +677,15 @@ print(
 )
 
 display(df.iloc[14:32])
+
+
+...
+
+print("Original rows:", len(df))
+
+print(
+    "Rows after removing empty rows:",
+    len(df.dropna(how="all"))
+)
+
+display(df.iloc[14:32])
