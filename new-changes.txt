@@ -814,3 +814,21 @@ SELECT
     'Only in Databricks' AS result,
     COUNT(*) AS rows_count
 FROM (SELECT * FROM m EXCEPT ALL SELECT * FROM d);
+
+...
+
+WITH d AS (
+    SELECT Scenario, MonthDate_iso, Price_Value, Value
+    FROM slmt_prd.exp_seif.md_china_gas_demand_power_c1_si_ds_china_gas_demand_power_c1_imbalance
+),
+m AS (
+    SELECT Scenario, MonthDate_iso, Price_Value, Value
+    FROM slmt_uat.exp_seif.ds_china_gas_demand_power_c1_imbalance_migration_candidate
+)
+SELECT 'Only Dataiku' AS result, COUNT(*) AS rows_count
+FROM (SELECT * FROM d EXCEPT ALL SELECT * FROM m)
+
+UNION ALL
+
+SELECT 'Only Databricks', COUNT(*)
+FROM (SELECT * FROM m EXCEPT ALL SELECT * FROM d);
