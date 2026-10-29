@@ -708,3 +708,13 @@ print("Rows:", len(df_dataiku))
 print("Columns:", len(df_dataiku.columns))
 
 display(df_dataiku.head(10))
+
+...
+
+display(df_dataiku.tail(10))
+
+print("Completely empty rows:",
+      df_dataiku.isna().all(axis=1).sum())
+
+print("Rows excluding empty rows:",
+      len(df_dataiku.dropna(how="all")))
