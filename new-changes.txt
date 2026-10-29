@@ -623,3 +623,26 @@ Fix the IP_CH_Coal_Prices Delta column collision.
 * Run relevant offline tests and a read-only dry run if available.
 * Do not modify transformation notebooks, other sources, or deploy/write tables.
 * Report changed files and test results.
+
+........
+
+import pandas as pd
+
+# Use the existing SharePoint Excel workbook
+workbook_content.seek(0)
+
+df = pd.read_excel(
+    workbook_content,
+    sheet_name="C2G Switching_Spot",
+    header=213,
+    engine="openpyxl"
+)
+
+print("Total rows:", len(df))
+print("Total columns:", len(df.columns))
+
+print("\nLast 10 rows:")
+display(df.tail(10))
+
+print("\nCompletely empty rows:", df.isna().all(axis=1).sum())
+print("Rows with a Year value:", df["Year"].notna().sum())
