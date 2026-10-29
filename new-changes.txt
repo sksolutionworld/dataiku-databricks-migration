@@ -904,3 +904,39 @@ FROM slmt_uat.exp_seif.ds_jkm_price_processed_migration_candidate
 WHERE ContractYear = 2027
   AND ContractMonth = 1
 ORDER BY ObservationDate DESC;
+
+...
+
+[5:34 pm, 29/10/2026] SK: SELECT
+    'PROD - Dataiku' AS source,
+    COUNT(*) AS total_rows
+FROM slmt_prd.exp_seif.md_china_gas_demand_power_c1_si_ds_china_gas_demand_power_c1_imbalance
+
+UNION ALL
+
+SELECT
+    'UAT - Databricks' AS source,
+    COUNT(*) AS total_rows
+FROM slmt_uat.exp_seif.ds_china_gas_demand_power_c1_imbalancemigration_candidate;
+[5:34 pm, 29/10/2026] SK: WITH prod AS (
+    SELECT Scenario, MonthDate_iso, Price_Value, Value
+    FROM slmt_prd.exp_seif.md_china_gas_demand_power_c1_si_ds_china_gas_demand_power_c1_imbalance
+),
+uat AS (
+    SELECT Scenario, MonthDate_iso, Price_Value, Value
+    FROM slmt_uat.exp_seif.ds_china_gas_demand_power_c1_imbalancemigration_candidate
+)
+SELECT 'Only in PROD' AS result, COUNT(*) AS rows_count
+FROM (
+    SELECT * FROM prod
+    EXCEPT ALL
+    SELECT * FROM uat
+)
+
+UNION ALL
+
+SELECT 'Only in UAT' AS result, COUNT(*) AS rows_count
+FROM (
+    SELECT * FROM uat
+    EXCEPT ALL
+    SELECT * FROM prod
