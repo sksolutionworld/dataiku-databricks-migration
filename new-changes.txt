@@ -666,3 +666,14 @@ for i in [17, 18, 27, 143, 144, 145]:
     print("Current Year:", df.iloc[i]["Year"])
     print("Next Year:", df.iloc[i+1]["Year"])
     print("----------------")
+
+    ...
+
+    print("Original rows:", len(df))
+
+print(
+    "Rows after removing empty rows:",
+    len(df.dropna(how="all"))
+)
+
+display(df.iloc[14:32])
