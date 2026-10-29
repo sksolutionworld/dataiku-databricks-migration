@@ -832,3 +832,28 @@ UNION ALL
 
 SELECT 'Only Databricks', COUNT(*)
 FROM (SELECT * FROM m EXCEPT ALL SELECT * FROM d);
+
+....
+WITH d AS (
+    SELECT Scenario, MonthDate_iso, Price_Value, Value
+    FROM slmt_prd.exp_seif.md_china_gas_demand_power_c1_si_ds_china_gas_demand_power_c1_imbalance
+),
+m AS (
+    SELECT Scenario, MonthDate_iso, Price_Value, Value
+    FROM slmt_uat.exp_seif.ds_china_gas_demand_power_c1_imbalance_migration_candidate
+),
+combined AS (
+    SELECT 'Dataiku' AS source, * FROM d
+    UNION ALL
+    SELECT 'Databricks' AS source, * FROM m
+)
+SELECT
+    Scenario,
+    MonthDate_iso,
+    COUNT(DISTINCT Price_Value) AS price_variations,
+    COUNT(DISTINCT Value) AS value_variations
+FROM combined
+GROUP BY Scenario, MonthDate_iso
+HAVING COUNT(DISTINCT Price_Value) > 1
+    OR COUNT(DISTINCT Value) > 1
+LIMIT 20;
