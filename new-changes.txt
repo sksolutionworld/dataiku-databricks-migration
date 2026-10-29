@@ -755,3 +755,24 @@ UNION ALL
 
 SELECT 'IP_CH_Coal_Prices', COUNT(*)
 FROM slmt_uat.exp_seif.IP_CH_Coal_Prices;
+
+...
+
+[1:02 pm, 29/10/2026] SK: SELECT 'Dataiku' AS source, COUNT(*) AS total_rows
+FROM slmt_prd.exp_seif.md_china_gas_demand_power_c1_si_ds_china_gas_demand_power_c1_imbalance
+
+UNION ALL
+
+SELECT 'Databricks' AS source, COUNT(*) AS total_rows
+FROM slmt_uat.exp_seif.ds_china_gas_demand_power_c1_imbalance_migration_candidate;
+[1:02 pm, 29/10/2026] SK: SELECT *
+FROM (
+    SELECT *
+    FROM slmt_prd.exp_seif.md_china_gas_demand_power_c1_si_ds_china_gas_demand_power_c1_imbalance
+
+    EXCEPT
+
+    SELECT *
+    FROM slmt_uat.exp_seif.ds_china_gas_demand_power_c1_imbalance_migration_candidate
+)
+LIMIT 20;
