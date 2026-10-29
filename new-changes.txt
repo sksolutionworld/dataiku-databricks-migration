@@ -718,3 +718,25 @@ print("Completely empty rows:",
 
 print("Rows excluding empty rows:",
       len(df_dataiku.dropna(how="all")))
+
+      .......
+
+      Fix only the SharePoint ingestion Delta write failure.
+
+Error: [COLUMN_ALREADY_EXISTS], SQLSTATE 42711.
+
+Cause: Excel has two columns differing only by capitalization:
+
+* Customs average LNG import price
+* Customs Average LNG Import Price
+
+Requirements:
+
+1. Locate the existing DataFrame-to-Delta write logic.
+2. Add a minimal reusable fix to rename case-insensitive duplicate columns uniquely before writing.
+3. Preserve all data and column order.
+4. Do not modify unrelated code, notebooks, or bundle configuration.
+5. Run only focused tests.
+6. Show changed files and test results.
+
+Do not deploy or execute the job.
