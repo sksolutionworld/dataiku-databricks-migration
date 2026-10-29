@@ -881,3 +881,26 @@ SELECT
 FROM slmt_uat.exp_seif.ds_china_gas_demand_power_c1_imbalance_migration_candidate
 WHERE Scenario = 4
   AND MonthDate_iso = '2027-01-01';
+
+  ...
+
+  [4:13 pm, 29/10/2026] SK: SELECT
+    ObservationDate,
+    ContractMonth,
+    ContractYear,
+    ContractMonthCalEndDate,
+    [JKM($/MMBtu)] AS JKM_Price
+FROM intermediate_schema.md_china_gas_demand_power_c1_si_ds_jkm_price_processed
+WHERE ContractYear = 2027
+  AND ContractMonth = 1
+ORDER BY ObservationDate DESC;
+[4:13 pm, 29/10/2026] SK: SELECT
+    ObservationDate,
+    ContractMonth,
+    ContractYear,
+    ContractMonthCalEndDate,
+    JKM($/MMBtu) AS JKM_Price
+FROM slmt_uat.exp_seif.ds_jkm_price_processed_migration_candidate
+WHERE ContractYear = 2027
+  AND ContractMonth = 1
+ORDER BY ObservationDate DESC;
