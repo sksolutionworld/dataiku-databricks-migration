@@ -857,3 +857,27 @@ GROUP BY Scenario, MonthDate_iso
 HAVING COUNT(DISTINCT Price_Value) > 1
     OR COUNT(DISTINCT Value) > 1
 LIMIT 20;
+
+...
+
+SELECT
+    'Dataiku' AS source,
+    Scenario,
+    MonthDate_iso,
+    Price_Value,
+    Value
+FROM slmt_prd.exp_seif.md_china_gas_demand_power_c1_si_ds_china_gas_demand_power_c1_imbalance
+WHERE Scenario = 4
+  AND MonthDate_iso = '2027-01-01'
+
+UNION ALL
+
+SELECT
+    'Databricks' AS source,
+    Scenario,
+    MonthDate_iso,
+    Price_Value,
+    Value
+FROM slmt_uat.exp_seif.ds_china_gas_demand_power_c1_imbalance_migration_candidate
+WHERE Scenario = 4
+  AND MonthDate_iso = '2027-01-01';
