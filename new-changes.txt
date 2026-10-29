@@ -609,3 +609,17 @@ Requirements:
 6. Run only relevant tests. Do not deploy, execute Databricks jobs or write Unity Catalog tables.
 
 Report changed files, test results and remaining risks concisely. Do not perform broad repository analysis.
+
+........
+
+Fix the IP_CH_Coal_Prices Delta column collision.
+
+* Update only china_coal_to_gas_price_model_bands.yml.
+* In the Coal40vsGas50_Spot source configuration, add exclude_columns for:
+    * Customs average LNG import price
+    * Customs Average LNG Import Price
+* Preserve all other columns, especially Month_iso, and existing Dataiku Excel settings.
+* Confirm the existing ingestion framework applies exclusions before Delta writes.
+* Run relevant offline tests and a read-only dry run if available.
+* Do not modify transformation notebooks, other sources, or deploy/write tables.
+* Report changed files and test results.
