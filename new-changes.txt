@@ -792,3 +792,25 @@ SELECT
     MAX(ObservationDate) AS latest_observation,
     MAX(ObservationDate_Max) AS latest_observation_max
 FROM slmt_uat.exp_seif.ds_jkm_price_new_migration_candidate;
+
+....
+
+WITH d AS (
+    SELECT * EXCEPT (Price_ObservationDate)
+    FROM slmt_prd.exp_seif.md_china_gas_demand_power_c1_si_ds_china_gas_demand_power_c1_imbalance
+),
+m AS (
+    SELECT * EXCEPT (Price_ObservationDate)
+    FROM slmt_uat.exp_seif.ds_china_gas_demand_power_c1_imbalance_migration_candidate
+)
+SELECT
+    'Only in Dataiku' AS result,
+    COUNT(*) AS rows_count
+FROM (SELECT * FROM d EXCEPT ALL SELECT * FROM m)
+
+UNION ALL
+
+SELECT
+    'Only in Databricks' AS result,
+    COUNT(*) AS rows_count
+FROM (SELECT * FROM m EXCEPT ALL SELECT * FROM d);
