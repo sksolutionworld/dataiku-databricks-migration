@@ -658,3 +658,11 @@ display(
         ["Year"]
     ].reset_index()
 )
+...
+
+for i in [17, 18, 27, 143, 144, 145]:
+    print(f"Index {i}:")
+    print("Previous Year:", df.iloc[i-1]["Year"])
+    print("Current Year:", df.iloc[i]["Year"])
+    print("Next Year:", df.iloc[i+1]["Year"])
+    print("----------------")
