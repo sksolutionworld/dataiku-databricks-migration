@@ -681,11 +681,11 @@ display(df.iloc[14:32])
 
 ...
 
-print("Original rows:", len(df))
+empty_rows = df[df.isna().all(axis=1)]
 
-print(
-    "Rows after removing empty rows:",
-    len(df.dropna(how="all"))
+display(
+    df.loc[
+        df.index.isin(empty_rows.index),
+        ["Year"]
+    ].reset_index()
 )
-
-display(df.iloc[14:32])
