@@ -689,3 +689,14 @@ display(
         ["Year"]
     ].reset_index()
 )
+
+......
+
+empty_rows = df[df.isna().all(axis=1)]
+
+display(
+    df.loc[
+        df.index.isin(empty_rows.index),
+        ["Year"]
+    ].reset_index()
+)
