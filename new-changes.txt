@@ -740,3 +740,18 @@ Requirements:
 6. Show changed files and test results.
 
 Do not deploy or execute the job.
+
+...
+
+SELECT 'C2G_Switching_China' AS dataset, COUNT(*) AS rows
+FROM slmt_uat.exp_seif.C2G_Switching_China
+
+UNION ALL
+
+SELECT 'DS_CH_IP_Coal_InstalledCapacity', COUNT(*)
+FROM slmt_uat.exp_seif.DS_CH_IP_Coal_InstalledCapacity
+
+UNION ALL
+
+SELECT 'IP_CH_Coal_Prices', COUNT(*)
+FROM slmt_uat.exp_seif.IP_CH_Coal_Prices;
