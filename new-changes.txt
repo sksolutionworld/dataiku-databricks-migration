@@ -692,11 +692,19 @@ display(
 
 ......
 
-empty_rows = df[df.isna().all(axis=1)]
+import pandas as pd
 
-display(
-    df.loc[
-        df.index.isin(empty_rows.index),
-        ["Year"]
-    ].reset_index()
+workbook_content.seek(0)
+
+df_dataiku = pd.read_excel(
+    workbook_content,
+    sheet_name="C2G Switching_Spot",
+    skiprows=213,
+    header=0,
+    engine="openpyxl"
 )
+
+print("Rows:", len(df_dataiku))
+print("Columns:", len(df_dataiku.columns))
+
+display(df_dataiku.head(10))
