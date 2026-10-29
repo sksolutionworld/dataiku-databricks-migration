@@ -776,3 +776,19 @@ FROM (
     FROM slmt_uat.exp_seif.ds_china_gas_demand_power_c1_imbalance_migration_candidate
 )
 LIMIT 20;
+
+........
+
+SELECT
+    'Processed' AS dataset,
+    MAX(ObservationDate) AS latest_observation,
+    MAX(ObservationDate_Max) AS latest_observation_max
+FROM slmt_uat.exp_seif.ds_jkm_price_processed_migration_candidate
+
+UNION ALL
+
+SELECT
+    'New' AS dataset,
+    MAX(ObservationDate) AS latest_observation,
+    MAX(ObservationDate_Max) AS latest_observation_max
+FROM slmt_uat.exp_seif.ds_jkm_price_new_migration_candidate;
