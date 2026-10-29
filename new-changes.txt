@@ -646,3 +646,15 @@ display(df.tail(10))
 
 print("\nCompletely empty rows:", df.isna().all(axis=1).sum())
 print("Rows with a Year value:", df["Year"].notna().sum())
+
+.....
+
+import pandas as pd
+
+display(
+    df.loc[
+        df["Year"].isna() |
+        (pd.to_numeric(df["Year"], errors="coerce") < 1900),
+        ["Year"]
+    ].reset_index()
+)
