@@ -2246,3 +2246,27 @@ Requirements:
 Do not commit, push, deploy or transfer anything.
 
 If achieving 80% requires modifying production behavior, stop and explain the proposed changes before proceeding.
+
+..
+
+We have completed fixes 1, 2, 5 and 6 on the existing fix branch.
+
+Now review ONLY the two remaining SonarQube security findings:
+
+1. Security hotspot S7637 in .github/workflows/ci.yml involving the reusable company SonarQube workflow reference.
+2. Informational vulnerability S8565 involving the missing uv.lock in pyproject.toml.
+
+Requirements:
+
+* Inspect the current implementation and existing company security conventions.
+* Check whether the existing SHA-pinned CI_requirements.txt already provides dependency integrity.
+* For the reusable workflow, verify whether our company policy requires commit-SHA pinning or permits the current @main reference.
+* Recommend the safest minimal resolution for each finding.
+* Do not introduce unnecessary dependencies, lockfiles, workflows or refactoring.
+* Do not modify migration conversion logic, bundle generation, transfer scripts or DSS export scripts.
+* Do not modify documentation.
+* Do not commit, push or deploy anything.
+
+First provide a short assessment of each finding, its actual risk, and the exact proposed change.
+
+Wait for my approval before modifying any files.
