@@ -2222,3 +2222,27 @@ After copying, provide a concise summary:
 8. Confirmation no tests, deployments or Git operations occurred.
 
 Success criteria: The new Git repository contains only the reusable Migration Agent framework, scripts, agents, skills, prompts, configuration and tests. No root documentation, generated bundles, project data, secrets or unnecessary files are copied or committed.
+...
+
+Choose Approve with changes.
+
+Goal: Achieve at least 80% measured unit-test coverage for the Migration Agent’s src/ and scripts/.
+
+Approve the coverage configuration improvements, required CI dependencies, SonarQube coverage integration, and additional isolated unit tests.
+
+Requirements:
+
+1. Include src/ and scripts/ in coverage measurement.
+2. Generate coverage.xml and configure SonarQube to import it.
+3. Preserve the existing company GitHub Actions security and quality checks.
+4. Use mocks for Dataiku, Azure, HTTP and filesystem interactions.
+5. Add meaningful tests covering successful operations, failures and edge cases. Do not create artificial tests solely to increase coverage.
+6. Do not exclude production code merely to achieve 80%.
+7. Do not modify the existing migration conversion logic, generated bundles or Pipeline repository.
+8. Do not modify DSS export script execution behavior without separate approval.
+9. Avoid adding new workflows if the existing build workflow can be reused.
+10. Keep changes minimal and report the actual measured coverage after running tests.
+
+Do not commit, push, deploy or transfer anything.
+
+If achieving 80% requires modifying production behavior, stop and explain the proposed changes before proceeding.
