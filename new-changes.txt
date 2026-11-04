@@ -1620,3 +1620,127 @@ Wait for my explicit approval of the proposed changes.
 After approval, implement only the approved changes, one small logical change at a time, with a clear explanation and non-destructive validation.
 
 Success means preserving the existing working Migration Agent while identifying a safe, minimal path to Pipeline repository integration and secure future GitHub publication.
+
+....
+
+Dataiku → Databricks Migration Agent — Minimal Changes
+
+Act as a Senior Python and Databricks Engineer.
+
+READ-ONLY FIRST. Inspect relevant files, propose minimal changes, and STOP for approval. No modifications before approval.
+
+1. Repositories and scope
+
+* Migration Agent: Local dataiku-databricks-migration.
+* Future GitHub repository: DataikuToDatabricksMigrationAgent — not created; I will create it later.
+* Pipeline repository: Existing local repository referenced by PIPELINE_REPO_PATH in .env.
+* Quality Gateway: Not used. Future quality checks will be added inside the Migration Agent.
+
+Preserve existing conversion logic, agents, skills, Python framework, zone notebooks, DAG, and Pipeline workflows.
+
+Do not modify, regenerate, transfer, delete, overwrite, or test any existing project or bundle in either repository.
+
+2. Environment configuration — new projects only
+
+Target	Catalog.Schema	Table naming
+personal	Existing	Existing behavior
+dev	slmt_uat.exp_seif	Existing _migration_candidate suffix
+uat	slmt_uat.seif_dataiku_tmp	Exact Dataiku physical table name
+prod	slmt_prd.exp_seif	Exact Dataiku physical table name
+
+* Preserve personal target and its existing suffix.
+* Add Pipeline-compatible dev target if needed.
+* Keep UAT/PROD configured but disabled.
+* New pipeline.yml: deploy: false, run: false for DEV/UAT/PROD.
+* Preserve authentication, job DAG, environment variables, and workspace configuration.
+
+Physical table names must come from Dataiku metadata, not dataset names.
+
+Examples:
+
+* titanic_survived_stacked_recombined → ${projectkey}_titanic_survived_stacked
+* DS_India_Gas_All → ${projectkey}_ds_malaysia_gas_all
+
+Do not guess names, double-prefix project keys, or change existing DEV naming.
+
+3. Approved change candidates
+
+D1 — Bundle targets
+
+Update only the reusable templates/instructions required for future bundles. Preserve personal, add Pipeline-compatible DEV, and configure inactive UAT/PROD. Do not modify existing bundles or conversion logic.
+
+D2 — Table naming
+
+Reuse existing Dataiku dataset metadata and naming utilities. Personal/DEV retain current naming; UAT/PROD use actual physical table names. If notebook-generation changes are necessary, request separate approval.
+
+D3 — Bundle transfer
+
+Reuse existing transfer_bundle.py and PIPELINE_REPO_PATH.
+
+Preserve manual execution, dry-run default, conflict detection, and overwrite protection.
+
+For future new projects only:
+
+* Transfer generated databricks.yml, resources/, and required src/ files.
+* Exclude ZIPs, raw data, secrets, caches, and unrelated files.
+* Create pipeline.yml only when absent, following existing Pipeline conventions.
+* Set deploy/run false for all environments.
+* Never overwrite an existing pipeline.yml.
+* Do not modify Pipeline workflows or existing project directories.
+
+D5 — Future GitHub safety
+
+Propose minimal .gitignore changes. Exclude secrets, Dataiku evidence, generated project bundles, certificates, caches, and local state. Preserve reusable source, agents, skills, scripts, tests, and safe templates.
+
+Do not initialize Git, create a repository, commit, or push.
+
+D4 — Optional
+
+Project-key conflict warning. Do not implement without separate approval.
+
+4. Testing — explicitly deferred
+
+DO NOT RUN TESTS NOW, EVEN AFTER IMPLEMENTATION APPROVAL.
+
+* No unit tests or integration tests.
+* No test fixtures or sample project generation.
+* No Databricks CLI validation.
+* No migration execution.
+* No bundle deployment or execution.
+* No transfer --apply.
+* No testing against existing projects or bundles.
+* No modifications to existing project directories in either repository.
+
+We will select a completely new Dataiku project later to test the full flow:
+
+Migration Agent → Bundle Generation → Manual Transfer → Pipeline Repository → Databricks.
+
+Do not create that project now.
+
+5. Quality and security — deferred
+
+Do not integrate Quality Gateway or install new scanners.
+
+Ruff, syntax, notebook validation, bundle validation, secret scanning, and dependency checks will be considered later inside the Migration Agent.
+
+Preserve existing validation behavior without executing it.
+
+6. Approval gate
+
+Inspect only necessary source/configuration files.
+
+Return a concise table:
+
+ID	Files to change	Minimal change	Risk
+D1			
+D2			
+D3			
+D5			
+
+Mention any unresolved compatibility issues.
+
+STOP and wait for explicit approval.
+
+After approval, change only approved reusable code/templates/instructions. Do not touch existing bundles in either repository, run tests, transfer bundles, deploy resources, or publish to GitHub.
+
+Success: Minimal changes ready for future new-project testing, with all existing projects, bundles, and conversion logic preserved.
