@@ -2079,3 +2079,146 @@ After copying, report:
 8. Confirmation that no Git commit or push occurred.
 
 Success criteria: The new Git repository contains the complete reusable Migration Agent source and approved configuration changes, without local project data, secrets, generated bundles or changes to existing repository governance.
+
+....
+
+
+Migration Agent — Approved Copy to Git Repository
+
+Act as a Senior DevOps and Python Engineer.
+
+Objective
+
+Copy only the reusable Migration Agent components from the existing local directory into the new Git repository.
+
+Copy, do not move. Preserve the original source unchanged.
+
+The previous read-only assessment identified 95 candidate files. Reuse that assessment and copy-manifest.json; do not repeat the full analysis unless necessary.
+
+1. Source and destination
+
+Source: Existing local dataiku-databricks-migration.
+
+Destination (verified existing Git clone):
+
+C:\Users\Sujesh-Kumar.KS\Desktop\dnr-tns-DataikuToDatabricksMigrationAgent
+
+Use the existing update-code branch.
+
+Do not create repositories, branches or remotes.
+
+2. Files approved for copying
+
+Copy only required reusable components:
+
+* src/migration_framework/
+* scripts/, including transfer_bundle.py
+* .github/agents/
+* .github/skills/ and required skill template assets
+* .github/prompts/
+* config/ including environment templates and schemas
+* tests/
+* pyproject.toml
+* .env.example with placeholders only
+
+Preserve existing relative paths, imports and executable behavior.
+
+Include the latest approved D1, D2, D2-NB, D3 and D5 implementation, including environment-aware table naming and ML artifact safeguards.
+
+Do not copy unnecessary files merely because they exist in the source.
+
+3. Strict exclusions
+
+DO NOT COPY OR COMMIT THE ROOT docs/ FOLDER.
+
+Also exclude:
+
+* Entire projects/ directory
+* Generated Databricks bundles
+* Dataiku ZIPs, raw evidence and recipe exports
+* Project-specific analysis and reports
+* Saved ML models, model ZIPs and datasets
+* Local .env and credentials
+* Certificates, private keys and tokens
+* .databricks/ and local state
+* Python caches, virtual environments and logs
+* Temporary files and scanner outputs
+* Source .git/ directory
+* Pipeline and Quality Gateway repositories
+
+Required templates inside .github/skills/ may be copied; these are functional skill assets, not the root documentation folder.
+
+4. Preserve destination governance
+
+The Git repository already contains governance files.
+
+Do not overwrite or delete existing:
+
+* .github/workflows/
+* .github/ISSUE_TEMPLATE/
+* .github/instructions/
+* .vscode/
+* CODEOWNERS
+* CODE_OF_CONDUCT.md
+* CONTRIBUTION.md
+* LICENSE
+* Pull request templates
+* sonar-project.properties
+
+Merge only new agent, skill and prompt subfolders into .github.
+
+For .gitignore, preserve existing rules and add only necessary exclusions for secrets, generated content, root docs/ and projects/.
+
+Avoid unnecessarily broad exclusions of .csv, .pdf, .xlsx and .docx.
+
+Preserve the existing destination README.md. Do not copy source documentation or append lengthy documentation sections. Add only a brief setup reference if essential, without overwriting existing content.
+
+5. Configuration safety
+
+Inspect the files selected for copying for secrets and machine-specific configuration.
+
+* Do not copy actual credentials or local .env.
+* Keep safe placeholders in .env.example.
+* For workspace-specific identifiers in environment templates, replace them with clearly named placeholders in the destination copy only.
+* Preserve the approved DEV/UAT/PROD catalog and schema conventions.
+* Do not change the original source configuration.
+* Do not change Python conversion or bundle-generation logic.
+* Preserve PIPELINE_REPO_PATH support.
+
+Report any configuration that requires user setup later.
+
+6. Execution restrictions
+
+This copy operation is approved, subject to the rules above.
+
+Do not:
+
+* Modify or delete source files.
+* Modify existing project bundles in either repository.
+* Modify the Pipeline repository.
+* Run tests or validation.
+* Execute migration or conversion.
+* Transfer Databricks bundles.
+* Deploy or execute Databricks jobs.
+* Install dependencies.
+* Initialize Git or create branches.
+* Stage, commit or push files.
+* Change Git remotes.
+* Introduce new agents or refactor code.
+
+If a destination conflict or missing required dependency is discovered, stop and request approval rather than overwriting or omitting it.
+
+7. Final report
+
+After copying, provide a concise summary:
+
+1. Total files copied.
+2. Directory structure created.
+3. Files merged or preserved.
+4. Confirmation root docs/ and projects/ were excluded.
+5. Confirmation source directory remains unchanged.
+6. Configuration placeholders requiring setup.
+7. Any conflicts or missing dependencies.
+8. Confirmation no tests, deployments or Git operations occurred.
+
+Success criteria: The new Git repository contains only the reusable Migration Agent framework, scripts, agents, skills, prompts, configuration and tests. No root documentation, generated bundles, project data, secrets or unnecessary files are copied or committed.
