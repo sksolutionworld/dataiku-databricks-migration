@@ -1915,3 +1915,167 @@ After implementation, provide:
 Do not claim implementation has been tested or validated.
 
 Success criteria: Reusable Migration Agent and transfer logic are prepared for future new-project migration, including ML artifact awareness, while existing projects, bundles, conversion behavior and Pipeline workflows remain untouched.
+
+...
+
+Migration Agent — Copy Required Files to New Git Repository
+
+Act as a Senior DevOps and Python Engineer.
+
+Objective
+
+Copy only the required reusable files from the existing Dataiku-to-Databricks Migration Agent into the newly created Git repository.
+
+Do not move or delete source files. Copy only.
+
+Source
+
+Existing local Migration Agent:
+
+dataiku-databricks-migration
+
+Destination
+
+C:\Users\Sujesh-Kumar.KS\Desktop\dm-tns-DataikuToDatabricksMigrationAgent
+
+Use the existing local paths. Verify both directories before proceeding.
+
+The destination is already a Git repository with existing .github, .vscode, .gitignore, README, CODEOWNERS, and other repository governance files.
+
+Do not initialize Git or replace repository governance files.
+
+1. Copy reusable components only
+
+Inspect the source structure and identify the exact files required for the Migration Agent to function.
+
+Include, where present:
+
+* Python migration framework (src/migration_framework/)
+* Migration scripts and utilities, including transfer_bundle.py
+* GitHub Copilot agents
+* GitHub Copilot skills
+* GitHub Copilot instructions
+* Reusable bundle templates
+* Reusable configuration templates
+* Environment configuration templates, including disabled UAT/PROD
+* Python dependency and packaging files
+* Existing reusable tests
+* Migration Agent documentation
+* Required schemas and static configuration
+
+Preserve the existing directory structure and relative imports.
+
+Include all approved D1, D2, D2-NB, D3 and D5 changes.
+
+Do not omit files required by the working migration workflow.
+
+2. Exclude local/generated content
+
+Do NOT copy:
+
+* projects/ generated project directories
+* Existing Databricks bundles
+* Dataiku ZIP exports
+* Raw Dataiku evidence
+* Recipe Details API downloads
+* Project-specific analysis output
+* ML model ZIPs or trained-model artifacts
+* Local .env files
+* API keys, tokens or credentials
+* Certificates or private keys
+* Local virtual environments
+* Python caches and logs
+* .databricks/ state
+* Temporary files
+* Company security scanner binaries or reference files
+* Any existing .git/ directory
+
+Keep safe .env.example templates without credentials.
+
+Do not copy the Pipeline repository or Quality Gateway.
+
+3. Preserve destination repository files
+
+The new Git repository already contains governance files.
+
+Do not overwrite or delete:
+
+* .github repository governance workflows/templates
+* .vscode settings
+* CODE_OF_CONDUCT.md
+* CODEOWNERS
+* CONTRIBUTING.md
+* LICENSE
+* PULL_REQUEST_TEMPLATE.md
+* sonar-project.properties
+
+For .github, merge only the required Migration Agent agents, skills and instructions into their appropriate subdirectories. Preserve existing workflows and templates.
+
+For .gitignore, merge required exclusions into the existing destination file without removing existing rules.
+
+For README.md, preserve existing content and propose a minimal migration-agent documentation addition.
+
+If any destination file already exists or conflicts, do not overwrite it. Report the conflict for approval.
+
+4. Safety and compatibility
+
+* Copy files without modifying Python business logic.
+* Preserve the working conversion flow and DAG.
+* Preserve personal, DEV, UAT and PROD bundle configurations.
+* Preserve PIPELINE_REPO_PATH configuration support.
+* Preserve ML artifact safety checks.
+* Do not change existing transfer behavior.
+* Do not modify the original Migration Agent.
+* Do not modify the Pipeline repository.
+* Do not create new agents or frameworks.
+* Do not add generated project bundles to Git.
+
+Check for hardcoded local paths and secrets in files selected for copying. Report findings without displaying secret values.
+
+Do not silently rewrite paths or configuration.
+
+5. Approval-gated execution
+
+First perform a read-only assessment.
+
+Provide:
+
+Component	Source path	Destination path	Action
+Framework			COPY
+Agents/skills			COPY/MERGE
+Scripts			COPY
+Templates/config			COPY
+Documentation			MERGE
+Governance			KEEP
+
+Also report:
+
+* Files to copy
+* Files excluded
+* Existing destination conflicts
+* Required documentation/configuration adjustments
+* Any missing dependencies
+* Any possible secret exposure
+
+STOP and wait for my approval before copying anything.
+
+After approval, copy only the approved files.
+
+Do not run migrations, tests, validation, bundle transfers, deployments, dependency installation or Git publishing commands.
+
+Do not stage, commit, push or create branches.
+
+6. Final report
+
+After copying, report:
+
+1. Number of files copied.
+2. Destination directory structure.
+3. Files merged or preserved.
+4. Excluded project data and secrets.
+5. Conflicts or missing dependencies.
+6. Confirmation that the original Migration Agent remains unchanged.
+7. Confirmation that no existing bundles were copied.
+8. Confirmation that no Git commit or push occurred.
+
+Success criteria: The new Git repository contains the complete reusable Migration Agent source and approved configuration changes, without local project data, secrets, generated bundles or changes to existing repository governance.
