@@ -2270,3 +2270,13 @@ Requirements:
 First provide a short assessment of each finding, its actual risk, and the exact proposed change.
 
 Wait for my approval before modifying any files.
+
+...
+
+Proceed with the following decisions on the existing fix branch:
+
+1. For S7637, update only the company SonarQube reusable workflow reference in ci.yml to the verified, company-approved v12.0.0 commit SHA. If company approval cannot be established, do not change it; report the blocker.
+2. For S8565, do not add uv.lock or change dependency installation. Keep the existing hash-pinned CI_requirements.txt. Provide the exact justification for requesting acceptance of this finding in SonarQube. Do not mark it accepted automatically.
+3. Preserve all existing migration logic, scripts, tests and configurations.
+4. Do not modify documentation, refactor unrelated code, commit, push or deploy.
+5. Run the existing relevant validations and report the changed files and results.
