@@ -1131,3 +1131,492 @@ Strict execution rules
 * Present the entire assessment in Copilot Chat only.
 
 Final instruction: First inspect both repositories, then produce an evidence-based comparison and minimal-change recommendation plan. Do not make any implementation changes.
+
+
+'''''
+
+
+Final Assessment and Controlled Tuning — Dataiku-to-Databricks Migration Agent
+
+You are acting as a Senior Platform Engineer, Databricks Architect, Python Engineer, GitHub Copilot Agent Engineer, and Security Reviewer.
+
+Objective
+
+Perform a comprehensive READ-ONLY assessment first of my existing Dataiku-to-Databricks Migration Agent and the separate Databricks Pipeline repository.
+
+Identify only the minimum changes necessary to support bundle handover, environment-specific naming, pipeline compatibility, and appropriate security scanning.
+
+CRITICAL: Do not modify, generate, overwrite, delete, format, move, or execute any project files or scripts without my explicit approval.
+
+My existing Migration Agent is working successfully. Preserve its current conversion behavior, Python framework, skills, instructions, zone-by-zone notebook generation, DAG execution order, and Databricks bundle generation.
+
+Do not redesign the architecture.
+
+⸻
+
+1. Repository Context
+
+We have three separate repositories:
+
+Repository 1 — Migration Agent
+
+Current local directory: dataiku-databricks-migration
+
+Future GitHub repository name:
+
+DataikuToDatabricksMigrationAgent
+
+This GitHub repository does not exist yet. I will create it manually later.
+
+Do not initialize Git, create a remote, push commits, create branches, or assume Git history exists.
+
+The Migration Agent contains:
+
+* Python acquisition and analysis scripts
+* src/migration_framework/
+* GitHub Copilot custom agents
+* Skills and instructions
+* Dataiku project ZIP and recipe details processing
+* Zone-by-zone PySpark notebook conversion
+* Dependency DAG generation
+* Databricks Asset Bundle generation
+
+Repository 2 — Databricks Pipeline
+
+A separate local Pipeline repository is used for Databricks deployment and execution.
+
+Discover its actual location from existing configuration or request the path if missing.
+
+Repository 3 — Quality Gateway
+
+A separate repository handles code quality checks.
+
+Preserve its existing responsibilities and integration boundaries.
+
+Do not merge the repositories.
+
+⸻
+
+2. Inspect Existing Bundle Transfer Implementation
+
+Before proposing any changes, search the complete Migration Agent repository for existing transfer functionality.
+
+Inspect:
+
+* .github/agents/
+* .github/skills/
+* .github/instructions/
+* AGENTS.md, if present
+* scripts/
+* src/
+* config/
+* .env.example and configuration loaders
+* Documentation and integration contracts
+* Existing bundle-generation entry points
+
+Determine whether the Migration Agent already has:
+
+1. An agent or skill responsible for bundle transfer.
+2. A Python script for copying or synchronizing generated bundles.
+3. Instructions directing the agent to transfer code to the Pipeline repository.
+4. An automatic transfer trigger after successful bundle generation.
+5. An existing integration contract between the repositories.
+6. A configurable Pipeline repository destination.
+7. Validation of destination paths and required bundle files.
+8. Handling of existing project directories, conflicts and overwrites.
+
+Classify every relevant finding as:
+
+* ACTIVE IMPLEMENTATION
+* INSTRUCTION ONLY
+* DOCUMENTATION ONLY
+* IMPLEMENTED BUT NOT INVOKED
+* NOT FOUND
+
+Provide exact file paths and line numbers.
+
+Do not create duplicate transfer logic if an implementation already exists.
+
+Do not assume a skill duplicates a Python script merely because the skill invokes that script.
+
+⸻
+
+3. Pipeline Repository Path Must Come from .env
+
+The Pipeline repository path must be configurable for different developers.
+
+Proposed variable, only if no equivalent already exists:
+
+DATABRICKS_PIPELINE_REPO_PATH
+
+Example:
+
+DATABRICKS_PIPELINE_REPO_PATH=/local/path/to/pipeline-repo
+
+Requirements:
+
+* First check whether an equivalent environment variable already exists.
+* Reuse existing configuration conventions wherever possible.
+* Never hardcode a developer’s local repository path.
+* Never overwrite an existing .env file.
+* Support Windows and Linux paths using appropriate Python path handling.
+* Validate the destination before any future transfer.
+* Do not create destination directories without authorization.
+* Ensure local .env files are excluded from Git.
+* Commit only safe .env.example templates without credentials or machine-specific values.
+
+Project key must come from an explicit user prompt or an existing .env variable.
+
+Use the existing project-key configuration convention if available.
+
+If both are provided, define and report a deterministic precedence rule, and flag conflicting values instead of silently choosing the wrong project.
+
+Do not hardcode a project key.
+
+⸻
+
+4. Inspect the Pipeline Repository Before Designing Transfer
+
+This is mandatory.
+
+Read and understand the existing Pipeline repository before proposing any file transfer or changes.
+
+Inspect its:
+
+* Directory structure
+* Project discovery mechanism
+* databricks.yml conventions
+* resources/ definitions
+* src/ structure
+* pipeline.yml conventions
+* GitHub Actions workflows
+* Environment configuration
+* Existing variables and deployment flags
+* Project-specific naming conventions
+* Shared Python utilities and dependencies
+
+Determine the exact expected destination for each generated bundle.
+
+Use the Pipeline repository’s existing conventions as the source of truth.
+
+Do not assume a directory structure without verifying it.
+
+Do not modify existing Pipeline files simply to accommodate Migration Agent output if compatibility can be achieved through a minimal, non-destructive handover.
+
+Identify which files need to be transferred, which files must remain local, and whether any project-level pipeline configuration needs to be created.
+
+If pipeline.yml is required and absent, propose creating it using the existing Pipeline repository convention.
+
+For newly onboarded projects, keep deployment and execution flags disabled by default for dev, uat and prod unless I explicitly approve otherwise.
+
+Preserve all existing project configurations and deployment behavior.
+
+⸻
+
+5. Environment Configuration — DEV, UAT and PROD
+
+We have three environments:
+
+* dev
+* uat
+* prod
+
+First inspect the existing environment configurations and Databricks bundle variables.
+
+Preserve existing workspace URLs, authentication settings, catalogs, schemas, targets, deployment configuration and job settings.
+
+Current expected catalog/schema mappings, subject to verification against the repository:
+
+* DEV: slmt_uat.exp_seif
+* UAT: slmt_uat.exp_seif
+* PROD: slmt_prd.exp_seif
+
+DEV is the initially active workspace. Do not enable UAT or PROD deployment or execution automatically.
+
+Table naming requirements
+
+DEV
+
+Keep the existing development table suffix behavior exactly as currently implemented.
+
+Do not invent or change the suffix value.
+
+UAT and PROD
+
+Use the intended Dataiku-derived table name without adding the DEV suffix.
+
+Preserve the exact table name, including the project key, according to the established Dataiku naming contract.
+
+Important:
+
+* Inspect the current table naming logic before proposing changes.
+* Do not blindly prepend the project key if it is already present.
+* Do not double-prefix project keys.
+* Preserve the existing Dataiku naming convention and table-name casing where supported.
+* Check Unity Catalog naming constraints and possible table collisions.
+* Apply environment-specific naming consistently to reads, writes, SQL references, job parameters and configuration.
+* Do not rename existing deployed tables.
+* Do not change DEV behavior.
+
+If the current Dataiku dataset name does not contain the project key, or the expected naming contract is ambiguous, report the conflict and request my decision.
+
+Provide a DEV/UAT/PROD table-name example using clearly marked illustrative names.
+
+⸻
+
+6. Review Company Security Scanning Reference
+
+I have a company reference repository containing an apiiro-remediation-runner and security-scanning instructions.
+
+Inspect the locally available company reference repository if accessible.
+
+The screenshot identifies these tools and versions, last verified 2026-09-08:
+
+Tool	Reference version
+Checkov	3.3.8
+Trivy	v0.72.0
+Hadolint	v2.14.0
+Gitleaks	v8.30.1
+OSV-Scanner	v2.4.0
+Semgrep	1.176.0
+
+The reference also mentions:
+
+* scripts/scan-vulnerabilities.js
+* scripts/parse-findings.js
+* Finding parsing and normalization
+* Optional Node.js/npm requirements
+
+Treat these as reference information, not automatic implementation requirements.
+
+First determine which tools are actually applicable to:
+
+1. Migration Agent repository.
+2. Pipeline repository.
+3. Generated Databricks notebooks and bundle files.
+
+For example, evaluate:
+
+* Python dependency vulnerabilities
+* Secret exposure
+* Databricks bundle YAML and infrastructure configuration
+* Python static analysis
+* Dockerfile scanning only where Dockerfiles exist
+* GitHub Actions security
+
+Do not install, upgrade or run any scanner without permission.
+
+Do not copy company scanner source code, reference scripts, packages, downloaded binaries or internal configuration into either repository.
+
+Check whether the company security solution is already available through a central CI workflow or reusable service.
+
+Prefer existing approved company tooling rather than creating a duplicate scanner implementation.
+
+Verify tool versions and compatibility before proposing adoption; do not assume the screenshot’s pinned versions remain current.
+
+⸻
+
+7. GitHub Repository Hygiene and Security
+
+The Migration Agent is currently a local directory and will later be published to a new GitHub repository:
+
+DataikuToDatabricksMigrationAgent
+
+I will create this repository myself.
+
+Before publishing, inspect what would be safe to commit.
+
+Identify required .gitignore entries for both Migration Agent and Pipeline repositories.
+
+Ensure that the following are not accidentally committed:
+
+* .env files containing local configuration or secrets
+* API keys, tokens, credentials and certificates
+* Dataiku project ZIP downloads
+* Raw Dataiku project evidence containing sensitive information
+* Local caches and temporary files
+* Python virtual environments
+* Local execution logs
+* Scanner downloads and binaries
+* Security-scanning temporary output
+* Vulnerability reports containing sensitive internal information
+* Company reference repository content
+* Machine-specific paths
+* Generated test artifacts not intended for source control
+
+Do not automatically exclude all generated Databricks notebooks or bundle resources: these may be legitimate version-controlled deployment artifacts.
+
+Distinguish source-controlled deliverables from temporary or sensitive files.
+
+Review whether existing .gitignore patterns are sufficient.
+
+If any sensitive file is currently present, report it without printing secret values.
+
+Do not initialize Git or push anything.
+
+⸻
+
+8. Preserve Existing Migration Agent Behavior
+
+The following must remain unchanged unless I explicitly approve a specific modification:
+
+* Dataiku acquisition logic
+* Project ZIP handling
+* Recipe Details API processing
+* Normalization and typed contracts
+* Reconciliation
+* Dependency DAG
+* Capability scanner
+* Zone-by-zone conversion
+* PySpark business logic generation
+* Notebook naming convention, including zone_01
+* Existing Databricks Asset Bundle generation
+* Existing project output paths
+* Existing environment configuration
+* Existing working skills and instructions
+* Existing code-quality integration
+
+Do not introduce a new agent, framework, harness, specification layer or conversion engine as part of this assessment.
+
+Do not refactor working modules.
+
+Do not delete unused modules or skills.
+
+Do not make unrelated improvements.
+
+⸻
+
+9. Proposed Bundle Transfer Contract
+
+Assess whether the following contract fits the existing repositories.
+
+Source
+
+Generated Databricks Asset Bundle from the Migration Agent.
+
+Destination
+
+The existing project structure in the Pipeline repository, resolved using .env.
+
+Transfer contents
+
+Only files required by the Pipeline repository, potentially including:
+
+* databricks.yml
+* resources/
+* src/
+* Required project configuration
+* Required reusable dependencies
+
+Determine the exact allowlist from the real Pipeline repository.
+
+Do not transfer:
+
+* Dataiku ZIP archives
+* Raw recipe details
+* Analysis evidence
+* Local .env
+* Secrets
+* Logs
+* Temporary files
+* Company scanner reference files
+
+Do not overwrite existing Pipeline files automatically.
+
+For existing destination projects, identify conflicts and present a proposed file-level change list.
+
+Any future transfer implementation must be explicit, validated, repeatable, non-destructive and safe to rerun.
+
+Do not implement or trigger the transfer yet.
+
+⸻
+
+10. Required Assessment Output
+
+Produce one concise report containing:
+
+A. Existing Implementation Status
+
+Capability	Status	Evidence	Change required?
+Bundle generation			
+Bundle transfer			
+Transfer agent/skill			
+Automatic transfer trigger			
+.env Pipeline path			
+Project-key configuration			
+Pipeline repository compatibility			
+DEV table suffix			
+UAT/PROD exact table naming			
+Security scanner integration			
+GitHub publish readiness			
+
+B. Pipeline Repository Compatibility
+
+Report:
+
+* Actual Pipeline repository path
+* Expected project directory structure
+* Required bundle files
+* Required pipeline configuration
+* Existing reusable utilities
+* Environment mapping
+* Conflicting or missing files
+
+C. Security Review
+
+Show which of the six security tools are applicable, already integrated, unnecessary or require approval.
+
+D. Minimal Change Proposal
+
+For each proposed change provide:
+
+1. Repository
+2. Exact file path
+3. Current behavior
+4. Required behavior
+5. Reason
+6. Risk to existing working functionality
+7. Whether an existing implementation can be reused
+8. Validation plan
+9. Approval required
+
+E. Final Questions
+
+Answer explicitly:
+
+1. Does the Migration Agent already have working bundle transfer logic?
+2. Is bundle transfer currently automatic, manual or absent?
+3. Is the Pipeline repository path already configurable through .env?
+4. Can the existing transfer logic be reused without duplication?
+5. Does the current Pipeline repository support the generated bundles without restructuring?
+6. Is DEV suffix behavior already correct?
+7. Do UAT and PROD preserve the intended Dataiku table names, including the project key?
+8. What security scanning is already available?
+9. What must be excluded before publishing the Migration Agent to GitHub?
+10. What is the minimum set of changes needed?
+
+⸻
+
+11. Mandatory Approval Gate
+
+STOP after producing the assessment and proposed changes.
+
+Do not modify any repository.
+
+Do not run installation commands, scanner commands, migration scripts, deployment commands or Git commands that change state.
+
+Do not create GitHub repositories.
+
+Do not transfer bundles.
+
+Do not change existing configuration.
+
+Do not create new agents or skills.
+
+Do not execute Databricks deployments.
+
+Wait for my explicit approval of the proposed changes.
+
+After approval, implement only the approved changes, one small logical change at a time, with a clear explanation and non-destructive validation.
+
+Success means preserving the existing working Migration Agent while identifying a safe, minimal path to Pipeline repository integration and secure future GitHub publication.
