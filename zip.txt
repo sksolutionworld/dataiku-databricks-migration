@@ -20,3 +20,80 @@ Do not create sample ZIP files or dummy project data.
 Keep the project simple and standalone. Do not integrate with any existing repository.
 
 After creating the structure, show me the folders and files created.
+
+...
+
+Step 5: Implement Dataiku Project ZIP Analyzer
+
+The Dataiku Project Export ZIP is now available inside the input/ folder.
+
+Implement a standalone Python ZIP analyzer using the existing project structure.
+
+Requirements
+
+1. Automatically detect the ZIP file inside input/.
+2. Read the ZIP directly without manually extracting it.
+3. Recursively inspect every file and folder.
+4. Identify the actual Dataiku project structure dynamically.
+
+Information to Discover
+
+Extract all available details for:
+
+* Project metadata and configuration
+* Datasets, schemas, connections, formats, and physical table references
+* Recipes, types, inputs, outputs, and configurations
+* Prepare recipe processors and transformation logic
+* SQL queries and Python recipe source code
+* Flow zones and upstream/downstream relationships
+* Cross-project dataset references and dependencies
+* Scenarios, triggers, and steps
+* Project variables and settings
+* Python libraries and code resources
+* Managed folders
+* Metrics and checks
+* Models and other project components
+* Any additional or unknown files
+
+Inventory Requirements
+
+For every ZIP entry, capture its original path, type, size, category, and parsing status.
+
+Preserve available configuration metadata in a structured inventory.
+
+Identify unresolved references separately. Do not invent missing information.
+
+Safely redact passwords, API keys, tokens, secrets, and credentials.
+
+Output
+
+Generate:
+
+output/inventory.json
+
+output/inventory.csv
+
+Include project-level summary counts and detailed component inventories.
+
+Validation
+
+Use the actual ZIP file from input/ to test the analyzer.
+
+Verify that all ZIP entries are accounted for and that component counts are accurate.
+
+Handle malformed JSON, unknown files, and large ZIPs safely.
+
+Do not implement the HTML dashboard yet.
+
+After implementation, provide:
+
+1. ZIP filename analyzed
+2. Total files discovered
+3. Dataset count
+4. Recipe count
+5. Scenario count
+6. Cross-project references discovered
+7. Unknown or unsupported files
+8. Any extraction errors or limitations
+
+Run the analyzer and show me the actual results
