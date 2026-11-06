@@ -97,3 +97,83 @@ After implementation, provide:
 8. Any extraction errors or limitations
 
 Run the analyzer and show me the actual results
+
+....
+
+Step 6: Build Interactive Dataiku ZIP HTML Dashboard
+
+The Dataiku ZIP analyzer is implemented and has successfully generated inventory.json and inventory.csv from the actual project ZIP.
+
+Now create a professional, standalone, interactive HTML dashboard using the existing analyzer output.
+
+Dashboard Sections
+
+1. Project Overview
+    * Project name and key
+    * Dataiku DSS version
+    * Total ZIP files and folders
+    * Dataset, recipe, scenario, and flow zone counts
+    * Cross-project dependency counts
+2. ZIP Explorer
+    * Complete expandable ZIP folder tree
+    * All files and directories
+    * File sizes and types
+    * Search and JSON configuration previews
+3. Dataset Explorer
+    * Dataset name and type
+    * Connection references
+    * Schema and column details
+    * Physical table references, if available
+    * Dataset configuration details
+4. Recipe Explorer
+    * Recipe names and types
+    * Inputs and outputs
+    * Prepare processors and their configurations
+    * Python and SQL recipe details
+    * Searchable and expandable views
+5. Flow and Dependencies
+    * Upstream and downstream relationships
+    * Cross-project references
+    * Interactive dependency visualization
+    * Unresolved references clearly highlighted
+6. Scenarios
+    * Scenario names
+    * Trigger definitions
+    * Execution steps
+    * Referenced datasets
+7. ZIP Coverage and Missing Information
+    * Information available inside ZIP
+    * Unresolved references
+    * Missing external configuration
+    * Unsupported files
+    * Parsing errors
+8. Complete Inventory
+    * Searchable table containing all ZIP entries
+    * Filtering and sorting
+    * JSON and CSV export
+
+Design Requirements
+
+Create a modern enterprise-style dashboard with sidebar navigation, KPI cards, searchable tables, expandable details, status indicators, and light/dark mode.
+
+The dashboard must run locally by opening output/index.html in a browser.
+
+Embed the necessary redacted inventory data inside the HTML so that it works offline without a server, CDN, or external JavaScript dependencies.
+
+Do not fabricate information. Use only the actual analyzed ZIP inventory.
+
+Preserve the existing analyzer and its working tests.
+
+Ensure large datasets and recipe inventories remain responsive.
+
+Deliverables
+
+* templates/dashboard.html
+* Dashboard generation functionality
+* output/index.html
+* Updated README with execution instructions
+* Tests for dashboard generation and safe rendering
+
+Run the generator against the existing real inventory and verify that output/index.html is created successfully.
+
+After completion, explain how to open the dashboard locally.
