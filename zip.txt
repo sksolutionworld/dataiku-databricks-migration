@@ -1,0 +1,22 @@
+The purpose of this project is to analyze Dataiku DSS Project Export ZIP files and generate an interactive HTML dashboard showing all information available inside the ZIP.
+
+For now, only create the project folder structure and necessary starter files.
+
+Create:
+
+* input/ — for Dataiku Project ZIP files
+* src/ — for Python analyzer modules
+* templates/ — for HTML dashboard templates
+* output/ — for generated reports
+* tests/ — for unit tests
+* README.md
+* requirements.txt
+* .gitignore
+
+Do not implement the analyzer or dashboard yet.
+
+Do not create sample ZIP files or dummy project data.
+
+Keep the project simple and standalone. Do not integrate with any existing repository.
+
+After creating the structure, show me the folders and files created.
